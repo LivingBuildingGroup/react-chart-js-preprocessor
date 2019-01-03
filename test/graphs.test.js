@@ -33,7 +33,7 @@ const {
   
   createGraphInfoOnGroupOrMount,
   formatGraphKeysInput,
-} = require('../compile/helpers/graphs');
+} = require('../build/helpers/graphs');
 
 describe('graphs', ()=> { 
 

@@ -12,7 +12,7 @@ const {
   createLayerSelectorsInner,
   createLayersSelected,
   createGroupByData,
-  parseDefaultLayerSelection, } = require('../compile/helpers/layers');
+  parseDefaultLayerSelection, } = require('../build/helpers/layers');
 
 describe('layers', ()=> { 
 

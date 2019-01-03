@@ -8,7 +8,7 @@ const {
   calcMinimumWindowDimensions,
   calcProportionalDimensions,
   calcDimensions,
-} = require('../compile/helpers/dimensions');
+} = require('../build/helpers/dimensions');
 
 describe('dimensions', ()=> { 
 

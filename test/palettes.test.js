@@ -25,7 +25,7 @@ const {
   selectPalette,
   createNamed,
   createPreSetGlobalPalettes,
-} = require('../compile/helpers/palettes');
+} = require('../build/helpers/palettes');
 
 describe('palettes', ()=> { 
 

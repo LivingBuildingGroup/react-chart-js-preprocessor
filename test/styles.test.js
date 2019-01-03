@@ -5,7 +5,7 @@ const expect = chai.expect;
 
 const { 
   createStyle,
-  createStylesArray, } = require('../compile/helpers/styles');
+  createStylesArray, } = require('../build/helpers/styles');
 
 describe('styles', ()=> { 
 

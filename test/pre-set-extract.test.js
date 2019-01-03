@@ -13,7 +13,7 @@ const {
   assignPreSetGroupColors,
   formatGroupsStyles,
   unpackPreSet,
-  selectDefaultPreSet,} = require('../compile/helpers/pre-set-extract');
+  selectDefaultPreSet,} = require('../build/helpers/pre-set-extract');
 
 describe('pre-set-extract', ()=> { 
 

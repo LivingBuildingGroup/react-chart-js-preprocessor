@@ -7,7 +7,7 @@ const {
   applyPreSetGlobalColorToStyles,
   correctPrefixOfLayersSelected,
   editOneStyle,
-} = require('../compile/helpers/pre-set-edit');
+} = require('../build/helpers/pre-set-edit');
 
 describe('pre-set-edit', ()=> { 
 

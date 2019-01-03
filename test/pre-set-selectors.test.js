@@ -3,7 +3,7 @@ const chai = require('chai');
 const expect = chai.expect;
 
 const { 
-  formatPreSetSelectorColumns,} = require('../compile/helpers/pre-set-selectors');
+  formatPreSetSelectorColumns,} = require('../build/helpers/pre-set-selectors');
 
 describe('pre-set-selectors', ()=>{
   it('formatPreSetSelectorColumns', () => {

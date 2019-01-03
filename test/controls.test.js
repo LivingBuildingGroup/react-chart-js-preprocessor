@@ -6,7 +6,7 @@ const expect = chai.expect;
 const { 
   formatControlsWithoutPreSets,
   formatPreSetsForControls,
-  formatControls, } = require('../compile/helpers/controls');
+  formatControls, } = require('../build/helpers/controls');
 
 describe('controls', ()=> { 
 

@@ -12,10 +12,8 @@
     "react-chartjs-2": "^2.7.4"
   },
   "scripts": {
-    "start": "webpack --watch",
-    "build": "webpack",
     "test": "mocha",
-    "compile": "babel src -d compile"
+    "build": "babel src -d build"
   },
   "author": {
     "name": "Brad Garner",
@@ -30,8 +28,6 @@
     "babel-preset-env": "^1.5.1",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "react": "^16.0.0",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^3.2.0"
+    "react": "^16.0.0"
   }
 }
