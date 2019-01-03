@@ -226,7 +226,9 @@ var GraphWrapper = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      window.scrollTo(0, 0);
+      if (typeof this.props.onMount === 'function') {
+        this.props.onMount();
+      }
       return new Promise(function (resolve, reject) {
         var dimensions = (0, _dimensions.calcDimensions)(_this2.state);
         resolve(_this2.setState(dimensions));

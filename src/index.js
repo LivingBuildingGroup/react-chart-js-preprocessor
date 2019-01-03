@@ -185,7 +185,9 @@ export default class GraphWrapper extends React.Component {
   // @@@@@@@@@@@@@@@@@@ LIFE CYCLE @@@@@@@@@@@@@@@@
 
   componentDidMount(){
-    window.scrollTo(0,0);
+    if(typeof this.props.onMount === 'function'){
+      this.props.onMount();
+    }
     return new Promise((resolve, reject)=>{
       const dimensions = calcDimensions(this.state);
       resolve (
