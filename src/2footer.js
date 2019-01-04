@@ -148,9 +148,9 @@ export default function Footer (props){
   const narrative =  `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at finibus est. Suspendisse maximus nisi at felis interdum, ac ultrices quam dictum. Nulla commodo nulla suscipit sollicitudin volutpat. In nec ultrices felis. Duis risus elit, hendrerit sit amet auctor ac, tincidunt ac dui. Nunc ultricies, sem eget laoreet euismod, nulla metus interdum ligula, et imperdiet lacus lectus ut erat. Nullam vestibulum sollicitudin nisi ac efficitur. Proin molestie felis a sagittis pellentesque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam venenatis libero non nibh facilisis rhoncus.`;
 
 
-  return <div className='gw-footer'>
-    <div className='gw-footer-top'
+  return <div className='gw-footer'
     style={props.cssDivFooter}>
+    <div className='gw-footer-top'>
       {buttonAdvanceLeft}
       {spinner}
       {graphTitle}
@@ -208,6 +208,7 @@ export default function Footer (props){
       }
     }
     .gw-footer-top {
+      width: 100%;
       justify-content: space-between;
       min-height: 36px;
       margin-bottom: 15px;
@@ -219,6 +220,7 @@ export default function Footer (props){
     }
     .gw-footer-bottom {
       width: 100%;
+      overflow-y: scroll;
     }
     .gw-footer-description {
       font-weight: 100;
