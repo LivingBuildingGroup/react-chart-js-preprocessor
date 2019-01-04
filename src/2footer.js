@@ -225,8 +225,9 @@ export default function Footer (props){
     }
     .gw-footer-description {
       font-weight: 100;
-      font-size: 67%;
+      font-size: 14px;
       opacity: 0.85;
+      text-align: left;
       padding-left: 20px;
       padding-right: 20px;
     }
