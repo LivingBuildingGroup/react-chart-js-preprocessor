@@ -137,7 +137,7 @@ export default function Footer (props){
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(1)}>
+    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-right ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(1)}>
       <div className='popover'>
         <p>advance the graph to the next event</p>
       </div>
@@ -148,9 +148,9 @@ export default function Footer (props){
   const narrative =  `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at finibus est. Suspendisse maximus nisi at felis interdum, ac ultrices quam dictum. Nulla commodo nulla suscipit sollicitudin volutpat. In nec ultrices felis. Duis risus elit, hendrerit sit amet auctor ac, tincidunt ac dui. Nunc ultricies, sem eget laoreet euismod, nulla metus interdum ligula, et imperdiet lacus lectus ut erat. Nullam vestibulum sollicitudin nisi ac efficitur. Proin molestie felis a sagittis pellentesque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam venenatis libero non nibh facilisis rhoncus.`;
 
 
-  return <div className='gw-footer' 
+  return <div className='gw-footer'>
+    <div className='gw-footer-top'
     style={props.cssDivFooter}>
-    <div className='gw-footer-top'>
       {buttonAdvanceLeft}
       {spinner}
       {graphTitle}
@@ -165,6 +165,9 @@ export default function Footer (props){
     </div>
 
     <style>{`
+    .gw-footer {
+      flex-direction: column;
+    }
     .gw-title {
       color: white;
       text-align: center;
@@ -216,6 +219,13 @@ export default function Footer (props){
     }
     .gw-footer-bottom {
       width: 100%;
+    }
+    .gw-footer-description {
+      font-weight: 100;
+      font-size: 67%;
+      opacity: 0.85;
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
     .gw-advance-waiting > div {

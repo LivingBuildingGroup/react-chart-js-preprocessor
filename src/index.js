@@ -23,9 +23,7 @@ import Selectors            from './3selectors';
 import Controls             from './2controls';
 import Footer               from './2footer';
 
-// console.log('helpers', helpers);
-console.log('createGraph', createGraph);
-// console.log('calcTicks', calcTicks);
+
 export default class GraphWrapper extends React.Component {
   constructor(props){
     super(props);
@@ -322,7 +320,6 @@ export default class GraphWrapper extends React.Component {
       xLabelStartAt     
       yAxisUnitOptions  
     */
-   console.log('state in handleGraphChange,', this.state)
     const input = formatGraphKeysInput(changeInput, this.state);
     const graphKeys = createGraph(input);
     /* graphKeys includes: 
