@@ -127,7 +127,7 @@ export default function Footer (props){
 
   const buttonAdvanceLeft = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(-1)}>
+    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(-1)}>
       <div className='popover'>
         <p>retreat the graph to the prior event</p>
       </div>
@@ -137,22 +137,33 @@ export default function Footer (props){
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(1)}>
+    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(1)}>
       <div className='popover'>
         <p>advance the graph to the next event</p>
       </div>
       <IconRight style={{height: 36}} />
     </div> :
     null ;
+    
+  const narrative =  `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque at finibus est. Suspendisse maximus nisi at felis interdum, ac ultrices quam dictum. Nulla commodo nulla suscipit sollicitudin volutpat. In nec ultrices felis. Duis risus elit, hendrerit sit amet auctor ac, tincidunt ac dui. Nunc ultricies, sem eget laoreet euismod, nulla metus interdum ligula, et imperdiet lacus lectus ut erat. Nullam vestibulum sollicitudin nisi ac efficitur. Proin molestie felis a sagittis pellentesque. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam venenatis libero non nibh facilisis rhoncus.`;
+
 
   return <div className='gw-footer' 
     style={props.cssDivFooter}>
-    {buttonAdvanceLeft}
-    {spinner}
-    {graphTitle}
-    {graphSubTitle}
-    {spinner}
-    {buttonAdvanceRight}
+    <div className='gw-footer-top'>
+      {buttonAdvanceLeft}
+      {spinner}
+      {graphTitle}
+      {graphSubTitle}
+      {spinner}
+      {buttonAdvanceRight}
+    </div>
+    <div className='gw-footer-bottom'>
+      <p className='gw-footer-description'>
+        {narrative}
+      </p>
+    </div>
+
     <style>{`
     .gw-title {
       color: white;
@@ -193,7 +204,7 @@ export default function Footer (props){
         display: none !important;
       }
     }
-    .gw-footer {
+    .gw-footer-top {
       justify-content: space-between;
       min-height: 36px;
       margin-bottom: 15px;
@@ -202,6 +213,9 @@ export default function Footer (props){
       .gw-footer {
         margin-bottom: 5px;
       }
+    }
+    .gw-footer-bottom {
+      width: 100%;
     }
 
     .gw-advance-waiting > div {
