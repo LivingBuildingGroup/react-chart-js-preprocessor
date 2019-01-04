@@ -220,7 +220,8 @@ export default function Footer (props){
     }
     .gw-footer-bottom {
       width: 100%;
-      overflow-y: scroll;
+      height: 70px;
+      overflow: scroll;
     }
     .gw-footer-description {
       font-weight: 100;
