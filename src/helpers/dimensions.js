@@ -145,9 +145,11 @@ export const calcDimensions = state => {
     cssHeightSelectors,
   } = state;
 
+  const extraHeightForFooter = 150;
+
   const cssDivOuter = {
     width: cssWidthOuter,
-    height: cssHeightOuter,
+    height: cssHeightOuter + extraHeightForFooter,
   };
   const cssDivGraph = {
     width: cssWidthOuter - cssWidthControls,
@@ -159,7 +161,7 @@ export const calcDimensions = state => {
   };
   const cssDivFooter = {
     width: cssWidthOuter,
-    height: cssHeightFooter,
+    height: cssHeightFooter + extraHeightForFooter,
   };
   const cssDivSelectors = {
     width: cssWidthOuter,

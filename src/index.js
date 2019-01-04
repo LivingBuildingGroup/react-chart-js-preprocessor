@@ -90,7 +90,7 @@ export default class GraphWrapper extends React.Component {
       cssWidthOuter:               isPrimitiveNumber(this.props.cssWidthOuter) ? this.props.cssWidthOuter : 200,
       cssHeightOuter:              isPrimitiveNumber(this.props.cssHeightOuter) ? this.props.cssHeightOuter : 150,
       cssWidthControls:            isPrimitiveNumber(this.props.cssWidthControls) ? this.props.cssWidthControls : 40,
-      cssHeightFooter:             isPrimitiveNumber(this.props.cssHeightFooter) ? this.props.cssHeightFooter : 60,
+      cssHeightFooter:             isPrimitiveNumber(this.props.cssHeightFooter) ? this.props.cssHeightFooter : 160,
       cssHeightSelectors:          isPrimitiveNumber(this.props.cssHeightSelectors) ? this.props.cssHeightSelectors : 'auto',
       cssCanvasHeight:             0,
       cssCanvasWidth:              0,
