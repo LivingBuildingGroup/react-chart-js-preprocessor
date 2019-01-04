@@ -228,8 +228,9 @@ export default function Footer (props){
       font-size: 14px;
       opacity: 0.85;
       text-align: left;
-      padding-left: 20px;
-      padding-right: 20px;
+      color: white;
+      padding-top: 20px 5px;
+      line-height: 1.5;
     }
 
     .gw-advance-waiting > div {
