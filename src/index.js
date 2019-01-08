@@ -106,6 +106,7 @@ export default class GraphWrapper extends React.Component {
       printAllow:             typeof this.props.printAllow      === 'boolean' ? this.props.printAllow      : true,
       backgroundAllow:        typeof this.props.backgroundAllow === 'boolean' ? this.props.backgroundAllow : true,
       advanceAllow:           typeof this.props.advanceAllow    === 'boolean' ? this.props.advanceAllow    : false,
+      retreatAllow:           typeof this.props.retreatAllow    === 'boolean' ? this.props.retreatAllow    : false,
       yAxisAllow:             typeof this.props.yAxisAllow      === 'boolean' ? this.props.yAxisAllow      : true,
       // configure settings in selectors
       groupAllow:             typeof this.props.groupAllow      === 'boolean' ? this.props.groupAllow      : false,
@@ -742,6 +743,7 @@ export default class GraphWrapper extends React.Component {
       groupDotColors        ={s.groupDotColors}
       titleText             ={s.titleText}
       advanceAllow          ={s.advanceAllow}
+      retreatAllow          ={s.retreatAllow}
       waitingOnDataFromProps={s.waitingOnDataFromProps}
       icons                 ={s.icons}
       cssDivFooter          ={s.cssDivFooter}

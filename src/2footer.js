@@ -126,8 +126,9 @@ export default function Footer (props){
   const IconRight = i.caret_right;
 
   const buttonAdvanceLeft = 
-    props.advanceAllow ?
-    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(-1)}>
+    props.retreatAllow ?
+    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} 
+      onClick={()=>props.graphAdvance(-1)}>
       <div className='popover'>
         <p>retreat the graph to the prior event</p>
       </div>
@@ -137,7 +138,8 @@ export default function Footer (props){
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-right ${hideAdvanceButtonClass}`} onClick={()=>props.graphAdvance(1)}>
+    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-right ${hideAdvanceButtonClass}`} 
+      onClick={()=>props.graphAdvance(1)}>
       <div className='popover'>
         <p>advance the graph to the next event</p>
       </div>
@@ -211,26 +213,23 @@ export default function Footer (props){
       width: 100%;
       justify-content: space-between;
       min-height: 36px;
-      margin-bottom: 15px;
-    }
-    @media(min-width: 520px){
-      .gw-footer {
-        margin-bottom: 5px;
-      }
+      margin-bottom: 5px;
     }
     .gw-footer-bottom {
       width: 100%;
-      height: 70px;
+      height: 35px;
       overflow: scroll;
     }
     .gw-footer-description {
       font-weight: 100;
-      font-size: 14px;
+      font-size: 12px;
       opacity: 0.85;
       text-align: left;
       color: white;
-      padding-top: 20px 5px;
-      line-height: 1.5;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      line-height: 1.3;
     }
 
     .gw-advance-waiting > div {
