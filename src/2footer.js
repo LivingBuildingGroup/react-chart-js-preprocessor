@@ -116,7 +116,7 @@ export default function Footer (props){
       <div/>
     </div> ;
 
-  const spinnerLeft = !props.advanceAllow ?
+  const spinnerLeft = !props.retreatAllow ?
     null :
     !props.waitingOnDataFromProps ?
     null : 
@@ -156,7 +156,7 @@ export default function Footer (props){
     <div className='gw-advance-button gw-control'/> ;
 
   const spinnerMargin = 80;
-  const spinnerSize = (Math.random()*20)+20;
+  const spinnerSize = (Math.random()*20)+40;
   const spinnerColorIndex = Math.floor(Math.random()*5);
   const spinnerColors = ['red', 'yellow', 'pink', 'green', 'purple', 'blue'];
   const spinnerColor = spinnerColors[spinnerColorIndex] || 'white' ;
@@ -258,7 +258,7 @@ export default function Footer (props){
     }
     .gw-advance-waiting > div {
       width: ${spinnerSize}px;
-      height: ${spinnerSize}x;
+      height: ${spinnerSize}px;
       background-color: ${spinnerColor};
       border-radius: 100%;
       -webkit-animation: blinking 1.0s infinite ease-in-out;
