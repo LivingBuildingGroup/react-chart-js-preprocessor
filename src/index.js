@@ -508,7 +508,9 @@ export default class GraphWrapper extends React.Component {
               // waitingOnDataFromProps update is delayed to give the spinner a little more time
               setTimeout(()=>{
                 this.setState({
-                  waitingOnDataFromProps: false // this is after a timeout so the looading icon doesn't disappear too fast
+                  waitingOnDataFromProps: false, // this is after a timeout so the looading icon doesn't disappear too fast
+                  advanceAllow: this.props.advanceAllow,
+                  retreatAllow: this.props.retreatAllow,
                 });
               }, 800);
               if(this.state.groupByOnMount){

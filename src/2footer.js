@@ -213,23 +213,23 @@ export default function Footer (props){
       width: 100%;
       justify-content: space-between;
       min-height: 36px;
-      margin-bottom: 5px;
     }
     .gw-footer-bottom {
       width: 100%;
-      height: 35px;
+      height: 42px;
       overflow: scroll;
     }
     .gw-footer-description {
-      font-weight: 100;
       font-size: 12px;
+      line-height: 14px;
+      max-height: 42px; /* 3 lines */
+      font-weight: 100;
       opacity: 0.85;
       text-align: left;
       color: white;
       padding-left: 20px;
       padding-right: 20px;
       padding-bottom: 20px;
-      line-height: 1.3;
     }
 
     .gw-advance-waiting > div {
