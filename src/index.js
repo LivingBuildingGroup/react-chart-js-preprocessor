@@ -511,6 +511,7 @@ export default class GraphWrapper extends React.Component {
                   waitingOnDataFromProps: false, // this is after a timeout so the looading icon doesn't disappear too fast
                   advanceAllow: this.props.advanceAllow,
                   retreatAllow: this.props.retreatAllow,
+                  legendDescription: this.props.legendDescription,
                 });
               }, 800);
               if(this.state.groupByOnMount){
