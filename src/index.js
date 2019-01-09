@@ -50,7 +50,7 @@ export default class GraphWrapper extends React.Component {
       legendUnits:           this.props.legendUnits       || {},
       legendAbbrevs:         this.props.legendAbbrevs ? this.props.legendAbbrevs : this.props.legendLabels ? this.props.legendLabels : {} ,
       legendLabels:          this.props.legendLabels      || {} ,
-
+      legendDescription:     this.props.legendDescription || '',
       graphData:          {}, // pass as props to graph
       graphOptions:       {   // pass as props to graph
         scales: {
@@ -744,6 +744,7 @@ export default class GraphWrapper extends React.Component {
       cssBackground         ={s.cssBackground}
       groupDotColors        ={s.groupDotColors}
       titleText             ={s.titleText}
+      legendDescription     ={s.legendDescription}
       advanceAllow          ={s.advanceAllow}
       retreatAllow          ={s.retreatAllow}
       waitingOnDataFromProps={s.waitingOnDataFromProps}
