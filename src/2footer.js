@@ -159,10 +159,10 @@ export default function Footer (props){
     style={props.cssDivFooter}>
     <div className='gw-footer-top'>
       {buttonAdvanceLeft}
-      {spinner}
+      {spinnerLeft}
       {graphTitle}
       {graphSubTitle}
-      {spinner}
+      {spinnerRight}
       {buttonAdvanceRight}
     </div>
     <div className='gw-footer-bottom'>
