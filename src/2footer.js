@@ -155,6 +155,12 @@ export default function Footer (props){
     </div> :
     <div className='gw-advance-button gw-control'/> ;
 
+  const spinnerMargin = 80;
+  const spinnerSize = (Math.random()*20)+20;
+  const spinnerColorIndex = Math.floor(Math.random()*5);
+  const spinnerColors = ['red', 'yellow', 'pink', 'green', 'purple', 'blue'];
+  const spinnerColor = spinnerColors[spinnerColorIndex] || 'white' ;
+
   return <div className='gw-footer'
     style={props.cssDivFooter}>
     <div className='gw-footer-top'>
@@ -215,6 +221,7 @@ export default function Footer (props){
     }
     .gw-footer-top {
       width: 100%;
+      position: relative;
       justify-content: space-between;
       min-height: 36px;
     }
@@ -239,22 +246,25 @@ export default function Footer (props){
     .gw-advance-waiting {
       position: absolute;
       top: 50%;
-      margin-top: -30px;
+      margin-top: -${spinnerSize/2}px;
     }
     .gw-advance-waiting-left {
-      left: 60px;
+      left: ${spinnerMargin}px;
+      margin-left: -${spinnerSize/2}px;
     }
     .gw-advance-waiting-right {
-      right: 60px;
+      right: ${spinnerMargin}px;
+      margin-right: -${spinnerSize/2}px;
     }
     .gw-advance-waiting > div {
-      width: 60px;
-      height: 60px;
-      background-color: yellow;
+      width: ${spinnerSize}px;
+      height: ${spinnerSize}x;
+      background-color: ${spinnerColor};
       border-radius: 100%;
       -webkit-animation: blinking 1.0s infinite ease-in-out;
       animation: blinking 1.0s infinite ease-in-out;
     }
+
     @-webkit-keyframes blinking {
       0% { -webkit-transform: scale(0.0) }
       100% {
