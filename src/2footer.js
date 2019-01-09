@@ -108,14 +108,22 @@ export default function Footer (props){
 
   const graphSubTitle   = null; // <h3 className={`gw-title gw-subtitle ${graphTitleClass}`}>Displaying: ????</h3>
 
-  const spinner = !props.advanceAllow ?
+  const spinnerRight = !props.advanceAllow ?
     null :
     !props.waitingOnDataFromProps ?
     null : 
-    <div className='gw-advance-waiting'>
-      <div></div>
+    <div className='gw-advance-waiting gw-advance-waiting-right'>
+      <div/>
     </div> ;
-    
+
+  const spinnerLeft = !props.advanceAllow ?
+    null :
+    !props.waitingOnDataFromProps ?
+    null : 
+    <div className='gw-advance-waiting gw-advance-waiting-left'>
+      <div/>
+    </div> ;
+      
   const hideAdvanceButtonClass = 
     props.waitingOnDataFromProps ? 
     'transparent' : 
@@ -134,7 +142,7 @@ export default function Footer (props){
       </div>
       <IconLeft style={{height: 36}} />
     </div> :
-    null ;
+    <div className='gw-advance-button gw-control'/> ;
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
@@ -145,7 +153,7 @@ export default function Footer (props){
       </div>
       <IconRight style={{height: 36}} />
     </div> :
-    null ;
+    <div className='gw-advance-button gw-control'/> ;
 
   return <div className='gw-footer'
     style={props.cssDivFooter}>
@@ -182,8 +190,7 @@ export default function Footer (props){
       background-color: white ;
     }
     .gw-advance-button {
-      font-size: 72px;
-      min-width: 30px;
+      width: 36px;
       justify-content: center;
       align-items: center;
     }
@@ -229,16 +236,25 @@ export default function Footer (props){
       padding-bottom: 20px;
     }
 
+    .gw-advance-waiting {
+      position: absolute;
+      top: 50%;
+      margin-top: -30px;
+    }
+    .gw-advance-waiting-left {
+      left: 60px;
+    }
+    .gw-advance-waiting-right {
+      right: 60px;
+    }
     .gw-advance-waiting > div {
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
       background-color: yellow;
       border-radius: 100%;
-    
       -webkit-animation: blinking 1.0s infinite ease-in-out;
       animation: blinking 1.0s infinite ease-in-out;
     }
-    
     @-webkit-keyframes blinking {
       0% { -webkit-transform: scale(0.0) }
       100% {
