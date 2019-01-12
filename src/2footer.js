@@ -9,12 +9,13 @@ export default function Footer (props){
   
     const titleArray = [];
     for (let id in titleText) {
+      const dot = typeof groupDotColors[id] === 'string' ? <div
+        className='gw-title-color-dot' key={id}
+        style={{backgroundColor: `rgb(${groupDotColors[id]})`}}>
+      </div> : null ;
       titleArray.push(
         <div key={id} className='gw-title-inner-container'>
-          <div
-            className='gw-title-color-dot' key={id}
-            style={{backgroundColor: `rgb(${groupDotColors[id]})`}}>
-          </div>
+          {dot}
           <h3 className={`gw-title ${graphTitleClass} gw-title-major`}>
             {titleText[id].tMajor}
           </h3>
