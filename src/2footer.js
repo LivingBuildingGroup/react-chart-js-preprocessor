@@ -3,10 +3,6 @@ import { isObjectLiteral } from 'conjunction-junction';
 import { calcMinimumWindowDimensions } from './helpers/dimensions';
 
 export default function Footer (props){
-  
-  const win = typeof window !== 'undefined' ? window : {} ;
-  const { cssWidthOuter } = calcMinimumWindowDimensions(win);
-  const bp = 500; // breakpoint
 
   const formatTitle = (titleText, groupDotColors, cssBackground) => {
     // this is a method, vs helper function, ONLY because it uses JSX
@@ -139,7 +135,11 @@ export default function Footer (props){
   const IconLeft  = i.caret_left;
   const IconRight = i.caret_right;
 
+  const win = typeof window !== 'undefined' ? window : {} ;
+  const { cssWidthOuter } = calcMinimumWindowDimensions(win);
+  const bp = 500; // breakpoint
   const popoverRightClass = bp > cssWidthOuter ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
+  console.log('win',win, 'bp', bp, 'cssWidthOuter', cssWidthOuter, 'popoverRightClass', popoverRightClass)
 
   const buttonAdvanceLeft = 
     props.retreatAllow ?
