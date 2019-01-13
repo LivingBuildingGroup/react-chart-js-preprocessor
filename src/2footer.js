@@ -198,27 +198,32 @@ export default function Footer (props){
     }
     .gw-advance-button {
       position: absolute;
-      bottom: 100px;
       width: 45px;
       justify-content: center;
       align-items: center;
     }
-    @media(min-width: 500px){
-      .gw-advance-button {
-        bottom: 0;
-      }
+    .gw-advance-button:hover {
+      opacity: 0.7;
     }
     .gw-advance-button-left {
       left: 0;
+      bottom: 110px;
     }
     .gw-advance-button-right {
-      right: 0;
+      left: 0;
+      bottom: 50px;
     }
-    // @media(min-width: 520px){
-    //   .gw-advance-button {
-    //     font-size: 36px;
-    //   }
-    // }
+    @media(min-width: 500px){
+      .gw-advance-button-left {
+        left: 0;
+        bottom: 0;
+      }
+      .gw-advance-button-right {
+        left: auto;
+        right: 0;
+        bottom: 0;
+      }
+    }
     .gw-control {
       cursor: pointer;
     }
