@@ -138,7 +138,7 @@ export default function Footer (props){
   const win = typeof window !== 'undefined' ? window : {} ;
   const { cssWidthOuter } = calcMinimumWindowDimensions(win);
   const bp = 500; // breakpoint
-  const popoverRightClass = bp > cssWidthOuter ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
+  const popoverRightClass = cssWidthOuter > bp ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
   console.log('win',win, 'bp', bp, 'cssWidthOuter', cssWidthOuter, 'popoverRightClass', popoverRightClass)
 
   const buttonAdvanceLeft = 
