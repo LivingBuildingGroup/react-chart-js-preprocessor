@@ -1,7 +1,12 @@
 import React from 'react';
 import { isObjectLiteral } from 'conjunction-junction';
+import { calcMinimumWindowDimensions } from './helpers/dimensions';
 
 export default function Footer (props){
+  
+  const win = typeof window !== 'undefined' ? window : {} ;
+  const { cssWidthOuter } = calcMinimumWindowDimensions(win);
+  const bp = 500; // breakpoint
 
   const formatTitle = (titleText, groupDotColors, cssBackground) => {
     // this is a method, vs helper function, ONLY because it uses JSX
@@ -134,6 +139,8 @@ export default function Footer (props){
   const IconLeft  = i.caret_left;
   const IconRight = i.caret_right;
 
+  const popoverRightClass = bp > cssWidthOuter ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
+
   const buttonAdvanceLeft = 
     props.retreatAllow ?
     <div className={`gw-advance-button gw-advance-button-left gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} 
@@ -147,7 +154,7 @@ export default function Footer (props){
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-advance-button-right gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-right ${hideAdvanceButtonClass}`} 
+    <div className={`gw-advance-button gw-advance-button-right gw-control gw-control-over-${props.cssBackground} tooltip ${popoverRightClass} ${hideAdvanceButtonClass}`} 
       onClick={()=>props.graphAdvance(1)}>
       <div className='popover'>
         <p>advance the graph to the next event</p>
@@ -213,7 +220,7 @@ export default function Footer (props){
       left: 0;
       bottom: 50px;
     }
-    @media(min-width: 500px){
+    @media(min-width: ${bp}px){
       .gw-advance-button-left {
         left: 0;
         bottom: 0;
