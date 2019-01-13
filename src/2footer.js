@@ -136,7 +136,7 @@ export default function Footer (props){
 
   const buttonAdvanceLeft = 
     props.retreatAllow ?
-    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} 
+    <div className={`gw-advance-button gw-advance-button-left gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} 
       onClick={()=>props.graphAdvance(-1)}>
       <div className='popover'>
         <p>retreat the graph to the prior event</p>
@@ -147,7 +147,7 @@ export default function Footer (props){
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-right ${hideAdvanceButtonClass}`} 
+    <div className={`gw-advance-button gw-advance-button-right gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-right ${hideAdvanceButtonClass}`} 
       onClick={()=>props.graphAdvance(1)}>
       <div className='popover'>
         <p>advance the graph to the next event</p>
@@ -197,15 +197,28 @@ export default function Footer (props){
       background-color: white ;
     }
     .gw-advance-button {
-      width: 36px;
+      position: absolute;
+      bottom: 100px;
+      width: 45px;
       justify-content: center;
       align-items: center;
     }
-    @media(min-width: 520px){
+    @media(min-width: 500px){
       .gw-advance-button {
-        font-size: 36px;
+        bottom: 0;
       }
     }
+    .gw-advance-button-left {
+      left: 0;
+    }
+    .gw-advance-button-right {
+      right: 0;
+    }
+    // @media(min-width: 520px){
+    //   .gw-advance-button {
+    //     font-size: 36px;
+    //   }
+    // }
     .gw-control {
       cursor: pointer;
     }
