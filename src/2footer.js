@@ -139,7 +139,6 @@ export default function Footer (props){
   const { cssWidthOuter } = calcMinimumWindowDimensions(win);
   const bp = 500; // breakpoint
   const popoverRightClass = cssWidthOuter > bp ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
-  console.log('win',win, 'bp', bp, 'cssWidthOuter', cssWidthOuter, 'popoverRightClass', popoverRightClass)
 
   const buttonAdvanceLeft = 
     props.retreatAllow ?
@@ -267,6 +266,7 @@ export default function Footer (props){
       padding-left: 20px;
       padding-right: 20px;
       padding-bottom: 20px;
+      width: 100%;
     }
 
     .gw-advance-waiting {
