@@ -376,7 +376,7 @@ export default class GraphWrapper extends React.Component {
     this.setState({yAxisInFocus});
     this.handleGraphChange({yAxisUnitOptions: 
       yAxisInFocus === 'auto' ? {} : 
-      this.state.yAxisUnitOptions });
+      this.props.yAxisUnitOptions });
   }
 
   // @@@@@@@@@@@@@@@@@ MINOR CONTROLS @@@@@@@@@@@@@@@@
