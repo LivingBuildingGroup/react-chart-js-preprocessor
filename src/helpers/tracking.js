@@ -6,6 +6,7 @@ export const createGoogleTagManagerClass = (state, action) => {
   const preSetArr = preSetName.split(' ');
   const preSetIdClass = preSetArr.join('-');
   const listOfEventsObj = isObjectLiteral(state.titleText) ? state.titleText : {} ;
+  console.log('state.titleText', state.titleText);
   const listOfEventsArr = [];
   for(let id in listOfEventsObj){
     listOfEventsArr.push[id];

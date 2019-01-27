@@ -140,8 +140,8 @@ export default function Footer (props){
   const bp = 500; // breakpoint
   const popoverRightClass = cssWidthOuter > bp ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
 
-  const googleTagManagerClassLeft = 'gw-event-button left true true';
-  const googleTagManagerClassRight = 'gw-event-button right true true';
+  const googleTagManagerClassLeft = 'gw-event-button left true1 true2';
+  const googleTagManagerClassRight = 'gw-event-button right true1 true2';
 
   const buttonAdvanceLeft = 
     props.retreatAllow ?
