@@ -8,7 +8,7 @@ export const createGoogleTagManagerClass = (state, action) => {
   const listOfEventsObj = isObjectLiteral(state.titleText) ? state.titleText : {} ;
   const listOfEventsArr = [];
   for(let id in listOfEventsObj){
-    listOfEventstate.push[id];
+    listOfEventsArr.push[id];
   }
   const listOfEventsId = listOfEventsArr.length > 0 ? listOfEventsArr.join('-') : 'no-events';
   const googleTagManagerClass = `gw-graph-catcher ${_action} ${preSetIdClass} ${listOfEventsId}`;
