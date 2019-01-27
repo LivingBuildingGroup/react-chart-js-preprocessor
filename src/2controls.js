@@ -29,7 +29,7 @@ export default function Controls (props){
       const vPosition = c === 'selector' ? 'bottom' : 'top'
       const ControlIcon = typeof controlIcons[i] === 'function' ? controlIcons[i] : null ;
       const controlIcon = ControlIcon ? <ControlIcon style={{height: 16}}/> : null ;
-      const googleTagManagerClass = `graph-control ${controlNameAsId} true true`;
+      const googleTagManagerClass = `graph-control ${controlNameAsId} true1 true2`;
       return <div key={i} 
         className={`gw-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
         onClick={controlFuncs[i]}>
