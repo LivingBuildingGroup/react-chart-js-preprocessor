@@ -140,9 +140,12 @@ export default function Footer (props){
   const bp = 500; // breakpoint
   const popoverRightClass = cssWidthOuter > bp ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
 
+  const googleTagManagerClassLeft = 'gw-event-button left true true';
+  const googleTagManagerClassRight = 'gw-event-button right true true';
+
   const buttonAdvanceLeft = 
     props.retreatAllow ?
-    <div className={`gw-advance-button gw-advance-button-left gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass}`} 
+    <div className={`gw-advance-button gw-advance-button-left gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass} ${googleTagManagerClassLeft}`} 
       onClick={()=>props.graphAdvance(-1)}>
       <div className='popover'>
         <p>retreat the graph to the prior event</p>
@@ -153,7 +156,7 @@ export default function Footer (props){
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-advance-button-right gw-control gw-control-over-${props.cssBackground} tooltip ${popoverRightClass} ${hideAdvanceButtonClass}`} 
+    <div className={`gw-advance-button gw-advance-button-right gw-control gw-control-over-${props.cssBackground} tooltip ${popoverRightClass} ${hideAdvanceButtonClass} ${googleTagManagerClassRight}`} 
       onClick={()=>props.graphAdvance(1)}>
       <div className='popover'>
         <p>advance the graph to the next event</p>

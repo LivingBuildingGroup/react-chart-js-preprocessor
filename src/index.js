@@ -22,6 +22,7 @@ import { createLayersSelected,
 import Selectors            from './3selectors';
 import Controls             from './2controls';
 import Footer               from './2footer';
+import { createGoogleTagManagerClass } from './helpers/tracking';
 
 
 export default class GraphWrapper extends React.Component {
@@ -751,11 +752,13 @@ export default class GraphWrapper extends React.Component {
       waitingOnDataFromProps={s.waitingOnDataFromProps}
       icons                 ={s.icons}
       cssDivFooter          ={s.cssDivFooter}
-      
+      googleTagManagerClass
       graphAdvance={this.graphAdvance}
     />
 
-    return <div className='gw-outer'
+    const googleTagManagerClass = createGoogleTagManagerClass(s);
+    
+    return <div className={`gw-outer ${googleTagManagerClass}`}
       style={s.cssDivOuter}>
       <div className='gw-inner'>
         <div className='gw-graph'

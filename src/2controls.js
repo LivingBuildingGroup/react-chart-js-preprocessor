@@ -9,6 +9,8 @@ export default function Controls (props){
 
   const controls = props.waitingOnPreSetIdFromProps ? null : // to force a re-render
     controlNames.map((c,i)=>{ 
+      const controlNameAsArr = c.split(' ');
+      const controlNameAsId = controlNameAsArr.join('-');
       const activeClass = 
         props.preSets[props.preSetIdActive] &&
         props.preSets[props.preSetIdActive].name === c ?
@@ -27,8 +29,9 @@ export default function Controls (props){
       const vPosition = c === 'selector' ? 'bottom' : 'top'
       const ControlIcon = typeof controlIcons[i] === 'function' ? controlIcons[i] : null ;
       const controlIcon = ControlIcon ? <ControlIcon style={{height: 16}}/> : null ;
+      const googleTagManagerClass = `graph-control ${controlNameAsId} true true`;
       return <div key={i} 
-        className={`gw-control tooltip tooltip-${vPosition}-right ${activeClass}`}
+        className={`gw-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
         onClick={controlFuncs[i]}>
         {popover}
         {controlIcon}
