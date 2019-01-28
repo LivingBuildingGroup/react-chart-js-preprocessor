@@ -289,8 +289,8 @@ export const formatGroupsStyles = input => {
     layersAllPrefixed,
     styles,
     thisPreSet,  } = input;
-  console.log('input to formatGroupsStyles', styles);
-  console.log('isGrouped', isGrouped, 'thisPreset', thisPreSet);
+  // console.log('input to formatGroupsStyles', styles);
+  // console.log('isGrouped', isGrouped, 'thisPreset', thisPreSet);
   const isGrouped = groupTrue && Array.isArray(groups);
 
   const defaultObject = {
@@ -351,7 +351,7 @@ export const unpackPreSet = (state, thisPreSet, id) => {
     layersAllPrefixed,
     styles,
   } = state;
-  console.log('state in unpackPreSet', state);
+  // console.log('state in unpackPreSet', state);
   const {
     selectorsRemaining,
     selectors      } = formatSelectors(

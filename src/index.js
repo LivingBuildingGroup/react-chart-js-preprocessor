@@ -757,7 +757,6 @@ export default class GraphWrapper extends React.Component {
     />
 
     const googleTagManagerClass = createGoogleTagManagerClass(s);
-    console.log('state.titleText in index', s.titleText);
 
     return <div className={`gw-outer ${googleTagManagerClass}`}
       style={s.cssDivOuter}>
