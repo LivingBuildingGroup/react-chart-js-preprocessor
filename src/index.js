@@ -46,11 +46,12 @@ export default class GraphWrapper extends React.Component {
       layerGroupByJSXOptions:[],
       layersThatHaveUnits:   [],
       layersSelected:        Array.isArray(this.props.layersSelected) ? this.props.layersSelected : [], // use as many keys as desired
-      layersRawPrefixCount:  this.props.layersRawPrefixCount,
+      // layersRawPrefixCount:  this.props.layersRawPrefixCount,
 
       legendUnits:           this.props.legendUnits       || {},
       legendAbbrevs:         this.props.legendAbbrevs ? this.props.legendAbbrevs : this.props.legendLabels ? this.props.legendLabels : {} ,
       legendLabels:          this.props.legendLabels      || {} ,
+      legendDefinitions:     this.props.legendDefinitions || {} ,
       legendDescription:     this.props.legendDescription || '',
       graphData:          {}, // pass as props to graph
       graphOptions:       {   // pass as props to graph
@@ -103,7 +104,6 @@ export default class GraphWrapper extends React.Component {
       preSetSaveAllow:        true,
       // configure settings in control bar
       selectorsAllow:         typeof this.props.selectorsAllow  === 'boolean' ? this.props.selectorsAllow  : true,
-      closeAllow:             typeof this.props.closeAllow      === 'boolean' ? this.props.closeAllow      : false,
       printAllow:             typeof this.props.printAllow      === 'boolean' ? this.props.printAllow      : true,
       backgroundAllow:        typeof this.props.backgroundAllow === 'boolean' ? this.props.backgroundAllow : true,
       advanceAllow:           typeof this.props.advanceAllow    === 'boolean' ? this.props.advanceAllow    : false,
@@ -149,8 +149,7 @@ export default class GraphWrapper extends React.Component {
       yAxisInFocus:       'default',
 
       // callback functions to access parent
-      handleBackgroundColor:       typeof this.props.handleBackgroundColor === 'function' ? this.props.handleBackgroundColor : ()=>{} ,
-      handleCloseGraph:            typeof this.props.handleCloseGraph === 'function' ? this.props.handleCloseGraph : ()=>{} ,
+      handleParentBackgroundColor: typeof this.props.handleBackgroundColor === 'function' ? this.props.handleBackgroundColor : ()=>{} ,
       handlePreSetSave:            typeof this.props.handlePreSetSave === 'function' ? this.props.handlePreSetSave : ()=>{} ,
       handleFetchAdvanceRequest:   this.props.handleFetchAdvanceRequest,
     };
@@ -361,9 +360,6 @@ export default class GraphWrapper extends React.Component {
   toggleSelectorsInFocus(focus){
     const selectorsInFocus = 
       focus ? focus : 'none' ;
-    if(this.state.selectorsInFocus === 'none'){
-      // look into React.findDOMNode... to focus
-    }
     this.setState({
       selectorsInFocus,
     });
@@ -391,7 +387,7 @@ export default class GraphWrapper extends React.Component {
       this.state.cssBackground === 'white' ?
         'gray' : 
         'white' ;
-    this.state.handleBackgroundColor(cssBackground);
+    this.state.handleParentBackgroundColor(cssBackground);
     this.handleGraphChange({cssBackground});
   }
 
@@ -753,14 +749,13 @@ export default class GraphWrapper extends React.Component {
       icons                 ={s.icons}
       cssDivFooter          ={s.cssDivFooter}
       googleTagManagerClass
-      graphAdvance={this.graphAdvance}
+      graphAdvance          ={this.graphAdvance}
     />
 
     const googleTagManagerClass = createGoogleTagManagerClass(s);
 
-    return <div className={`gw-outer ${googleTagManagerClass}`}
-      style={s.cssDivOuter}>
-      <div className='gw-inner'>
+    return <div className={`gw-outer ${googleTagManagerClass}`}>
+      <div className='gw-inner' style={s.cssDivInner}>
         <div className='gw-graph'
           style={s.cssDivGraph}>
           {graph}
@@ -787,7 +782,6 @@ export default class GraphWrapper extends React.Component {
         .gw-controls {
           top: 0px;
           height: 100%;
-          padding-top: 45px;
           width: 30px;
           padding-right: 0;
           margin-right: 20px;

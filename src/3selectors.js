@@ -131,7 +131,7 @@ export default class Selectors extends React.Component{
       preSetGlobalPalette: this.props.preSetGlobalPalette,
       cssStyleColorsNamed: this.props.cssStyleColorsNamed,
     });
-    console.log('property',property,'value', value, 'styles', styles);
+    console.log('handlePreSetEdit property',property,'value', value, 'styles', styles);
     this.props.receiveNewStyles(styles);
   }
 
@@ -231,19 +231,14 @@ export default class Selectors extends React.Component{
           justify-content: flex-end;
           width: 100%;
           height: 45px;
-          position: absolute;
           padding-top: 5px;
         }
         .gw-selectors {
-          position: absolute;
           top: 100%;
           flex-direction: column;
           background-color: white;
           width: 100%;
-          max-width: 100vw;
-          margin-left: auto;
-          margin-right: auto;
-          margin-bottom: 30px;
+          width: 100vw;
           z-index: 9999;
         }
         @media(min-width: 800px){

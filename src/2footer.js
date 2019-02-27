@@ -2,6 +2,10 @@ import React from 'react';
 import { isObjectLiteral } from 'conjunction-junction';
 import { calcMinimumWindowDimensions } from './helpers/dimensions';
 
+const Dummy = function(){
+  return null;
+}
+
 export default function Footer (props){
 
   const formatTitle = (titleText, groupDotColors, cssBackground) => {
@@ -132,8 +136,8 @@ export default function Footer (props){
     '' ;
 
   const i = props.icons || {} ;
-  const IconLeft  = i.caret_left;
-  const IconRight = i.caret_right;
+  const IconLeft  = typeof i.CaretLeft  === 'function' ? i.CaretLeft  : typeof i.caret_left  === 'function' ? i.caret_left : Dummy;
+  const IconRight = typeof i.CaretRight === 'function' ? i.CaretRight : typeof i.caret_right === 'function' ? i.caret_right: Dummy;
 
   const win = typeof window !== 'undefined' ? window : {} ;
   const { cssWidthOuter } = calcMinimumWindowDimensions(win);
@@ -183,7 +187,7 @@ export default function Footer (props){
     </div>
     <div className='gw-footer-bottom'>
       <p className='gw-footer-description'>
-        {props.legendDescription}
+        {typeof props.legendDescription === 'string' ? props.legendDescription : ''}
       </p>
     </div>
 
@@ -255,20 +259,15 @@ export default function Footer (props){
     }
     .gw-footer-bottom {
       width: 100%;
-      height: 42px;
-      overflow: scroll;
     }
     .gw-footer-description {
       font-size: 12px;
       line-height: 14px;
-      max-height: 42px; /* 3 lines */
       font-weight: 100;
       opacity: 0.85;
       text-align: left;
       color: white;
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-bottom: 20px;
+      padding: 20px;
       width: 100%;
     }
 

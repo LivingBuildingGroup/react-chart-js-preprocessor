@@ -375,21 +375,22 @@ export const createGraphData = input => {
   } = input;
 
 
-  const datasets = layersSelected.map((k,i)=>{
-    const units = yAxisArray[i] ;
-    const unitsIndex = yAxisArray.findIndex(u=>u === units);
-    const yAxisID = unitsIndex < 0 ?
-      yAxisIdArray[0] :
-      yAxisIdArray[unitsIndex];
-    return Object.assign({},
-      stylesArray[i],
-      {
-        label: dataLabelArray[i],
-        yAxisID,
-        data: dataType0Processed[i],
-      }
-    );
-  });
+  const datasets = Array.isArray(layersSelected) ? 
+    layersSelected.map((k,i)=>{
+      const units = yAxisArray[i] ;
+      const unitsIndex = yAxisArray.findIndex(u=>u === units);
+      const yAxisID = unitsIndex < 0 ?
+        yAxisIdArray[0] :
+        yAxisIdArray[unitsIndex];
+      return Object.assign({},
+        stylesArray[i],
+        {
+          label: dataLabelArray[i],
+          yAxisID,
+          data: dataType0Processed[i],
+        }
+      );
+    }) : [] ;
 
   const startAt = isPrimitiveNumber(xLabelStartAt) ?
     xLabelStartAt : 0 ;

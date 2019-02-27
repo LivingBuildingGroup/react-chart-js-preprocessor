@@ -171,7 +171,7 @@ export const createLayerSelectors = state => {
     data:                state.dataType1Processed,
     groups:              state.groups,
     groupsSub:           state.groupsSub,
-    layersRawPrefixCount:state.layersRawPrefixCount,
+    // layersRawPrefixCount:state.layersRawPrefixCount,
     units:               state.legendUnits,
     abbrevs:             state.legendAbbrevs,
     labels:              state.legendLabels,

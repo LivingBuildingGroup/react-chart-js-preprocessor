@@ -147,9 +147,13 @@ export const calcDimensions = state => {
 
   const extraHeightForFooter = 150;
 
-  const cssDivOuter = {
+  const cssDivOuter = { // NOT USING, JUST LET IT FLOW
     width: cssWidthOuter,
     height: cssHeightOuter + extraHeightForFooter,
+  };
+  const cssDivInner = {
+    height:cssHeightOuter - cssHeightFooter,
+    width: cssWidthOuter,
   };
   const cssDivGraph = {
     width: cssWidthOuter - cssWidthControls,
@@ -161,7 +165,7 @@ export const calcDimensions = state => {
   };
   const cssDivFooter = {
     width: cssWidthOuter,
-    height: cssHeightFooter + extraHeightForFooter,
+    // height: cssHeightFooter + extraHeightForFooter,
   };
   const cssDivSelectors = {
     width: cssWidthOuter,
@@ -172,6 +176,7 @@ export const calcDimensions = state => {
 
   return {
     cssDivOuter,
+    cssDivInner,
     cssDivGraph,
     cssDivControls,
     cssDivFooter,

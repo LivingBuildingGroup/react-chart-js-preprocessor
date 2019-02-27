@@ -1,7 +1,12 @@
 const { isObjectLiteral } = require('conjunction-junction');
 
+const Dummy = () => {
+  return null;
+};
+const iconStyle = {height: 20, width: 20};
+
 export const formatControlsWithoutPreSets = (state, that) => {
-  const icons = state.icons;
+  const icons = state.icons || {};
   
   const controlNamesTop = [];
   const controlIconsTop = [];
@@ -11,33 +16,27 @@ export const formatControlsWithoutPreSets = (state, that) => {
   const controlIconsBot = [];
   const controlFuncsBot = [];
   const controlLabelsBot= [];
-  if(state.closeAllow && typeof state.handleCloseGraph === 'function'){
-    controlNamesTop.push('close');
-    controlIconsTop.push(icons.times);
-    controlFuncsTop.push(state.handleCloseGraph);
-    controlLabelsTop.push('Close the graph');
-  }
   if(state.printAllow){
     controlNamesTop.push('print');
-    controlIconsTop.push(icons.print);
+    controlIconsTop.push(<icons.Print style={iconStyle}/>);
     controlFuncsTop.push(that.printGraph);
     controlLabelsTop.push('Print the graph on letter size landscape (allow a few seconds for the graph to render before print preview starts).');
   }
   if(state.backgroundAllow){
     controlNamesTop.push('background');
-    controlIconsTop.push(icons.palette_solid);
+    controlIconsTop.push(<icons.PaletteSolid style={iconStyle}/>);
     controlFuncsTop.push(that.handleBackgroundChange);
     controlLabelsTop.push('Toggle white graph background');
   }
   if(state.yAxisAllow){
     controlNamesTop.push('y-Axis');
-    controlIconsTop.push(icons.arrows_alt_v);
+    controlIconsTop.push(<icons.ArrowsAltV style={iconStyle}/>);
     controlFuncsTop.push(that.handleYAxisSelector);
     controlLabelsTop.push('Toggle Y-Axis settings');
   }
   if(state.selectorsAllow){
     controlNamesBot.push('selector');
-    controlIconsBot.push(icons.edit);
+    controlIconsBot.push(<icons.Edit style={iconStyle}/>);
     controlFuncsBot.push(that.toggleSelectorsPopover);
     controlLabelsBot.push('Open graph customization options');
   }
@@ -53,7 +52,7 @@ export const formatControlsWithoutPreSets = (state, that) => {
   };
 };
 
-export const formatPreSetsForControls = (preSets, icons, that) => {
+export const formatPreSetsForControls = (preSets, icons={}, that) => {
   if(!isObjectLiteral(preSets)) {
     return { 
       preSetIds  : [],
@@ -68,10 +67,12 @@ export const formatPreSetsForControls = (preSets, icons, that) => {
   }
   preSetIds.sort();
   const preSetNames = preSetIds.map(id=>{
-    return preSets[id].name;
+    return preSets[id].name || 'pre-set';
   });
   const preSetIcons = preSetIds.map(id=>{
-    return icons[preSets[id].icon];
+    const Icon = typeof icons[preSets[id].icon] === 'function' ?
+      icons[preSets[id].icon] : Dummy;
+    return <Icon style={iconStyle}/>
   });
   const preSetFuncs = preSetIds.map(id=>{
     return ()=>that.handlePreSetSelect(id);

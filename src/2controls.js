@@ -9,7 +9,7 @@ export default function Controls (props){
 
   const controls = props.waitingOnPreSetIdFromProps ? null : // to force a re-render
     controlNames.map((c,i)=>{ 
-      const controlNameAsArr = c.split(' ');
+      const controlNameAsArr = typeof c === 'string' ? c.split(' '): [] ;
       const controlNameAsId = controlNameAsArr.join('-');
       const activeClass = 
         props.preSets[props.preSetIdActive] &&
@@ -27,14 +27,12 @@ export default function Controls (props){
           <p>{controlLabels[i]}</p>
         </div>
       const vPosition = c === 'selector' ? 'bottom' : 'top'
-      const ControlIcon = typeof controlIcons[i] === 'function' ? controlIcons[i] : null ;
-      const controlIcon = ControlIcon ? <ControlIcon style={{height: 16}}/> : null ;
       const googleTagManagerClass = `graph-control ${controlNameAsId} true1 true2`;
       return <div key={i} 
         className={`gw-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
         onClick={controlFuncs[i]}>
         {popover}
-        {controlIcon}
+        {controlIcons[i] || null}
       </div>
     });
   if(Array.isArray(controls)){
@@ -49,7 +47,6 @@ export default function Controls (props){
     .gw-controls-outermost {
       top: 0px;
       height: 100%;
-      padding-top: 45px;
       width: 30px;
       padding-right: 0;
       margin-right: 20px;
@@ -62,6 +59,7 @@ export default function Controls (props){
     }
     .gw-control {
       cursor: pointer;
+      min-height: 25px;
     }
     .gw-control.gw-control-over-white{
       color: #333;

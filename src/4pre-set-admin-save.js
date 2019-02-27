@@ -120,8 +120,7 @@ export default class AdminSave extends React.Component {
           type='radio'
           className='gw-pre-set-input'
           onChange={()=>this.toggleSaveType()} 
-          checked={this.state.isNew}
-          value={this.state.isNew} />
+          checked={this.state.isNew} />
         save as a new pre-set
       </label> 
       <label className='gw-pre-set-input-label'>
@@ -130,8 +129,7 @@ export default class AdminSave extends React.Component {
           type='radio'
           className='gw-pre-set-input'
           onChange={()=>this.toggleSaveType()} 
-          checked={!this.state.isNew}
-          value={!this.state.isNew} />
+          checked={!this.state.isNew} />
         update existing pre-set     
       </label> 
     </div>
@@ -144,8 +142,7 @@ export default class AdminSave extends React.Component {
           type='radio'
           className='gw-pre-set-input'
           onChange={()=>this.toggleIsPublic()} 
-          checked={this.state.isPublic}
-          value={this.state.isPublic} />
+          checked={this.state.isPublic}/>
         make publicly visible
       </label> 
       <label className='gw-pre-set-input-label'>
@@ -154,8 +151,7 @@ export default class AdminSave extends React.Component {
           type='radio'
           className='gw-pre-set-input'
           onChange={()=>this.toggleIsPublic()} 
-          checked={!this.state.isPublic}
-          value={!this.state.isPublic} />
+          checked={!this.state.isPublic} />
         keep private     
       </label> 
     </div>
@@ -168,8 +164,7 @@ export default class AdminSave extends React.Component {
           type='radio'
           className='gw-pre-set-input'
           onChange={()=>this.toggleIsDef()} 
-          checked={this.state.def}
-          value={this.state.def} />
+          checked={this.state.def} />
         make default
       </label> 
       <label className='gw-pre-set-input-label'>
@@ -178,8 +173,7 @@ export default class AdminSave extends React.Component {
           type='radio'
           className='gw-pre-set-input'
           onChange={()=>this.toggleIsDef()} 
-          checked={!this.state.def}
-          value={!this.state.def} />
+          checked={!this.state.def} />
         not default     
       </label> 
     </div>
