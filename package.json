@@ -3,6 +3,7 @@
   "version": "0.1.38",
   "description": "Preprocessor to accept data and simple configuration, then create powerful controllers that generate and manage inputs to react-chart-js",
   "main": "build/index.js",
+  "license": "MIT",
   "peerDependencies": {
     "react": "^16.0.0"
   },
