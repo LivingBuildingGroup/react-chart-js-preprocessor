@@ -7,6 +7,10 @@ const iconStyle = {height: 20, width: 20};
 
 export const formatControlsWithoutPreSets = (state, that) => {
   const icons = state.icons || {};
+  const Print        = typeof icons.Print        === 'function' ? icons.Print        : Dummy ;
+  const PaletteSolid = typeof icons.PaletteSolid === 'function' ? icons.PaletteSolid : Dummy ;
+  const ArrowsAltV   = typeof icons.ArrowsAltV   === 'function' ? icons.ArrowsAltV   : Dummy ;
+  const Edit         = typeof icons.Edit         === 'function' ? icons.Edit         : Dummy ;
   
   const controlNamesTop = [];
   const controlIconsTop = [];
@@ -18,25 +22,25 @@ export const formatControlsWithoutPreSets = (state, that) => {
   const controlLabelsBot= [];
   if(state.printAllow){
     controlNamesTop.push('print');
-    controlIconsTop.push(<icons.Print style={iconStyle}/>);
+    controlIconsTop.push(<Print style={iconStyle}/>);
     controlFuncsTop.push(that.printGraph);
     controlLabelsTop.push('Print the graph on letter size landscape (allow a few seconds for the graph to render before print preview starts).');
   }
   if(state.backgroundAllow){
     controlNamesTop.push('background');
-    controlIconsTop.push(<icons.PaletteSolid style={iconStyle}/>);
+    controlIconsTop.push(<PaletteSolid style={iconStyle}/>);
     controlFuncsTop.push(that.handleBackgroundChange);
     controlLabelsTop.push('Toggle white graph background');
   }
   if(state.yAxisAllow){
     controlNamesTop.push('y-Axis');
-    controlIconsTop.push(<icons.ArrowsAltV style={iconStyle}/>);
+    controlIconsTop.push(<ArrowsAltV style={iconStyle}/>);
     controlFuncsTop.push(that.handleYAxisSelector);
     controlLabelsTop.push('Toggle Y-Axis settings');
   }
   if(state.selectorsAllow){
     controlNamesBot.push('selector');
-    controlIconsBot.push(<icons.Edit style={iconStyle}/>);
+    controlIconsBot.push(<Edit style={iconStyle}/>);
     controlFuncsBot.push(that.toggleSelectorsPopover);
     controlLabelsBot.push('Open graph customization options');
   }

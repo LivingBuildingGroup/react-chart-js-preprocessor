@@ -144,7 +144,7 @@ export const calcDimensions = state => {
     cssHeightFooter,
     cssHeightSelectors,
   } = state;
-
+  console.log('cssWidthOuter',cssWidthOuter,'cssHeightOuter',cssHeightOuter)
   const extraHeightForFooter = 150;
 
   const cssDivOuter = { // NOT USING, JUST LET IT FLOW
@@ -169,7 +169,7 @@ export const calcDimensions = state => {
   };
   const cssDivSelectors = {
     width: cssWidthOuter,
-    height: cssHeightSelectors,
+    height: cssHeightSelectors || 'auto',
   };
   const cssCanvasWidth  = cssDivGraph.width;
   const cssCanvasHeight = cssDivGraph.height;

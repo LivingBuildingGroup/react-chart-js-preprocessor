@@ -23,7 +23,7 @@ import Selectors            from './3selectors';
 import Controls             from './2controls';
 import Footer               from './2footer';
 import { createGoogleTagManagerClass } from './helpers/tracking';
-
+import { consoleDeveloperWarnings } from './helpers/developer-warnings';
 
 export default class GraphWrapper extends React.Component {
   constructor(props){
@@ -46,11 +46,10 @@ export default class GraphWrapper extends React.Component {
       layerGroupByJSXOptions:[],
       layersThatHaveUnits:   [],
       layersSelected:        Array.isArray(this.props.layersSelected) ? this.props.layersSelected : [], // use as many keys as desired
-      // layersRawPrefixCount:  this.props.layersRawPrefixCount,
 
       legendUnits:           this.props.legendUnits       || {},
-      legendAbbrevs:         this.props.legendAbbrevs ? this.props.legendAbbrevs : this.props.legendLabels ? this.props.legendLabels : {} ,
       legendLabels:          this.props.legendLabels      || {} ,
+      legendAbbrevs:         this.props.legendUnits ? this.props.legendAbbrevs : this.props.legendLabels ? this.props.legendLabels : {} ,
       legendDefinitions:     this.props.legendDefinitions || {} ,
       legendDescription:     this.props.legendDescription || '',
       graphData:          {}, // pass as props to graph
@@ -78,7 +77,7 @@ export default class GraphWrapper extends React.Component {
       styles:                      this.props.styles         || {},
       
       cssStyleColorsNamedArray:    [],
-      cssStyleColorsNamed:         this.props.cssStyleColorsNamed              || createNamed('bright'),
+      cssStyleColorsNamed:         this.props.cssStyleColorsNamed           || createNamed('bright'),
       cssRgbArray:                 this.props.cssRgbArray                   || selectPalette(30), // array of styles to loop through//  VVVVVVVVVVV edit location per project VVVVVVVVVVV
     
       cssBackground:               this.props.cssBackground                 || 'gray' ,
@@ -134,7 +133,8 @@ export default class GraphWrapper extends React.Component {
       preSetLayers:           [],
       // preSetStyleOptionsJSX:  [[]],
 
-      keyToCompareOnNewData: this.props.keyToCompareOnNewData || 'xLabel',
+      keyToCompareOnAdvance: this.props.keyToCompareOnAdvance ? this.props.keyToCompareOnAdvance :
+      this.props.keyToCompareOnNewData ? this.props.keyToCompareOnNewData : 'xLabel',
 
       xStart:             0,
       xEnd:               this.props.xEnd              || 1000, 
@@ -187,6 +187,11 @@ export default class GraphWrapper extends React.Component {
     if(typeof this.props.onMount === 'function'){
       this.props.onMount();
     }
+    if(this.props.developerWarnings){
+      // setTimeout(()=>{
+        consoleDeveloperWarnings(this.props);
+      // },1000);
+    }
     return new Promise((resolve, reject)=>{
       const dimensions = calcDimensions(this.state);
       resolve (
@@ -203,8 +208,9 @@ export default class GraphWrapper extends React.Component {
     .then(()=>{
       const selectorsInFocus =
         !this.state.selectorsAllow ? 'none' :
-        !this.props.selectorsInFocus ? 'layers' :
-        this.props.selectorsInFocus ;
+        this.props.selectorsInFocus ? 
+        this.props.selectorsInFocus :
+        'layers' ;
       const preSetIdActive = selectDefaultPreSet(this.state.preSets, this.state.graphName);
       this.setState({
         selectorsInFocus,
@@ -371,9 +377,13 @@ export default class GraphWrapper extends React.Component {
       this.state.yAxisInFocus === 'auto' ? 'default'    :
       'default';
     this.setState({yAxisInFocus});
-    this.handleGraphChange({yAxisUnitOptions: 
-      yAxisInFocus === 'auto' ? {} : 
-      this.props.yAxisUnitOptions });
+    this.handleGraphChange(
+      {
+        yAxisUnitOptions: 
+          yAxisInFocus === 'auto' ? {} : 
+          this.props.yAxisUnitOptions 
+      }
+    );
   }
 
   // @@@@@@@@@@@@@@@@@ MINOR CONTROLS @@@@@@@@@@@@@@@@
@@ -492,7 +502,7 @@ export default class GraphWrapper extends React.Component {
       // compare ex. dataType1Raw[0][key] against new data [0][key] to see if new data actually arrived
       if(Array.isArray(this.props.dataType1) && Array.isArray(this.state.dataType1Raw)){
         if(isObjectLiteral(this.props.dataType1[0]) && isObjectLiteral(this.state.dataType1Raw[0])){
-          if(this.props.dataType1[0][this.props.keyToCompareOnNewData] !== this.state.dataType1Raw[0][this.state.keyToCompareOnNewData] ) {
+          if(this.props.dataType1[0][this.props.keyToCompareOnAdvance] !== this.state.dataType1Raw[0][this.state.keyToCompareOnAdvance] ) {
             return new Promise (resolve => {
               resolve(
                 this.setState({
