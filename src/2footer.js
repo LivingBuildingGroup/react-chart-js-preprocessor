@@ -8,9 +8,10 @@ const Dummy = function(){
 
 export default function Footer (props){
 
-  const formatTitle = (titleText, groupDotColors, cssBackground) => {
+  const fontColor = props.cssBackground === 'white' ? '#333' : 'white' ;
+
+  const formatTitle = (titleText, groupDotColors) => {
     // this is a method, vs helper function, ONLY because it uses JSX
-    const graphTitleClass = cssBackground === 'white' ? 'gw-title-black' : '' ;
   
     const titleArray = [];
     for (let id in titleText) {
@@ -21,10 +22,10 @@ export default function Footer (props){
       titleArray.push(
         <div key={id} className='gw-title-inner-container'>
           {dot}
-          <h3 className={`gw-title ${graphTitleClass} gw-title-major`}>
+          <h3 className='gw-title gw-title-major'>
             {titleText[id].tMajor}
           </h3>
-          <h3 className={`gw-title ${graphTitleClass} gw-title-minor`}>
+          <h3 className='gw-title gw-title-minor'>
             {titleText[id].tMinor}
           </h3>
         </div>
@@ -48,18 +49,14 @@ export default function Footer (props){
             background-color: white;
           }
           .gw-title {
-            color: white;
+            color: ${fontColor};
             text-align: center;
             margin-top: 10px;
             margin-bottom: 10px;
             flex-grow: 1;
           }
-          .gw-title.gw-title-black {
-            color: #333;
-          }
           .gw-title.gw-subtitle {
             display: none;
-          
           }
           @media print{
             .gw-title.gw-subtitle {
@@ -98,21 +95,18 @@ export default function Footer (props){
   
     return titleTextJSX;
   };
-
-  // const graphTitleClass = props.cssBackground === 'white' ? 'gw-title-black' : '' ;
     
   // const graphTitle      = props.titleTextJSX ? props.titleTextJSX :
   //   typeof props.titleText === 'string' ?
-  //   <h3 className={`gw-title ${graphTitleClass}`}>{props.titleText}</h3> :
-  //   <h3 className={`gw-title ${graphTitleClass}`}>graph!</h3>
+  //   <h3 className={`gw-title`}>{props.titleText}</h3> :
+  //   <h3 className={`gw-title`}>graph!</h3>
    
   const graphTitle = formatTitle(
     props.titleText, 
     props.groupDotColors,
-    props.cssBackground
   );
 
-  const graphSubTitle   = null; // <h3 className={`gw-title gw-subtitle ${graphTitleClass}`}>Displaying: ????</h3>
+  const graphSubTitle   = null; // <h3 className={`gw-title gw-subtitle`}>Displaying: ????</h3>
 
   const spinnerRight = !props.advanceAllow ?
     null :
@@ -149,7 +143,7 @@ export default function Footer (props){
 
   const buttonAdvanceLeft = 
     props.retreatAllow ?
-    <div className={`gw-advance-button gw-advance-button-left gw-control gw-control-over-${props.cssBackground} tooltip tooltip-bottom-left ${hideAdvanceButtonClass} ${googleTagManagerClassLeft}`} 
+    <div className={`gw-advance-button gw-advance-button-left gw-control tooltip tooltip-bottom-left ${hideAdvanceButtonClass} ${googleTagManagerClassLeft}`} 
       onClick={()=>props.graphAdvance(-1)}>
       <div className='popover'>
         <p>retreat the graph to the prior event</p>
@@ -160,7 +154,7 @@ export default function Footer (props){
 
   const buttonAdvanceRight = 
     props.advanceAllow ?
-    <div className={`gw-advance-button gw-advance-button-right gw-control gw-control-over-${props.cssBackground} tooltip ${popoverRightClass} ${hideAdvanceButtonClass} ${googleTagManagerClassRight}`} 
+    <div className={`gw-advance-button gw-advance-button-right gw-control tooltip ${popoverRightClass} ${hideAdvanceButtonClass} ${googleTagManagerClassRight}`} 
       onClick={()=>props.graphAdvance(1)}>
       <div className='popover'>
         <p>advance the graph to the next event</p>
@@ -196,7 +190,7 @@ export default function Footer (props){
       flex-direction: column;
     }
     .gw-title {
-      color: white;
+      color: ${fontColor};
       text-align: center;
       margin-top: 10px;
       margin-bottom: 10px;
@@ -239,12 +233,7 @@ export default function Footer (props){
     }
     .gw-control {
       cursor: pointer;
-    }
-    .gw-control.gw-control-over-white{
-      color: #333;
-    }
-    .gw-control.gw-control-over-gray {
-      color: white;
+      color: ${fontColor};
     }
     @media print {
       .gw-control {
@@ -266,7 +255,7 @@ export default function Footer (props){
       font-weight: 100;
       opacity: 0.85;
       text-align: left;
-      color: white;
+      color: ${fontColor};
       padding: 20px;
       width: 100%;
     }
