@@ -19,11 +19,11 @@ import { createLayersSelected,
   toggleLayerGroup,
   createGroupByData,
   parseDefaultLayerSelection }            from './helpers/layers';
-import Selectors            from './3selectors';
-import Controls             from './2controls';
-import Footer               from './2footer';
-import { createGoogleTagManagerClass } from './helpers/tracking';
-import { consoleDeveloperWarnings } from './helpers/developer-warnings';
+import Selectors                          from './3selectors';
+import Controls                           from './2controls';
+import Footer                             from './2footer';
+import { createGoogleTagManagerClass }    from './helpers/tracking';
+import { consoleDeveloperWarnings }       from './helpers/developer-warnings';
 
 export default class GraphWrapper extends React.Component {
   constructor(props){
@@ -212,8 +212,8 @@ export default class GraphWrapper extends React.Component {
         this.props.selectorsInFocus :
         'layers' ;
       const preSetIdActive = 
-        this.state.preSets[this.state.preSetIdActive] ?
-        this.state.preSetIdActive : 
+        this.props.preSets[this.props.preSetIdActive] ?
+        this.props.preSetIdActive : 
         selectDefaultPreSet(this.state.preSets, this.state.graphName);
       this.setState({
         selectorsInFocus,

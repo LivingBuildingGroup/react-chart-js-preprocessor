@@ -144,7 +144,6 @@ export const calcDimensions = state => {
     cssHeightFooter,
     cssHeightSelectors,
   } = state;
-  console.log('cssWidthOuter',cssWidthOuter,'cssHeightOuter',cssHeightOuter)
   const extraHeightForFooter = 150;
 
   const cssDivOuter = { // NOT USING, JUST LET IT FLOW
