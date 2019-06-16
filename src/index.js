@@ -125,7 +125,7 @@ export default class GraphWrapper extends React.Component {
       
       preSetSaveSettings:     {useOnlyExplicitStylesWhenUngrouped: false, prefixGroups: false, prefixGroupsSub: false, preSetSaveAsType: 'single', ...this.props.preSetSaveSettings } ,
       preSets:                this.props.preSets        || {},
-      preSetIdActive:         '' ,
+      preSetIdActive:         this.props.preSetIdActive || '' ,
       preSetIds:              [],
       preSetNames:            [],
       preSetFuncs:            [],
@@ -211,7 +211,10 @@ export default class GraphWrapper extends React.Component {
         this.props.selectorsInFocus ? 
         this.props.selectorsInFocus :
         'layers' ;
-      const preSetIdActive = selectDefaultPreSet(this.state.preSets, this.state.graphName);
+      const preSetIdActive = 
+        this.state.preSets[this.state.preSetIdActive] ?
+        this.state.preSetIdActive : 
+        selectDefaultPreSet(this.state.preSets, this.state.graphName);
       this.setState({
         selectorsInFocus,
         preSetIdActive
