@@ -18,7 +18,7 @@
     "browser-helpers": "0.0.2",
     "chart.js": "^2.7.3",
     "conjunction-junction": "^3.9.9",
-    "graphing-helpers": "^5.1.4",
+    "graphing-helpers": "^5.1.5",
     "pretty-colors": "0.0.2",
     "react-chartjs-2": "^2.7.4"
   },
