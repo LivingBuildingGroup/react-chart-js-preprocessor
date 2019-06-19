@@ -1,4 +1,4 @@
-const { isObjectLiteral } = require('conjunction-junction');
+import { isObjectLiteral } from 'conjunction-junction';
 
 const Dummy = () => {
   return null;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { convertScToSpace , 
+import { 
+  convertScToSpace , 
   titleCaseWord } from 'conjunction-junction';
 
 export default function LayersOnFly (props){

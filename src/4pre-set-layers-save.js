@@ -1,6 +1,6 @@
-import React from 'react';
-import { isObjectLiteral } from 'conjunction-junction';
-import { parseSelectorValue } from './helpers/pre-set-selectors';
+import React                  from 'react';
+import { isObjectLiteral }    from 'conjunction-junction';
+import { parseSelectorValue } from 'graphing-helpers';
 
 export default function LayersSave (props){
 

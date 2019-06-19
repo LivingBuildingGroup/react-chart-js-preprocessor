@@ -1,6 +1,7 @@
-import React from 'react';
-import { isObjectLiteral } from 'conjunction-junction';
-import { calcMinimumWindowDimensions } from './helpers/dimensions';
+import React                    from 'react';
+import { isObjectLiteral }      from 'conjunction-junction';
+import { 
+  calcMinimumWindowDimensions } from 'browser-helpers';
 
 const Dummy = function(){
   return null;

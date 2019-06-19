@@ -1,8 +1,9 @@
 import React               from 'react';
-import { formatPreSetSelectorColumns, } from './helpers/pre-set-selectors';
-import { editOneStyle,
+import { 
+  formatPreSetSelectorColumns, 
+  editOneStyle,
   applyPreSetGlobalColorToStyles,
-}                          from './helpers/pre-set-edit';
+}                          from 'graphing-helpers';
 import LayersOnFly         from './4layers-on-fly';
 import LayersSave          from './4pre-set-layers-save';
 import AdminSave           from './4pre-set-admin-save';

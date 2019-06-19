@@ -1,29 +1,31 @@
-import React                 from 'react';
-import { Line }              from 'react-chartjs-2';
+import React                    from 'react';
+import { Line }                 from 'react-chartjs-2';
 import { 
   isPrimitiveNumber,
-  isObjectLiteral}           from 'conjunction-junction';
-import { createGraph,
+  isObjectLiteral}              from 'conjunction-junction';
+import { calcDimensions }       from 'browser-helpers';
+import { 
+    createPreSetGlobalPalettes,
+    createNamed,
+    selectPalette,
+    listBright }                from 'pretty-colors';
+import { 
+  createGraph,
   formatGraphKeysInput,
-  createGraphInfoOnGroupOrMount }         from './helpers/graphs';
-import { unpackPreSet,
-  selectDefaultPreSet, }                  from './helpers/pre-set-extract';
-import { applyPreSetGlobalColorToStyles } from './helpers/pre-set-edit';
-import { createPreSetGlobalPalettes,
-  createNamed,
-  selectPalette,
-  listBright,}                            from './helpers/palettes';
-import { formatControls, }                from './helpers/controls';
-import { calcDimensions, }                from './helpers/dimensions';
-import { createLayersSelected,
+  createGraphInfoOnGroupOrMount,
+  unpackPreSet,
+  selectDefaultPreSet,
+  applyPreSetGlobalColorToStyles,
+  createLayersSelected,
   toggleLayerGroup,
   createGroupByData,
-  parseDefaultLayerSelection }            from './helpers/layers';
-import Selectors                          from './3selectors';
-import Controls                           from './2controls';
-import Footer                             from './2footer';
-import { createGoogleTagManagerClass }    from './helpers/tracking';
-import { consoleDeveloperWarnings }       from './helpers/developer-warnings';
+  parseDefaultLayerSelection,
+  createGoogleTagManagerClass,
+  consoleDeveloperWarnings }    from 'graphing-helpers';
+import { formatControls, }      from './control-helpers';
+import Selectors                from './3selectors';
+import Controls                 from './2controls';
+import Footer                   from './2footer';
 
 export default class GraphWrapper extends React.Component {
   constructor(props){
