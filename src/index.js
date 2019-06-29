@@ -521,9 +521,9 @@ export default class GraphWrapper extends React.Component {
               setTimeout(()=>{
                 this.setState({
                   waitingOnDataFromProps: false, // this is after a timeout so the looading icon doesn't disappear too fast
-                  advanceAllow: this.props.advanceAllow,
-                  retreatAllow: this.props.retreatAllow,
-                  legendDescription: this.props.legendDescription,
+                  advanceAllow:           this.props.advanceAllow,
+                  retreatAllow:           this.props.retreatAllow,
+                  legendDescription:      this.props.legendDescription,
                 });
               }, 800);
               if(this.state.groupByOnMount){
@@ -550,14 +550,17 @@ export default class GraphWrapper extends React.Component {
             resolve(
               this.setState({
                 dataType1Raw: this.props.dataType1,
-                titleText: this.props.titleText,
-                forceUpdate: this.props.forceUpdate,
+                forceUpdate:  this.props.forceUpdate,
+                hide:         true,
               })
             );
           })
           .then(()=>{
             const graphInfo = createGraphInfoOnGroupOrMount(this.state);
-            this.setState(graphInfo);
+            this.setState({
+              ...graphInfo,
+              hide: false
+            });
             return;
           })
           .then(()=>{
