@@ -503,10 +503,10 @@ export default class GraphWrapper extends React.Component {
   // }
 
   advanceDataFromProps() {
-    if(this.state.waitingOnDataFromProps) {
-      // compare ex. dataType1Raw[0][key] against new data [0][key] to see if new data actually arrived
-      if(Array.isArray(this.props.dataType1) && Array.isArray(this.state.dataType1Raw)){
-        if(isObjectLiteral(this.props.dataType1[0]) && isObjectLiteral(this.state.dataType1Raw[0])){
+    if(Array.isArray(this.props.dataType1) && Array.isArray(this.state.dataType1Raw)){
+      if(isObjectLiteral(this.props.dataType1[0]) && isObjectLiteral(this.state.dataType1Raw[0])){
+        if(this.state.waitingOnDataFromProps) {
+          // compare ex. dataType1Raw[0][key] against new data [0][key] to see if new data actually arrived
           if(this.props.dataType1[0][this.props.keyToCompareOnAdvance] !== this.state.dataType1Raw[0][this.state.keyToCompareOnAdvance] ) {
             return new Promise (resolve => {
               resolve(
@@ -544,8 +544,27 @@ export default class GraphWrapper extends React.Component {
               this.handleGraphChange({})
             })
           }
+        } else if(this.props.forceUpdate !== this.state.forceUpdate){
+
+          return new Promise (resolve => {
+            resolve(
+              this.setState({
+                dataType1Raw: this.props.dataType1,
+                titleText: this.props.titleText,
+                forceUpdate: this.props.forceUpdate,
+              })
+            );
+          })
+          .then(()=>{
+            const graphInfo = createGraphInfoOnGroupOrMount(this.state);
+            this.setState(graphInfo);
+            return;
+          })
+          .then(()=>{
+            this.handleGraphChange({})
+          })
         }
-      }
+      } 
     }
   }
 
