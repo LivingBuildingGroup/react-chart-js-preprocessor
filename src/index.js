@@ -557,10 +557,13 @@ export default class GraphWrapper extends React.Component {
           })
           .then(()=>{
             const graphInfo = createGraphInfoOnGroupOrMount(this.state);
-            this.setState({
-              ...graphInfo,
-              hide: false
-            });
+            setTimeout(()=>{
+              this.setState({
+                ...graphInfo,
+                hide: false
+              });
+            },50)
+
             return;
           })
           .then(()=>{
