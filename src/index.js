@@ -137,7 +137,6 @@ export default class GraphWrapper extends React.Component {
 
       keyToCompareOnAdvance: this.props.keyToCompareOnAdvance ? this.props.keyToCompareOnAdvance :
       this.props.keyToCompareOnNewData ? this.props.keyToCompareOnNewData : 'xLabel',
-      forceUpdate:        this.props.forceUpdate,
 
       xStart:             0,
       xEnd:               this.props.xEnd              || 1000, 
@@ -504,10 +503,10 @@ export default class GraphWrapper extends React.Component {
   // }
 
   advanceDataFromProps() {
-    if(Array.isArray(this.props.dataType1) && Array.isArray(this.state.dataType1Raw)){
-      if(isObjectLiteral(this.props.dataType1[0]) && isObjectLiteral(this.state.dataType1Raw[0])){
-        if(this.state.waitingOnDataFromProps) {
-          // compare ex. dataType1Raw[0][key] against new data [0][key] to see if new data actually arrived
+    if(this.state.waitingOnDataFromProps) {
+      // compare ex. dataType1Raw[0][key] against new data [0][key] to see if new data actually arrived
+      if(Array.isArray(this.props.dataType1) && Array.isArray(this.state.dataType1Raw)){
+        if(isObjectLiteral(this.props.dataType1[0]) && isObjectLiteral(this.state.dataType1Raw[0])){
           if(this.props.dataType1[0][this.props.keyToCompareOnAdvance] !== this.state.dataType1Raw[0][this.state.keyToCompareOnAdvance] ) {
             return new Promise (resolve => {
               resolve(
@@ -522,9 +521,9 @@ export default class GraphWrapper extends React.Component {
               setTimeout(()=>{
                 this.setState({
                   waitingOnDataFromProps: false, // this is after a timeout so the looading icon doesn't disappear too fast
-                  advanceAllow:           this.props.advanceAllow,
-                  retreatAllow:           this.props.retreatAllow,
-                  legendDescription:      this.props.legendDescription,
+                  advanceAllow: this.props.advanceAllow,
+                  retreatAllow: this.props.retreatAllow,
+                  legendDescription: this.props.legendDescription,
                 });
               }, 800);
               if(this.state.groupByOnMount){
@@ -545,38 +544,8 @@ export default class GraphWrapper extends React.Component {
               this.handleGraphChange({})
             })
           }
-        } else if(this.props.forceUpdate !== this.state.forceUpdate){
-          const update = {
-            dataType1Raw: this.props.dataType1,
-            forceUpdate:  this.props.forceUpdate,
-            hide:         true,
-          };
-          return new Promise (resolve => {
-            resolve(
-              this.setState(update)
-            );
-          })
-          .then(()=>{
-            setTimeout(()=>{
-              const newState = {...this.state, update};
-              const graphInfo = createGraphInfoOnGroupOrMount(newState);
-              console.log('props.dataType1',this.props.dataType1)
-              console.log('update.dataType1Raw',update.dataType1Raw)
-              console.log('newState.dataType1Raw',newState.dataType1Raw)
-              console.log('graphInfo.dataType1Processed',graphInfo.dataType1Processed)
-              this.setState({
-                ...graphInfo,
-                hide: false
-              });
-            },100)
-
-            return;
-          })
-          .then(()=>{
-            this.handleGraphChange({})
-          })
         }
-      } 
+      }
     }
   }
 
