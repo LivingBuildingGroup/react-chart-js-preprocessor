@@ -545,19 +545,24 @@ export default class GraphWrapper extends React.Component {
             })
           }
         } else if(this.props.forceUpdate !== this.state.forceUpdate){
-
+          const update = {
+            dataType1Raw: this.props.dataType1,
+            forceUpdate:  this.props.forceUpdate,
+            hide:         true,
+          };
           return new Promise (resolve => {
             resolve(
-              this.setState({
-                dataType1Raw: this.props.dataType1,
-                forceUpdate:  this.props.forceUpdate,
-                hide:         true,
-              })
+              this.setState(update)
             );
           })
           .then(()=>{
             setTimeout(()=>{
-              const graphInfo = createGraphInfoOnGroupOrMount(this.state);
+              const newState = {...this.state, update};
+              const graphInfo = createGraphInfoOnGroupOrMount(newState);
+              console.log('props.dataType1',this.props.dataType1)
+              console.log('newState.dataType1Raw',newState.dataType1Raw)
+              console.log('graphInfo.dataType1',graphInfo.dataType1Raw)
+              console.log('graphInfo.dataType1Processed',graphInfo.dataType1Processed)
               this.setState({
                 ...graphInfo,
                 hide: false
