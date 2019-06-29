@@ -137,6 +137,7 @@ export default class GraphWrapper extends React.Component {
 
       keyToCompareOnAdvance: this.props.keyToCompareOnAdvance ? this.props.keyToCompareOnAdvance :
       this.props.keyToCompareOnNewData ? this.props.keyToCompareOnNewData : 'xLabel',
+      forceUpdate:        this.props.forceUpdate,
 
       xStart:             0,
       xEnd:               this.props.xEnd              || 1000, 
@@ -560,8 +561,8 @@ export default class GraphWrapper extends React.Component {
               const newState = {...this.state, update};
               const graphInfo = createGraphInfoOnGroupOrMount(newState);
               console.log('props.dataType1',this.props.dataType1)
+              console.log('update.dataType1Raw',update.dataType1Raw)
               console.log('newState.dataType1Raw',newState.dataType1Raw)
-              console.log('graphInfo.dataType1',graphInfo.dataType1Raw)
               console.log('graphInfo.dataType1Processed',graphInfo.dataType1Processed)
               this.setState({
                 ...graphInfo,
