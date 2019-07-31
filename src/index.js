@@ -147,8 +147,8 @@ export default class GraphWrapper extends React.Component {
       
       yAxisArray:         [],   // used as history in createGraph()
       yAxisIdArray:       [],   // used as history in createGraph()
-      yAxisUnitOptions:   this.props.yAxisUnitOptions  || {} ,
-      yAxisInFocus:       'default',
+      yAxisUnitOptions:   this.props.yAxisUnitOptions  || [] ,
+      yAxisInFocus:       0,
 
       // callback functions to access parent
       handleParentBackgroundColor: typeof this.props.handleBackgroundColor === 'function' ? this.props.handleBackgroundColor : ()=>{} ,
@@ -377,18 +377,18 @@ export default class GraphWrapper extends React.Component {
   }
 
   handleYAxisSelector(){
+    const yAxesLength = Array.isArray(this.props.yAxisUnitOptions) ? this.props.yAxisUnitOptions.length : 0 ;
     const yAxisInFocus = 
-      this.state.yAxisInFocus === 'default'  ? 'auto' :
-      this.state.yAxisInFocus === 'auto' ? 'default'    :
-      'default';
+      isPrimitiveNumber(this.state.yAxisInFocus) && 
+      this.state.yAxisInFocus + 1 <= yAxesLength + 1 ?
+      yAxesLength + 1 :
+      0;
     this.setState({yAxisInFocus});
-    this.handleGraphChange(
-      {
-        yAxisUnitOptions: 
-          yAxisInFocus === 'auto' ? {} : 
-          this.props.yAxisUnitOptions 
-      }
-    );
+    const yAxisUnitOptions = 
+      Array.isArray(this.props.yAxisUnitOptions) ? 
+      this.props.yAxisUnitOptions[yAxisInFocus] :
+      {};
+    this.handleGraphChange({yAxisUnitOptions});
   }
 
   // @@@@@@@@@@@@@@@@@ MINOR CONTROLS @@@@@@@@@@@@@@@@
