@@ -380,7 +380,7 @@ export default class GraphWrapper extends React.Component {
     const yAxesLength = Array.isArray(this.props.yAxisUnitOptions) ? this.props.yAxisUnitOptions.length : 0 ;
     const yAxisInFocus = 
       isPrimitiveNumber(this.state.yAxisInFocus) && 
-      this.state.yAxisInFocus + 1 <= yAxesLength + 1 ?
+      this.state.yAxisInFocus + 1 <= yAxesLength - 1 ?
       yAxesLength + 1 :
       0;
     this.setState({yAxisInFocus});
