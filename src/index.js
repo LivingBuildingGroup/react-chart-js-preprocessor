@@ -147,7 +147,7 @@ export default class GraphWrapper extends React.Component {
       
       yAxisArray:         [],   // used as history in createGraph()
       yAxisIdArray:       [],   // used as history in createGraph()
-      yAxisUnitOptions:   this.props.yAxisUnitOptions  || [] ,
+      yAxisUnitOptions:   Array.isArray(this.props.yAxisUnitOptions) && this.props.yAxisUnitOptions[0] ? this.props.yAxisUnitOptions[0] : {} ,
       yAxisInFocus:       0,
 
       // callback functions to access parent
@@ -381,7 +381,7 @@ export default class GraphWrapper extends React.Component {
     const yAxisInFocus = 
       isPrimitiveNumber(this.state.yAxisInFocus) && 
       this.state.yAxisInFocus + 1 <= yAxesLength - 1 ?
-      yAxesLength + 1 :
+      this.state.yAxisInFocus + 1 :
       0;
     this.setState({yAxisInFocus});
     const yAxisUnitOptions = 
