@@ -27,7 +27,7 @@ import Selectors                from './3selectors';
 import Controls                 from './2controls';
 import Footer                   from './2footer';
 
-export default class GraphWrapper extends React.Component {
+export default class RCJSPP extends React.Component {
   constructor(props){
     super(props);
     this.state = {
