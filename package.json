@@ -15,16 +15,17 @@
     "email": "brad@bradgarner.com"
   },
   "dependencies": {
-    "browser-helpers": "0.0.2",
-    "chart.js": "^2.7.3",
-    "conjunction-junction": "^3.9.9",
-    "graphing-helpers": "^5.1.8",
-    "pretty-colors": "0.0.2",
-    "react-chartjs-2": "^2.7.4"
+    "node-pre-gyp": "^0.13.0"
   },
   "peerDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "browser-helpers": "^0.0.2",
+    "chart.js": "^2.7.3",
+    "conjunction-junction": "^3.9.9",
+    "graphing-helpers": "^5.1.8",
+    "react-chartjs-2": "^2.7.4",
+    "pretty-colors": "^0.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -32,10 +33,16 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.24.1",
+    "browser-helpers": "0.0.3",
+    "chart.js": "^2.8.0",
+    "conjunction-junction": "^3.13.10",
+    "graphing-helpers": "^5.1.8",
     "path": "^0.12.7",
+    "pretty-colors": "0.0.2",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.8.6",
+    "react-chartjs-2": "^2.7.6",
+    "react-dom": "^16.8.6",
     "webpack": "^4.5.0",
     "webpack-cli": "^3.2.1"
   }
