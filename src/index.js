@@ -804,6 +804,11 @@ export default class RCJSPP extends React.Component {
           justify-content: space-around;
           z-index: 9999;
         }
+        @media print {
+          .gw-controls {
+            display: none;
+          }
+        }
       `}</style>
     </div>   
   }

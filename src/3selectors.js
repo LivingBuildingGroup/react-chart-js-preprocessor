@@ -207,6 +207,11 @@ export default class Selectors extends React.Component{
     return <div className='gw-selectors-outermost'>
       {selectors}
       <style>{`
+        @media print {
+          .gw-selectors-outermost {
+            display: none;
+          }
+        }
         .gw-sel-style-col-header {
           width: 10%;
           padding-left: 7px;

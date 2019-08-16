@@ -194,6 +194,11 @@ export default function Footer (props){
     .gw-footer {
       flex-direction: column;
     }
+    @media print {
+      .gw-footer {
+        display: none;
+      }
+    }
     .gw-title {
       color: ${fontColor};
       text-align: center;
