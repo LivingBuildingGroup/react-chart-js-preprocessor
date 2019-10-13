@@ -65,12 +65,15 @@ export default function LayersOnFly (props){
         !Array.isArray(props.legendObject[key]) ?
         key :
         props.legendObject[key][props.indexAbbrev];
+
+      const displayClass = typeof display === 'string' && 
+        display.includes('PREDICTED') ? 'gw-sel-predicted-selector' : ''
   
       return <label key={key} className='gw-sel-label-radio'>
         <input
           name={key}
           type='checkbox'
-          className='gw-sel-input-radio'
+          className={`gw-sel-input-radio ${displayClass}`}
           onChange={e=>props.handleLayerSelection(e)} 
           checked={checked}
           value={key} />
@@ -144,6 +147,9 @@ export default function LayersOnFly (props){
       }
       .gw-sel-label-radio:hover {
         background-color: rgba(125, 157, 165, 0.1);
+      }
+      .gw-sel-predicted-selector {
+        color: red;
       }
     `}</style>
   </div>
