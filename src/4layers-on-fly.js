@@ -69,11 +69,11 @@ export default function LayersOnFly (props){
       const displayClass = typeof display === 'string' && 
         display.includes('PREDICTED') ? 'gw-sel-predicted-selector' : ''
   
-      return <label key={key} className='gw-sel-label-radio'>
+      return <label key={key} className={`gw-sel-label-radio ${displayClass}`}>
         <input
           name={key}
           type='checkbox'
-          className={`gw-sel-input-radio ${displayClass}`}
+          className='gw-sel-input-radio'
           onChange={e=>props.handleLayerSelection(e)} 
           checked={checked}
           value={key} />
