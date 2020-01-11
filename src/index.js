@@ -141,8 +141,9 @@ export default class RCJSPP extends React.Component {
       this.props.keyToCompareOnNewData ? this.props.keyToCompareOnNewData : 'xLabel',
 
       xStart:             0,
-      xEnd:               this.props.xEnd              || 1000, 
-      xIdealTickSpacing:  this.props.xIdealTickSpacing || 6,
+      xEnd:               isPrimitiveNumber(this.props.xEnd)              ? this.props.xEnd              : 1000, 
+      xIdealTickSpacing:  isPrimitiveNumber(this.props.xIdealTickSpacing) ? this.props.xIdealTickSpacing : 6,
+      xMaxTickSpacing:    isPrimitiveNumber(this.props.xMaxTickSpacing)   ? this.props.xMaxTickSpacing   : 50,
       xLabelStartAt:      this.props.xLabelStartAt     || null, // ignored if not a number
       xLabelKey:          this.props.xLabelKey         || null ,
       xLabel:             this.props.xLabel,
@@ -461,7 +462,7 @@ export default class RCJSPP extends React.Component {
     const value =
       !isPrimitiveNumber(rawValue) ? 6 :
       rawValue < 1 ? 1 :
-      rawValue > 50 ? 50 :
+      rawValue > this.state.xMaxTickSpacing ? this.state.xMaxTickSpacing :
       rawValue;
     this.setState({xIdealTickSpacing: value});
     setTimeout(()=>{
