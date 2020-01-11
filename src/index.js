@@ -105,11 +105,13 @@ export default class RCJSPP extends React.Component {
       preSetSaveAllow:        true,
       // configure settings in control bar
       selectorsAllow:         typeof this.props.selectorsAllow  === 'boolean' ? this.props.selectorsAllow  : true,
+      selectorsInclude:       typeof this.props.selectorsInclude=== 'boolean' ? this.props.selectorsInclude: true,
       printAllow:             typeof this.props.printAllow      === 'boolean' ? this.props.printAllow      : true,
       backgroundAllow:        typeof this.props.backgroundAllow === 'boolean' ? this.props.backgroundAllow : true,
       advanceAllow:           typeof this.props.advanceAllow    === 'boolean' ? this.props.advanceAllow    : false,
       retreatAllow:           typeof this.props.retreatAllow    === 'boolean' ? this.props.retreatAllow    : false,
       yAxisAllow:             typeof this.props.yAxisAllow      === 'boolean' ? this.props.yAxisAllow      : true,
+      footerInclude:          typeof this.props.footerInclude   === 'boolean' ? this.props.footerInclude   : true,
       // configure settings in selectors
       groupAllow:             typeof this.props.groupAllow      === 'boolean' ? this.props.groupAllow      : false,
 
@@ -139,8 +141,9 @@ export default class RCJSPP extends React.Component {
       this.props.keyToCompareOnNewData ? this.props.keyToCompareOnNewData : 'xLabel',
 
       xStart:             0,
-      xEnd:               this.props.xEnd              || 1000, 
-      xIdealTickSpacing:  this.props.xIdealTickSpacing || 6,
+      xEnd:               isPrimitiveNumber(this.props.xEnd)              ? this.props.xEnd              : 1000, 
+      xIdealTickSpacing:  isPrimitiveNumber(this.props.xIdealTickSpacing) ? this.props.xIdealTickSpacing : 6,
+      xMaxTickSpacing:    isPrimitiveNumber(this.props.xMaxTickSpacing)   ? this.props.xMaxTickSpacing   : 50,
       xLabelStartAt:      this.props.xLabelStartAt     || null, // ignored if not a number
       xLabelKey:          this.props.xLabelKey         || null ,
       xLabel:             this.props.xLabel,
@@ -291,7 +294,7 @@ export default class RCJSPP extends React.Component {
     })
   };
 
-  componentWillReceiveProps(){
+  componentDidUpdate(){
     this.advanceDataFromProps();
     // this.assignNewPreSetId();
   }
@@ -459,7 +462,7 @@ export default class RCJSPP extends React.Component {
     const value =
       !isPrimitiveNumber(rawValue) ? 6 :
       rawValue < 1 ? 1 :
-      rawValue > 50 ? 50 :
+      rawValue > this.state.xMaxTickSpacing ? this.state.xMaxTickSpacing :
       rawValue;
     this.setState({xIdealTickSpacing: value});
     setTimeout(()=>{
@@ -696,14 +699,12 @@ export default class RCJSPP extends React.Component {
       controlIcons    ={s.controlIcons}
       controlFuncs    ={s.controlFuncs}
       controlLabels   ={s.controlLabels}
-      waitingOnPreSetIdFromProps={s.waitingOnPreSetIdFromProps}
       preSets         ={s.preSets}
       preSetIdActive  ={s.preSetIdActive}
       selectorsPopover={s.selectorsPopover}
       cssBackground   ={s.cssBackground}
-
-      toggleSelectorsInFocus={this.toggleSelectorsInFocus}
-    />
+      waitingOnPreSetIdFromProps={s.waitingOnPreSetIdFromProps}
+      toggleSelectorsInFocus={this.toggleSelectorsInFocus} />
     
     const graph = s.ready && !s.hide && !s.paused ?
       <Line 
@@ -713,7 +714,7 @@ export default class RCJSPP extends React.Component {
         width  ={s.cssCanvasWidth } /> : null ;
 
     
-    const selectors = <Selectors
+    const selectors = this.state.selectorsInclude ? <Selectors
       graphName          ={s.graphName}
       selectorsInFocus   ={s.selectorsInFocus}
       cssDivSelectors    ={s.cssDivSelectors}
@@ -751,9 +752,9 @@ export default class RCJSPP extends React.Component {
       handlePreSetSave    ={this.handlePreSetSave}
       receiveNewStyles    ={this.receiveNewStyles}
       handleLayerSelection={this.handleLayerSelection}
-    />
+    /> : null ;
 
-    const footer = <Footer
+    const footer = this.state.footerInclude ? <Footer
       cssBackground         ={s.cssBackground}
       groupDotColors        ={s.groupDotColors}
       titleText             ={s.titleText}
@@ -765,7 +766,7 @@ export default class RCJSPP extends React.Component {
       cssDivFooter          ={s.cssDivFooter}
       googleTagManagerClass
       graphAdvance          ={this.graphAdvance}
-    />
+    /> : null ;
 
     const googleTagManagerClass = createGoogleTagManagerClass(s);
 
