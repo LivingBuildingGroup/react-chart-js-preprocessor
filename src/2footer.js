@@ -21,19 +21,23 @@ export default function Footer (props){
         style={{backgroundColor: `rgb(${groupDotColors[id]})`}}>
       </div> : null ;
       const theTitle = <div key={id} className={`gw-title-inner-container ${titleText[id].tooltip ? 'tooltip' : ''}`}>
-      {typeof titleText[id].link === 'string' ?
-        <a href={titleText[id].link} target='_blank'>{dot}</a> :
-        dot}
-      <h3 className='gw-title gw-title-major'>
-        {titleText[id].tMajor}
-      </h3>
-      <h3 className='gw-title gw-title-minor'>
-        {titleText[id].tMinor}
-      </h3>
-      {titleText[id].tooltip ? 
-        <div className='popover'><p>{titleText[id].tooltip}</p></div> :
-        null }
-    </div>
+        {
+          typeof titleText[id].link === 'string' ?
+            <a href={titleText[id].link} target='_blank'>{dot}</a> :
+          dot
+        }
+        <h3 className='gw-title gw-title-major'>
+          {titleText[id].tMajor}
+        </h3>
+        <h3 className='gw-title gw-title-minor'>
+          {titleText[id].tMinor}
+        </h3>
+        {
+          titleText[id].tooltip ? 
+            <div className='popover'><p>{titleText[id].tooltip}</p></div> :
+          null
+        }
+      </div>
       titleArray.push(theTitle);
     }
     
