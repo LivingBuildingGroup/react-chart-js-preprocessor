@@ -147,6 +147,8 @@ export default class RCJSPP extends React.Component {
       xLabelStartAt:      this.props.xLabelStartAt     || null, // ignored if not a number
       xLabelKey:          this.props.xLabelKey         || null ,
       xLabel:             this.props.xLabel,
+      beginAtZeroX:       typeof this.props.beginAtZeroX === 'boolean' ? this.props.beginAtZeroX : false ,
+      stepSizeX:          isPrimitiveNumber(this.props.stepSizeX)         ? this.props.stepSizeX : undefined,
       
       yAxisArray:         [],   // used as history in createGraph()
       yAxisIdArray:       [],   // used as history in createGraph()
@@ -334,6 +336,8 @@ export default class RCJSPP extends React.Component {
       xLabelKey         
       xLabelStartAt     
       yAxisUnitOptions  
+      beginAtZeroX
+      stepSizeX
     */
     const input = formatGraphKeysInput(changeInput, this.state);
     const graphKeys = createGraph(input);
