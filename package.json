@@ -36,7 +36,7 @@
     "browser-helpers": "0.0.4",
     "chart.js": "^2.9.3",
     "conjunction-junction": "^3.13.38",
-    "graphing-helpers": "^5.2.7",
+    "graphing-helpers": "^5.2.8",
     "path": "^0.12.7",
     "pretty-colors": "0.0.2",
     "prop-types": "^15.6.0",
