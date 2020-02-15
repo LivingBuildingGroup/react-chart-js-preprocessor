@@ -242,7 +242,6 @@ export default class RCJSPP extends React.Component {
       return;
     })
     .then(()=>{
-      console.log('on mount this.state.dataType1Raw', this.state.dataType1Raw[0])
       if(this.state.groupByOnMount){
         const groupByData = createGroupByData(
           this.state.groupByOnMount, 
