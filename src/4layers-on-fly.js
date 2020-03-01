@@ -49,6 +49,8 @@ export default function LayersOnFly (props){
 
   // how can we prevent this from having to loop on every render?
   const layerCheckboxes = [];
+
+  const legendObject = props.legendObject || {};
     
   props.layerUnitsArray.forEach(unit => {
   
@@ -60,16 +62,14 @@ export default function LayersOnFly (props){
         true : 
         false ;
   
-      const display = !props.legendObject ?
-        key :
-        !Array.isArray(props.legendObject[key]) ?
-        key :
-        props.legendObject[key][props.indexAbbrev];
+      const legendArr = Array.isArray(legendObject[key]) ? legendObject[key] : [];
+      const label = legendArr[props.indexAbbrev] || key;
+      const def   = legendArr[props.indexDef] || key;
 
-      const displayClass = typeof display === 'string' && 
-        display.includes('PREDICTED') ? 'gw-sel-predicted-selector' : ''
+      const displayClass = typeof label === 'string' && 
+        label.includes('PREDICTED') ? 'gw-sel-predicted-selector' : ''
   
-      return <label key={key} className={`gw-sel-label-radio ${displayClass}`}>
+      return <label key={key} className={`gw-sel-label-radio ${displayClass} tooltip`}>
         <input
           name={key}
           type='checkbox'
@@ -77,7 +77,10 @@ export default function LayersOnFly (props){
           onChange={e=>props.handleLayerSelection(e)} 
           checked={checked}
           value={key} />
-        {display}
+        {label}
+        <div className='popover'>
+          <p>{def}</p>
+        </div>
       </label>
     });
   

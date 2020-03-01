@@ -1,4 +1,5 @@
 import React               from 'react';
+import { parseEvent }      from 'conjunction-junction'; 
 import { 
   formatPreSetSelectorColumns, 
   editOneStyle,
@@ -18,20 +19,10 @@ export default class Selectors extends React.Component{
       preSetShadeColumn:      {},
       preSetColumns:          [],
       ready: false,
-
     };
     this.handlePreSetGlobalColor=this.handlePreSetGlobalColor.bind(this);
-    this.handlePreSetEdit=this.handlePreSetEdit.bind(this);
+    this.handlePreSetEdit       =this.handlePreSetEdit.bind(this);
   }
-
-    // move this to conjunction-junction
-    parseEvent(event){
-      const value = !event ? null :
-        !event.target ? event :
-        event.target.value ? event.target.value :
-        event;
-      return value;
-    }
 
   componentDidMount(){
     return new Promise((resolve, reject)=>{
@@ -123,7 +114,7 @@ export default class Selectors extends React.Component{
   }
 
   handlePreSetEdit(event, layer, property){
-    let value = this.parseEvent(event);
+    let value = parseEvent(event);
     const styles = editOneStyle({
       styles: this.props.styles, 
       value, 
@@ -132,7 +123,7 @@ export default class Selectors extends React.Component{
       preSetGlobalPalette: this.props.preSetGlobalPalette,
       cssStyleColorsNamed: this.props.cssStyleColorsNamed,
     });
-    console.log('handlePreSetEdit property',property,'value', value, 'styles', styles);
+    // console.log('handlePreSetEdit property',property,'value', value, 'styles', styles);
     this.props.receiveNewStyles(styles);
   }
 
@@ -171,6 +162,7 @@ export default class Selectors extends React.Component{
             layersSelected        ={p.layersSelected}
             legendObject          ={p.legendObject}
             indexAbbrev           ={p.indexAbbrev}
+            indexDef              ={p.indexDef}
 
             handleLayerSelection={p.handleLayerSelection}
             toggleLayerGroup    ={p.toggleLayerGroup}

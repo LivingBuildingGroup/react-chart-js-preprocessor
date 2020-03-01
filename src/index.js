@@ -2,6 +2,7 @@ import React                    from 'react';
 import { Line }                 from 'react-chartjs-2';
 import { 
   isPrimitiveNumber,
+  parseEvent,
   isObjectLiteral}              from 'conjunction-junction';
 import { calcDimensions }       from 'browser-helpers';
 import { 
@@ -72,6 +73,7 @@ export default class RCJSPP extends React.Component {
       indexAbbrev:        0,
       indexLabels:        1,
       indexUnits:         2,
+      indexDef:           3,
 
       graphName:                   this.props.graphName,
       titleText:                   this.props.titleText      || 'data',
@@ -177,15 +179,6 @@ export default class RCJSPP extends React.Component {
     this.graphAdvance           = this.graphAdvance.bind(this);
     this.advanceDataFromProps   = this.advanceDataFromProps.bind(this);
     this.handleYAxisSelector    = this.handleYAxisSelector.bind(this);
-  }
-
-  // move this to conjunction-junction
-  parseEvent(event){
-    const value = !event ? null :
-      !event.target ? event :
-      event.target.value ? event.target.value :
-      event;
-    return value;
   }
 
   // @@@@@@@@@@@@@@@@@@ LIFE CYCLE @@@@@@@@@@@@@@@@
@@ -306,7 +299,7 @@ export default class RCJSPP extends React.Component {
   handleGroupBy(event){
     // handleGroupBy should ONLY run from subcomponents
     // convert data type 1 to type 2
-    const theKey = this.parseEvent(event);
+    const theKey = parseEvent(event);
     if(!theKey) return;
     const groupByData = createGroupByData(
       theKey, 
@@ -437,7 +430,7 @@ export default class RCJSPP extends React.Component {
 
   handleLayerSelection(event){
     // handleLayerSelection should only run from subcomponents
-    const key = this.parseEvent(event);
+    const key = parseEvent(event);
     if(!key) return;
     const layersSelected = createLayersSelected(key, this.state.layersSelected);
     this.handleGraphChange({layersSelected});
@@ -740,6 +733,7 @@ export default class RCJSPP extends React.Component {
       layersThatHaveUnits     ={s.layersThatHaveUnits}
       layersSelected          ={s.layersSelected}
       legendLabels            ={s.legendLabels}
+      legendDefinitions       ={s.legendDefinitions}
       preSetGroupEditMode     ={s.preSetGroupEditMode}
       preSetSaveSettings      ={s.preSetSaveSettings}
       styles                  ={s.styles}
@@ -748,6 +742,7 @@ export default class RCJSPP extends React.Component {
       layersGroupedByUnits={s.layersGroupedByUnits}
       legendObject        ={s.legendObject}
       indexAbbrev         ={s.indexAbbrev}
+      indexDef            ={s.indexDef}
 
       toggleLayerGroup    ={this.toggleLayerGroup}
       handleRangeChange   ={this.handleRangeChange}
