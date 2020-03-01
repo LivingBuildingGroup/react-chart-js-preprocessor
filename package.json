@@ -35,7 +35,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "browser-helpers": "0.0.4",
     "chart.js": "^2.9.3",
-    "conjunction-junction": "^3.13.38",
+    "conjunction-junction": "^3.13.47",
     "graphing-helpers": "^5.2.14",
     "path": "^0.12.7",
     "pretty-colors": "0.0.2",
