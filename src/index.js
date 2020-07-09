@@ -133,10 +133,6 @@ export default class RCJSPP extends React.Component {
       preSets:                this.props.preSets        || {},
       preSetIdActive:         this.props.preSetIdActive || '' ,
       preSetIds:              [],
-      preSetNames:            [],
-      preSetFuncs:            [],
-      preSetIcons:            [],
-      preSetLayers:           [],
       // preSetStyleOptionsJSX:  [[]],
 
       keyToCompareOnAdvance: this.props.keyToCompareOnAdvance ? this.props.keyToCompareOnAdvance :
@@ -693,10 +689,6 @@ export default class RCJSPP extends React.Component {
 
     const controls = <Controls
       controls        ={s.controls}
-      controlNames    ={s.controlNames}
-      controlIcons    ={s.controlIcons}
-      controlFuncs    ={s.controlFuncs}
-      controlLabels   ={s.controlLabels}
       preSets         ={s.preSets}
       preSetIdActive  ={s.preSetIdActive}
       selectorsPopover={s.selectorsPopover}

@@ -146,9 +146,5 @@ export const formatControls = (state, that) => {
   return {
     preSetIds,
     controls,
-    // controlNames,
-    // controlIcons,
-    // controlFuncs,
-    // controlLabels,
   };
 };
