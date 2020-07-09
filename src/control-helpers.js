@@ -113,6 +113,11 @@ export const formatControls = (state, that) => {
     ...preSetNames,
     ...controlNamesBot, 
   ];
+  const controlIds = [
+    ...controlNamesTop, 
+    ...preSetIds,
+    ...controlNamesBot, 
+  ];
   const controlIcons = [
     ...controlIconsTop, 
     ...preSetIcons,
@@ -128,17 +133,22 @@ export const formatControls = (state, that) => {
     ...preSetNames,
     ...controlLabelsBot, 
   ];
+
+  const controls = controlNames.map((n,i)=>{
+    return {
+      name: n,
+      id:    controlIds[i],
+      icon:  controlIcons[i],
+      func:  controlFuncs[i],
+      label: controlLabels[i],
+    };
+  })
   return {
     preSetIds,
+    controls,
     controlNames,
     controlIcons,
     controlFuncs,
     controlLabels,
   };
 };
-
-// export default {
-//   formatControlsWithoutPreSets,
-//   formatPreSetsForControls,
-//   formatControls,
-// };

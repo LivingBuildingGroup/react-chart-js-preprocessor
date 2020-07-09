@@ -625,31 +625,31 @@ export default class RCJSPP extends React.Component {
     }
     console.log('hydratedPreSet',hydratedPreSet);
     return;
-    const updatedPreSet = this.state.handlePreSetSave(hydratedPreSet);
-    console.log('updatedPreSet',updatedPreSet);
-    if(isObjectLiteral(updatedPreSet)){
-      if(updatedPreSet.id){
-        return new Promise((resolve, reject)=>{
-          resolve(
-            this.setState({
-              preSetIdActive: updatedPreSet.id,
-              preSets: {
-                ...this.state.preSets,
-                [updatedPreSet.id]: updatedPreSet,
-              }
-            })
-          );
-        })
-        .then(()=>{
-          this.handlePreSetSelect(updatedPreSet.id)
-          // this.loadControls();
-        })
-      } else {
-        console.error('there was a problem saving the pre-set (no id):', preSet)
-      }
-    } else {
-      console.error('there was a problem saving the pre-set (no object returned):', preSet)
-    }
+    // const updatedPreSet = this.state.handlePreSetSave(hydratedPreSet);
+    // console.log('updatedPreSet',updatedPreSet);
+    // if(isObjectLiteral(updatedPreSet)){
+    //   if(updatedPreSet.id){
+    //     return new Promise((resolve, reject)=>{
+    //       resolve(
+    //         this.setState({
+    //           preSetIdActive: updatedPreSet.id,
+    //           preSets: {
+    //             ...this.state.preSets,
+    //             [updatedPreSet.id]: updatedPreSet,
+    //           }
+    //         })
+    //       );
+    //     })
+    //     .then(()=>{
+    //       this.handlePreSetSelect(updatedPreSet.id)
+    //       // this.loadControls();
+    //     })
+    //   } else {
+    //     console.error('there was a problem saving the pre-set (no id):', preSet)
+    //   }
+    // } else {
+    //   console.error('there was a problem saving the pre-set (no object returned):', preSet)
+    // }
   }
 
   receiveNewStyles(styles, psgc){
@@ -692,6 +692,7 @@ export default class RCJSPP extends React.Component {
     const s = this.state;
 
     const controls = <Controls
+      controls        ={s.controls}
       controlNames    ={s.controlNames}
       controlIcons    ={s.controlIcons}
       controlFuncs    ={s.controlFuncs}
