@@ -2,21 +2,23 @@ import React from 'react';
 
 export default function Controls (props){
 
-  const controlNames  = Array.isArray(props.controlNames)  ? props.controlNames  : [] ;
-  const controlIcons  = Array.isArray(props.controlIcons)  ? props.controlIcons  : [] ;
-  const controlFuncs  = Array.isArray(props.controlFuncs ) ? props.controlFuncs  : [] ;
-  const controlLabels = Array.isArray(props.controlLabels) ? props.controlLabels : [] ;
+  const controlsFromProps  = Array.isArray(props.controls)  ? props.controls  : [] ;
+  // const controlNames  = Array.isArray(props.controlNames)  ? props.controlNames  : [] ;
+  // const controlIcons  = Array.isArray(props.controlIcons)  ? props.controlIcons  : [] ;
+  // const controlFuncs  = Array.isArray(props.controlFuncs ) ? props.controlFuncs  : [] ;
+  // const controlLabels = Array.isArray(props.controlLabels) ? props.controlLabels : [] ;
 
   const controls = props.waitingOnPreSetIdFromProps ? null : // to force a re-render
-    controlNames.map((c,i)=>{ 
-      const controlNameAsArr = typeof c === 'string' ? c.split(' '): [] ;
+    controlsFromProps.map((c,i)=>{ 
+      const controlNameAsArr = typeof c.name === 'string' ? c.name.split(' '): [] ;
       const controlNameAsId = controlNameAsArr.join('-');
       const activeClass = 
         props.preSets[props.preSetIdActive] &&
-        props.preSets[props.preSetIdActive].name === c ?
+        props.preSets[props.preSetIdActive].name === c.name ?
         'gw-pre-set-control-active' : 
         `gw-control-over-${props.cssBackground}` ;
-      const popover = c === 'selector' && props.selectorsPopover ?
+
+      const popover = c.name === 'selector' && props.selectorsPopover ?
         <div className='popover popover-constant popover-bottom-right'>
           <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('none')}>Hide selectors</p>
           <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('layers')}>Layer selectors</p>
@@ -24,17 +26,21 @@ export default function Controls (props){
           <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-all')}>Graphic selectors (all layers)</p>
         </div> :
         <div className='popover'>
-          <p>{controlLabels[i]}</p>
+          <p>{c.label}</p>
         </div>
+
       const vPosition = c === 'selector' ? 'bottom' : 'top'
       const googleTagManagerClass = `graph-control ${controlNameAsId} true1 true2`;
+
       return <div key={i} 
         className={`gw-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
-        onClick={controlFuncs[i]}>
+        onClick={c.func}>
         {popover}
-        {controlIcons[i] || null}
+        {c.icon || null}
       </div>
+
     });
+    
   if(Array.isArray(controls)){
     if(controls.length === 1) {
       controls.unshift(<div key='extra'></div>);
