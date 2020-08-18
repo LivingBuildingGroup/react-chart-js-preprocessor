@@ -8,6 +8,7 @@ import {
 import LayersOnFly         from './4layers-on-fly';
 import LayersSave          from './4pre-set-layers-save';
 import AdminSave           from './4pre-set-admin-save';
+import RangeFinder from './4-range-finder';
 
 export default class Selectors extends React.Component{
   constructor(props){
@@ -143,20 +144,40 @@ export default class Selectors extends React.Component{
         handlePreSetSave   ={p.handlePreSetSave}
       /> : null ;
 
+    const rangeFinder = <RangeFinder
+      groupTrue             ={p.groupTrue}
+      groupAllow            ={p.groupAllow}
+      handleGroupBy         ={p.handleGroupBy}
+      xStart                ={p.xStart}
+      xEnd                  ={p.xEnd}
+      xIdealTickSpacing     ={p.xIdealTickSpacing}
+      layerGroupByJSXOptions={p.layerGroupByJSXOptions}
+      handleRangeChange     ={p.handleRangeChange}
+      handleTickChange      ={p.handleTickChange} />
+      // layerUnitsArray       ={p.layerUnitsArray}
+      // layersGroupedByUnits  ={p.layersGroupedByUnits}
+      // layersSelected        ={p.layersSelected}
+      // legendObject          ={p.legendObject}
+      // indexAbbrev           ={p.indexAbbrev}
+      // indexDef              ={p.indexDef}
+
+      // handleLayerSelection={p.handleLayerSelection}
+      // toggleLayerGroup    ={p.toggleLayerGroup} />
+
     const selectors = 
       p.selectorsInFocus === 'layers' ?
         <div className='gw-selectors'
           style={p.cssDivSelectors}>
           <LayersOnFly
-            groupTrue             ={p.groupTrue}
-            groupAllow            ={p.groupAllow}
-            handleGroupBy         ={p.handleGroupBy}
-            xStart                ={p.xStart}
-            xEnd                  ={p.xEnd}
-            xIdealTickSpacing     ={p.xIdealTickSpacing}
-            layerGroupByJSXOptions={p.layerGroupByJSXOptions}
-            handleRangeChange     ={p.handleRangeChange}
-            handleTickChange      ={p.handleTickChange}
+            // groupTrue             ={p.groupTrue}
+            // groupAllow            ={p.groupAllow}
+            // handleGroupBy         ={p.handleGroupBy}
+            // xStart                ={p.xStart}
+            // xEnd                  ={p.xEnd}
+            // xIdealTickSpacing     ={p.xIdealTickSpacing}
+            // layerGroupByJSXOptions={p.layerGroupByJSXOptions}
+            // handleRangeChange     ={p.handleRangeChange}
+            // handleTickChange      ={p.handleTickChange}
             layerUnitsArray       ={p.layerUnitsArray}
             layersGroupedByUnits  ={p.layersGroupedByUnits}
             layersSelected        ={p.layersSelected}
@@ -197,6 +218,7 @@ export default class Selectors extends React.Component{
       null ;
 
     return <div className='gw-selectors-outermost'>
+      {rangeFinder}
       {selectors}
       <style>{`
         @media print {

@@ -138,7 +138,7 @@ export default class RCJSPP extends React.Component {
       keyToCompareOnAdvance: this.props.keyToCompareOnAdvance ? this.props.keyToCompareOnAdvance :
       this.props.keyToCompareOnNewData ? this.props.keyToCompareOnNewData : 'xLabel',
 
-      xStart:             0,
+      xStart:             isPrimitiveNumber(this.props.xStart)            ? this.props.xStart            : 0, 
       xEnd:               isPrimitiveNumber(this.props.xEnd)              ? this.props.xEnd              : 1000, 
       xIdealTickSpacing:  isPrimitiveNumber(this.props.xIdealTickSpacing) ? this.props.xIdealTickSpacing : 6,
       xMaxTickSpacing:    isPrimitiveNumber(this.props.xMaxTickSpacing)   ? this.props.xMaxTickSpacing   : 50,
