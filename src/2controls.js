@@ -15,15 +15,15 @@ export default function Controls (props){
       const activeClass = 
         props.preSets[props.preSetIdActive] &&
         props.preSets[props.preSetIdActive].name === c.name ?
-        'gw-pre-set-control-active' : 
-        `gw-control-over-${props.cssBackground}` ;
+        'rcjspp-pre-set-control-active' : 
+        `rcjspp-control-over-${props.cssBackground}` ;
 
       const popover = c.name === 'selector' && props.selectorsPopover ?
         <div className='popover popover-constant popover-bottom-right'>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('none')}>Hide selectors</p>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('layers')}>Layer selectors</p>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-selected')}>Graphic selectors (current layers)</p>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-all')}>Graphic selectors (all layers)</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('none')}>Hide selectors</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('layers')}>Layer selectors</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-selected')}>Graphic selectors (current layers)</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-all')}>Graphic selectors (all layers)</p>
         </div> :
         <div className='popover'>
           <p>{c.label}</p>
@@ -33,7 +33,7 @@ export default function Controls (props){
       const googleTagManagerClass = `graph-control ${controlNameAsId} true1 true2`;
 
       return <div key={i} 
-        className={`gw-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
+        className={`rcjspp-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
         onClick={c.func}>
         {popover}
         {c.icon || null}
@@ -47,49 +47,8 @@ export default function Controls (props){
     }
   }
 
-  return <div className='gw-controls-outermost'>
+  return <div className='rcjspp-controls-outermost'>
     {controls}
-    <style>{`
-    .gw-controls-outermost {
-      top: 0px;
-      height: 100%;
-      width: 30px;
-      padding-right: 0;
-      margin-right: 20px;
-      flex-direction: column;
-      justify-content: space-around;
-      z-index: 9999;
-    }
-    .tooltip .popover p.gw-sel-popover:hover {
-      color: rgb(103, 175, 103) !important;
-    }
-    .gw-control {
-      cursor: pointer;
-      min-height: 25px;
-    }
-    .gw-control.gw-control-over-white{
-      color: #333;
-    }
-    .gw-control.gw-control-over-gray {
-      color: white;
-    }
-    .gw-control.gw-pre-set-control-active {
-      color: orange;
-    }
-    @media print {
-      .gw-control {
-        display: none !important;
-      }
-    }
-    .gw-control.gw-control-print {
-      display: none;
-    }
-    @media (min-width: 800px) {
-      .gw-control.gw-control-print {
-        display: flex;
-      }
-    }
-    `}</style>
   </div>;
 
 }

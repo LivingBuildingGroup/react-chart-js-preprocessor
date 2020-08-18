@@ -687,6 +687,16 @@ export default class RCJSPP extends React.Component {
     // @@@@@@@@@@@@@@@@@@ CONTROLS @@@@@@@@@@@@@@@@
     const s = this.state;
 
+    const footerFontColor = s.cssBackground === 'white' ? '#333' : 'white' ;
+    const bp = 500; // breakpoint
+
+    const spinnerMargin = 80;
+    const spinnerSize = (Math.random()*20)+40;
+    const spinnerColorIndex = Math.floor(Math.random()*5);
+    const spinnerColors = ['red', 'yellow', 'pink', 'green', 'purple', 'blue'];
+    const spinnerColor = spinnerColors[spinnerColorIndex] || 'white' ;
+  
+
     const controls = <Controls
       controls        ={s.controls}
       preSets         ={s.preSets}
@@ -746,8 +756,9 @@ export default class RCJSPP extends React.Component {
       handleLayerSelection={this.handleLayerSelection}
     /> : null ;
 
+
     const footer = this.state.footerInclude ? <Footer
-      cssBackground         ={s.cssBackground}
+      // cssBackground         ={s.cssBackground}
       groupDotColors        ={s.groupDotColors}
       titleText             ={s.titleText}
       legendDescription     ={s.legendDescription}
@@ -756,19 +767,20 @@ export default class RCJSPP extends React.Component {
       waitingOnDataFromProps={s.waitingOnDataFromProps}
       icons                 ={s.icons}
       cssDivFooter          ={s.cssDivFooter}
+      bp                    ={bp}
       googleTagManagerClass
       graphAdvance          ={this.graphAdvance}
     /> : null ;
 
     const googleTagManagerClass = createGoogleTagManagerClass(s);
 
-    return <div className={`gw-outer ${googleTagManagerClass}`}>
-      <div className='gw-inner' style={s.cssDivInner}>
-        <div className='gw-graph'
+    return <div className={`rcjspp-outer ${googleTagManagerClass}`}>
+      <div className='rcjspp-inner' style={s.cssDivInner}>
+        <div className='rcjspp-graph'
           style={s.cssDivGraph}>
           {graph}
         </div>
-        <div className='gw-controls'
+        <div className='rcjspp-controls'
           style={s.cssDivControls}>
           {controls}
         </div>
@@ -776,18 +788,18 @@ export default class RCJSPP extends React.Component {
       {footer}
       {selectors}
       <style>{`
-        .gw-outer {
+        .rcjspp-outer {
           position: relative;
           z-index: 7777;
           flex-direction: column;
         }
-        .gw-inner {
+        .rcjspp-inner {
           flex-direction: row;
         }
-        .gw-graph {
+        .rcjspp-graph {
           position: relative;
         }
-        .gw-controls {
+        .rcjspp-controls {
           top: 0px;
           height: 100%;
           width: 30px;
@@ -798,9 +810,408 @@ export default class RCJSPP extends React.Component {
           z-index: 9999;
         }
         @media print {
-          .gw-controls {
+          .rcjspp-controls {
             display: none;
           }
+        }
+
+
+        .rcjspp-controls-outermost {
+          top: 0px;
+          height: 100%;
+          width: 30px;
+          padding-right: 0;
+          margin-right: 20px;
+          flex-direction: column;
+          justify-content: space-around;
+          z-index: 9999;
+        }
+        .tooltip .popover p.rcjspp-sel-popover:hover {
+          color: rgb(103, 175, 103) !important;
+        }
+        .rcjspp-control {
+          cursor: pointer;
+          min-height: 25px;
+        }
+        .rcjspp-control.rcjspp-control-over-white{
+          color: #333;
+        }
+        .rcjspp-control.rcjspp-control-over-gray {
+          color: white;
+        }
+        .rcjspp-control.rcjspp-pre-set-control-active {
+          color: orange;
+        }
+        @media print {
+          .rcjspp-control {
+            display: none !important;
+          }
+        }
+        .rcjspp-control.rcjspp-control-print {
+          display: none;
+        }
+        @media (min-width: 800px) {
+          .rcjspp-control.rcjspp-control-print {
+            display: flex;
+          }
+        }
+
+
+        .rcjspp-title-inner-container {
+          justify-content: center;
+          align-items: center;
+          margin-right: 25px;
+          margin-left: 25px;
+        }
+        .rcjspp-title-color-dot {
+          border-radius: 50%;
+          height: 15px;
+          width: 15px;
+          background-color: white;
+        }
+        .rcjspp-title {
+          color: ${footerFontColor};
+          text-align: center;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          flex-grow: 1;
+        }
+        .rcjspp-title.rcjspp-subtitle {
+          display: none;
+        }
+        @media print{
+          .rcjspp-title.rcjspp-subtitle {
+            display: block;
+          }
+        }
+        .rcjspp-title-wrap-container {
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          flex-grow: 1;
+        }
+        .rcjspp-title-major {
+          margin-left: 3px;
+        }
+        .rcjspp-title-minor {
+          font-weight: 100;
+          font-size: 67%;
+          opacity: 0.75;
+          margin-left: 3px;
+        }
+        .rcjspp-title-inner-container {
+          justify-content: center;
+          align-items: center;
+          margin-right: 25px;
+          margin-left: 25px;
+        }
+        .rcjspp-title-color-dot {
+          border-radius: 50%;
+          height: 15px;
+          width: 15px;
+          background-color: white;
+        }
+
+        .rcjspp-footer {
+          flex-direction: column;
+        }
+        @media print {
+          .rcjspp-footer {
+            display: none;
+          }
+        }
+        .rcjspp-title {
+          color: ${footerFontColor};
+          text-align: center;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          flex-grow: 1;
+        }
+        .rcjspp-advance-spinner-container {
+          height: 36px;
+          overflow: hidden;
+        }
+        .rcjspp-advance-spinner-container .line-scale-pulse-out-rapid > div {
+          background-color: white ;
+        }
+        .rcjspp-advance-button {
+          position: absolute;
+          width: 45px;
+          justify-content: center;
+          align-items: center;
+        }
+        .rcjspp-advance-button:hover {
+          opacity: 0.7;
+        }
+        .rcjspp-advance-button-left {
+          left: 0;
+          bottom: 110px;
+        }
+        .rcjspp-advance-button-right {
+          left: 0;
+          bottom: 50px;
+        }
+        @media(min-width: ${bp}px){
+          .rcjspp-advance-button-left {
+            left: 0;
+            bottom: 0;
+          }
+          .rcjspp-advance-button-right {
+            left: auto;
+            right: 0;
+            bottom: 0;
+          }
+        }
+        .rcjspp-control {
+          cursor: pointer;
+          color: ${footerFontColor};
+        }
+        @media print {
+          .rcjspp-control {
+            display: none !important;
+          }
+        }
+        .rcjspp-footer-top {
+          width: 100%;
+          position: relative;
+          justify-content: space-between;
+          min-height: 36px;
+        }
+        .rcjspp-footer-bottom {
+          width: 100%;
+        }
+        .rcjspp-footer-description {
+          font-size: 12px;
+          line-height: 14px;
+          font-weight: 100;
+          opacity: 0.85;
+          text-align: left;
+          color: ${footerFontColor};
+          padding: 20px;
+          width: 100%;
+        }
+    
+        .rcjspp-advance-waiting {
+          position: absolute;
+          top: 50%;
+          margin-top: -${spinnerSize/2}px;
+        }
+        .rcjspp-advance-waiting-left {
+          left: ${spinnerMargin}px;
+          margin-left: -${spinnerSize/2}px;
+        }
+        .rcjspp-advance-waiting-right {
+          right: ${spinnerMargin}px;
+          margin-right: -${spinnerSize/2}px;
+        }
+        .rcjspp-advance-waiting > div {
+          width: ${spinnerSize}px;
+          height: ${spinnerSize}px;
+          background-color: ${spinnerColor};
+          border-radius: 100%;
+          -webkit-animation: blinking 1.0s infinite ease-in-out;
+          animation: blinking 1.0s infinite ease-in-out;
+        }
+    
+        @-webkit-keyframes blinking {
+          0% { -webkit-transform: scale(0.0) }
+          100% {
+            -webkit-transform: scale(1.0);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes blinking {
+          0% {
+            transform: scale(0.0);
+            -webkit-transform: scale(0.0);
+          } 100% {
+            transform: scale(1.0);
+            -webkit-transform: scale(1.0);
+            opacity: 0;
+          }
+        }
+
+
+        .rcjspp-selectors-outermost {
+          flex-direction: column;
+        }
+        @media print {
+          .rcjspp-selectors-outermost {
+            display: none;
+          }
+        }
+        .rcjspp-sel-style-col-header {
+          width: 10%;
+          padding-left: 7px;
+        }     
+        .rcjspp-sel-style-select-shade {
+          width: 40px;
+        } 
+        .rcjspp-sel-style-row-label {
+          display: block;
+          width: 20%;
+          height: 100%;
+          overflow: scroll;
+          cursor: pointer;
+          color: #aaa;
+          padding-left: 10px;
+        }
+        .rcjspp-sel-style-row-active {
+          color: inherit;
+        }
+        .rcjspp-sel-style-header-row {
+          background-color: white;
+          opacity: 0.85;
+          justify-content: flex-end;
+          width: 100%;
+          height: 45px;
+          padding-top: 5px;
+        }
+        .rcjspp-selectors {
+          top: 100%;
+          flex-direction: column;
+          background-color: white;
+          width: 100%;
+          width: 100vw;
+          z-index: 9999;
+        }
+        @media(min-width: 800px){
+          .rcjspp-selectors {
+            overflow-y: scroll;
+          }
+        }
+        .rcjspp-pre-set-save-container {
+          background-color: white;
+          display: block;
+          height: 75px;
+        }
+
+
+        .rcjspp-sel-row-form {
+          width: 100%;
+          justify-content: space-between;
+          padding: 5px;
+        }
+        .rcjspp-sel-row-form-label {
+          display: flex;
+          margin-right: 20px;
+          align-items: baseline;
+        }
+        .rcjspp-sel-row-form .rcjspp-sel-input {
+          font-size: 16px;
+          display: flex;
+          min-height: 14px;
+          padding: 3px;
+          width: 4em;
+        }
+        .rcjspp-sel-row.rcjspp-sel-input-radio {
+          width: 5%;
+        }
+
+        .rcjspp-sel-inner-container {
+          padding: 5px;
+          flex-direction: column;
+        }
+        .rcjspp-sel-checkbox-container {
+          flex-direction: row;
+          flex-wrap: wrap;
+          margin-top: 15px;
+          justify-content: space-around;
+        }
+        @media(min-width: 800px){
+          .rcjspp-sel-checkbox-container {
+            overflow-y: scroll;
+          }
+        }
+        .rcjspp-sel-checkbox-group-container {
+          flex-direction: column; 
+          margin-bottom: 10px;
+          margin-right: 20px;
+        }
+        .rcjspp-sel-checkbox-group-container .rcjspp-sel-checkbox-group-header {
+          margin-top: 10px;
+          margin-bottom: 5px;
+        }
+        .rcjspp-sel-checkbox-group .rcjspp-sel-label-radio {
+          display: flex;
+        }
+        .rcjspp-sel-label-radio {
+          cursor: pointer;
+        }
+        .rcjspp-sel-label-radio:hover {
+          background-color: rgba(125, 157, 165, 0.1);
+        }
+        .rcjspp-sel-predicted-selector {
+          color: red;
+        }
+
+
+        .rcjspp-pre-set-save-button {
+          padding: 5px;
+          margin-right: 20px;
+        }
+        .rcjspp-pre-set-save-toggle-container {
+          flex-direction: column;
+          margin: 15px;
+          width: 200px;
+          flex-grow: 0;
+          flex-shrink: 0;
+        }
+        .rcjspp-pre-set-input-label {
+          padding-left: 5px;
+        }
+        .rcjspp-pre-set-input {
+          min-width: 150px;
+        }
+        .rcjspp-pre-set-save-inner-container {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+        }
+        .rcjspp-pre-set-selector {
+          min-width: 100px;
+        }
+
+        .rcjspp-sel-style-body {
+          overflow-y: scroll;
+        }
+        .rcjspp-sel-style-col-header {
+          width: 10%;
+          padding-left: 7px;
+        }
+        .rcjspp-sel-style-body {
+          display: block;
+          padding-top: 45px;
+          margin-bottom: 20px;
+        }
+        .rcjspp-sel-style-row {
+          height: 20px;
+        }
+        .rcjspp-sel-style-row-label {
+          display: block;
+          width: 20%;
+          height: 100%;
+          overflow: scroll;
+          cursor: pointer;
+          color: #aaa;
+          padding-left: 10px;
+        }
+        .rcjspp-sel-style-row-active {
+          color: inherit;
+        }
+        .rcjspp-sel-style-input,
+        .rcjspp-sel-style-select {
+          width: 10%;
+          height: 100%;
+        }
+        .rcjspp-sel-style-select-shade {
+          width: 40px;
+        }
+        .rcjspp-sel-disabled {
+          color: transparent;
         }
       `}</style>
     </div>   

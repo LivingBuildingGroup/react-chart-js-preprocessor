@@ -5,7 +5,7 @@ import { parseSelectorValue } from 'graphing-helpers';
 export default function LayersSave (props){
 
   const preSetGlobalColorSelector = props.preSetGroupEditMode ?
-  <div className ='gw-sel-style-row tooltip'>
+  <div className ='rcjspp-sel-style-row tooltip'>
       <div className='popover popover-wide-readme'>
         <p>
           You are in 'group pre-set edit mode'. 
@@ -14,24 +14,24 @@ export default function LayersSave (props){
           We do save shades here. In the first column, select shade 1 (bright), 2 (lightest), 9 (darkest), or 0 to always use the same color (e.g. blue for rain).
         </p>
       </div>
-    <div className='gw-sel-style-row-label gw-sel-style-row-active'>
+    <div className='rcjspp-sel-style-row-label rcjspp-sel-style-row-active'>
       test with this color:
     </div>
-    <div className='gw-sel-style-col-header gw-sel-style-select-shade'></div>
+    <div className='rcjspp-sel-style-col-header rcjspp-sel-style-select-shade'></div>
     <select 
-      className='gw-sel-style-select'
+      className='rcjspp-sel-style-select'
       onChange={e=>props.handlePreSetGlobalColor(e)}
       value={props.preSetGlobalColor} >
       {props.preSetGlobalColorOptionsJSX}
     </select>
     {/* these are to pad the right using the same css*/}
-    <div className='gw-sel-style-input'></div>
-    <div className='gw-sel-style-input'></div>
-    <div className='gw-sel-style-input'></div>
-    <div className='gw-sel-style-input'></div>
-    <div className='gw-sel-style-input'></div>
-    <div className='gw-sel-style-input'></div>
-    <div className='gw-sel-style-input'></div>
+    <div className='rcjspp-sel-style-input'></div>
+    <div className='rcjspp-sel-style-input'></div>
+    <div className='rcjspp-sel-style-input'></div>
+    <div className='rcjspp-sel-style-input'></div>
+    <div className='rcjspp-sel-style-input'></div>
+    <div className='rcjspp-sel-style-input'></div>
+    <div className='rcjspp-sel-style-input'></div>
   </div> : null ;
 
   const layersForSelectors = 
@@ -65,23 +65,23 @@ export default function LayersSave (props){
        props.styles[layer].style.shade ;
 
     const disabledShadeClass = shadeValue <= 0 ?
-      'gw-sel-disabled' :
+      'rcjspp-sel-disabled' :
       '' ;
     const shadeSelector = props.preSetGroupEditMode ?
       <select 
-        className={`gw-sel-style-select gw-sel-style-select-shade ${disabledShadeClass}`}
+        className={`rcjspp-sel-style-select rcjspp-sel-style-select-shade ${disabledShadeClass}`}
         onChange={e=>props.handlePreSetEdit(e, layer, {type: 'shade'})}
         value={shadeValue} >
         {props.preSetShadeOptionsJSX}
       </select> : 
-      <div className='gw-sel-style-select gw-sel-style-select-shade'></div>;
+      <div className='rcjspp-sel-style-select rcjspp-sel-style-select-shade'></div>;
 
     const selectors = props.preSetColumns.map((col,j)=>{
 
       const thisLayer = isObjectLiteral(props.styles[layer]) ? props.styles[layer] : {} ;
       const value = parseSelectorValue(thisLayer, col, props.preSetGroupEditMode)
       const disabledColorClass = col.type === 'color' && props.preSetGroupEditMode && shadeValue > 0 ?
-        'gw-sel-disabled' :
+        'rcjspp-sel-disabled' :
         '' ;
 
       const input = col.type === 'number' ?
@@ -89,12 +89,12 @@ export default function LayersSave (props){
           key={`${layer}${col.key}-${j}`}
           type='number'
           step={col.step}
-          className={`gw-sel-style-input gw-sel-style-input-${col.key}`}
+          className={`rcjspp-sel-style-input rcjspp-sel-style-input-${col.key}`}
           onChange={e=>props.handlePreSetEdit(e, layer, col)} 
           value={value} /> :
         <select 
           key={`${layer}${col.key}-${j}`}
-          className={`gw-sel-style-select gw-sel-style-input-${col.key} ${disabledColorClass}`}
+          className={`rcjspp-sel-style-select rcjspp-sel-style-input-${col.key} ${disabledColorClass}`}
           onChange={e=>props.handlePreSetEdit(e, layer, col)}
           value={value} >
           {props.preSetStyleOptionsJSX[j]}
@@ -104,12 +104,12 @@ export default function LayersSave (props){
     });
 
     const rowActiveClass = props.layersSelected.includes(layer) ?
-      'gw-sel-style-row-active' : '' ;
+      'rcjspp-sel-style-row-active' : '' ;
 
     const fullRow = <div key={`${layer}${i}`} 
-      className ='gw-sel-style-row'>
+      className ='rcjspp-sel-style-row'>
       <div key={`${header}-header`} 
-        className={`gw-sel-style-row-label ${rowActiveClass}`}
+        className={`rcjspp-sel-style-row-label ${rowActiveClass}`}
         onClick={()=>props.handleLayerSelection(layer)}>
         {header}
       </div>
@@ -121,49 +121,9 @@ export default function LayersSave (props){
   });
   // end preSetInputs
 
-  return <div className='gw-sel-style-body'>
+  return <div className='rcjspp-sel-style-body'>
     {preSetGlobalColorSelector}
     {preSetInputs}
-    <style>{`
-      .gw-sel-style-body {
-        overflow-y: scroll;
-      }
-      .gw-sel-style-col-header {
-        width: 10%;
-        padding-left: 7px;
-      }
-      .gw-sel-style-body {
-        display: block;
-        padding-top: 45px;
-        margin-bottom: 20px;
-      }
-      .gw-sel-style-row {
-        height: 20px;
-      }
-      .gw-sel-style-row-label {
-        display: block;
-        width: 20%;
-        height: 100%;
-        overflow: scroll;
-        cursor: pointer;
-        color: #aaa;
-        padding-left: 10px;
-      }
-      .gw-sel-style-row-active {
-        color: inherit;
-      }
-      .gw-sel-style-input,
-      .gw-sel-style-select {
-        width: 10%;
-        height: 100%;
-      }
-      .gw-sel-style-select-shade {
-        width: 40px;
-      }
-      .gw-sel-disabled {
-        color: transparent;
-      }
-    `}</style>
   </div>
 
 }

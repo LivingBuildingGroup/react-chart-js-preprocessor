@@ -107,27 +107,27 @@ export default class AdminSave extends React.Component {
   render() {
 
     const preSetSaveButton = <button type='submit'
-      className='gw-pre-set-save-button'
+      className='rcjspp-pre-set-save-button'
       onClick={e=>this.handlePreSetSave(e)}>
       save
     </button>
 
     const saveTypeToggle = <div 
-      className='gw-pre-set-save-toggle-container'>
-      <label className='gw-pre-set-input-label'>
+      className='rcjspp-pre-set-save-toggle-container'>
+      <label className='rcjspp-pre-set-input-label'>
         <input
           name='save-type'
           type='radio'
-          className='gw-pre-set-input'
+          className='rcjspp-pre-set-input'
           onChange={()=>this.toggleSaveType()} 
           checked={this.state.isNew} />
         save as a new pre-set
       </label> 
-      <label className='gw-pre-set-input-label'>
+      <label className='rcjspp-pre-set-input-label'>
         <input
           name='save-type'
           type='radio'
-          className='gw-pre-set-input'
+          className='rcjspp-pre-set-input'
           onChange={()=>this.toggleSaveType()} 
           checked={!this.state.isNew} />
         update existing pre-set     
@@ -135,21 +135,21 @@ export default class AdminSave extends React.Component {
     </div>
 
     const isPublicToggle = <div 
-      className='gw-pre-set-save-toggle-container'>
-      <label className='gw-pre-set-input-label'>
+      className='rcjspp-pre-set-save-toggle-container'>
+      <label className='rcjspp-pre-set-input-label'>
         <input
           name='permission'
           type='radio'
-          className='gw-pre-set-input'
+          className='rcjspp-pre-set-input'
           onChange={()=>this.toggleIsPublic()} 
           checked={this.state.isPublic}/>
         make publicly visible
       </label> 
-      <label className='gw-pre-set-input-label'>
+      <label className='rcjspp-pre-set-input-label'>
         <input
           name='permission'
           type='radio'
-          className='gw-pre-set-input'
+          className='rcjspp-pre-set-input'
           onChange={()=>this.toggleIsPublic()} 
           checked={!this.state.isPublic} />
         keep private     
@@ -157,31 +157,31 @@ export default class AdminSave extends React.Component {
     </div>
 
     const defToggle = <div 
-      className='gw-pre-set-save-toggle-container'>
-      <label className='gw-pre-set-input-label'>
+      className='rcjspp-pre-set-save-toggle-container'>
+      <label className='rcjspp-pre-set-input-label'>
         <input
           name='def'
           type='radio'
-          className='gw-pre-set-input'
+          className='rcjspp-pre-set-input'
           onChange={()=>this.toggleIsDef()} 
           checked={this.state.def} />
         make default
       </label> 
-      <label className='gw-pre-set-input-label'>
+      <label className='rcjspp-pre-set-input-label'>
         <input
           name='def'
           type='radio'
-          className='gw-pre-set-input'
+          className='rcjspp-pre-set-input'
           onChange={()=>this.toggleIsDef()} 
           checked={!this.state.def} />
         not default     
       </label> 
     </div>
 
-    const nameSelector = <label className='gw-pre-set-input-label'>
+    const nameSelector = <label className='rcjspp-pre-set-input-label'>
       <input
         type='text'
-        className='gw-pre-set-input'
+        className='rcjspp-pre-set-input'
         onChange={e=>this.handlePreSetName(e)} 
         value={this.state.name || ''} /> 
       {this.state.isNew ? 'name' : 'new name (only if changing)'}
@@ -190,8 +190,8 @@ export default class AdminSave extends React.Component {
     const IconPreview = this.state.icon && typeof this.props.icons[this.state.icon] === 'function' ? this.props.icons[this.state.icon] : null ;
     const iconPreview = IconPreview ? <IconPreview style={{height: 16}}/> : null ;
 
-    const iconSelector = <label className='gw-pre-set-input-label'>
-      <select className='gw-pre-set-selector'
+    const iconSelector = <label className='rcjspp-pre-set-input-label'>
+      <select className='rcjspp-pre-set-selector'
         onChange={e=>this.handlePreSetIcon(e)}
         value={this.state.icon || ''} >
         {this.state.preSetIconJSXOptions}
@@ -200,8 +200,8 @@ export default class AdminSave extends React.Component {
       {iconPreview}
     </label>
       
-    return <form className='gw-pre-set-save-container'>
-      <div className='gw-pre-set-save-inner-container'>
+    return <form className='rcjspp-pre-set-save-container'>
+      <div className='rcjspp-pre-set-save-inner-container'>
         {saveTypeToggle}
         {isPublicToggle}
         {defToggle}
@@ -209,35 +209,6 @@ export default class AdminSave extends React.Component {
         {iconSelector}
         {preSetSaveButton}
       </div>    
-      <style>{`
-        .gw-pre-set-save-button {
-          padding: 5px;
-          margin-right: 20px;
-        }
-        .gw-pre-set-save-toggle-container {
-          flex-direction: column;
-          margin: 15px;
-          width: 200px;
-          flex-grow: 0;
-          flex-shrink: 0;
-        }
-        .gw-pre-set-input-label {
-          padding-left: 5px;
-        }
-        .gw-pre-set-input {
-          min-width: 150px;
-        }
-        .gw-pre-set-save-inner-container {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-        }
-        .gw-pre-set-selector {
-          min-width: 100px;
-        }
-      `}</style>
     </form>
   }
   

@@ -2,13 +2,12 @@ import React               from 'react';
 import { parseEvent }      from 'conjunction-junction'; 
 import { 
   formatPreSetSelectorColumns, 
-  editOneStyle,
   applyPreSetGlobalColorToStyles,
-}                          from 'graphing-helpers';
+  editOneStyle }           from 'graphing-helpers';
 import LayersOnFly         from './4layers-on-fly';
 import LayersSave          from './4pre-set-layers-save';
 import AdminSave           from './4pre-set-admin-save';
-import RangeFinder from './4-range-finder';
+import RangeFinder         from './4-range-finder';
 
 export default class Selectors extends React.Component{
   constructor(props){
@@ -88,15 +87,15 @@ export default class Selectors extends React.Component{
     const columnsJSX = Array.isArray(columns) ?
       columns.map((style,i)=>{
         return <div key={`${style.key}${i}`}
-          className='gw-sel-style-col-header'>
+          className='rcjspp-sel-style-col-header'>
           {style.label}
         </div>
       }) : null ;
     if(Array.isArray(columnsJSX)){
-      columnsJSX.unshift(<div key='shade' className='gw-sel-style-col-header gw-sel-style-select-shade'></div>);  
-      columnsJSX.unshift(<div key='blank' className='gw-sel-style-row-label gw-sel-style-row-active'></div>)    
+      columnsJSX.unshift(<div key='shade' className='rcjspp-sel-style-col-header rcjspp-sel-style-select-shade'></div>);  
+      columnsJSX.unshift(<div key='blank' className='rcjspp-sel-style-row-label rcjspp-sel-style-row-active'></div>)    
     }
-    const preSetHeaderRowJSX = <div className='gw-sel-style-header-row'>
+    const preSetHeaderRowJSX = <div className='rcjspp-sel-style-header-row'>
       {columnsJSX}
     </div>
   
@@ -154,30 +153,12 @@ export default class Selectors extends React.Component{
       layerGroupByJSXOptions={p.layerGroupByJSXOptions}
       handleRangeChange     ={p.handleRangeChange}
       handleTickChange      ={p.handleTickChange} />
-      // layerUnitsArray       ={p.layerUnitsArray}
-      // layersGroupedByUnits  ={p.layersGroupedByUnits}
-      // layersSelected        ={p.layersSelected}
-      // legendObject          ={p.legendObject}
-      // indexAbbrev           ={p.indexAbbrev}
-      // indexDef              ={p.indexDef}
-
-      // handleLayerSelection={p.handleLayerSelection}
-      // toggleLayerGroup    ={p.toggleLayerGroup} />
 
     const selectors = 
       p.selectorsInFocus === 'layers' ?
-        <div className='gw-selectors'
+        <div className='rcjspp-selectors'
           style={p.cssDivSelectors}>
           <LayersOnFly
-            // groupTrue             ={p.groupTrue}
-            // groupAllow            ={p.groupAllow}
-            // handleGroupBy         ={p.handleGroupBy}
-            // xStart                ={p.xStart}
-            // xEnd                  ={p.xEnd}
-            // xIdealTickSpacing     ={p.xIdealTickSpacing}
-            // layerGroupByJSXOptions={p.layerGroupByJSXOptions}
-            // handleRangeChange     ={p.handleRangeChange}
-            // handleTickChange      ={p.handleTickChange}
             layerUnitsArray       ={p.layerUnitsArray}
             layersGroupedByUnits  ={p.layersGroupedByUnits}
             layersSelected        ={p.layersSelected}
@@ -191,7 +172,7 @@ export default class Selectors extends React.Component{
           />
         </div> :
       p.selectorsInFocus.includes('edit') ?
-        <div className='gw-selectors'
+        <div className='rcjspp-selectors'
           style={p.cssDivSelectors}>
           {this.state.preSetHeaderRowJSX}
           <LayersSave
@@ -217,61 +198,9 @@ export default class Selectors extends React.Component{
         </div> :
       null ;
 
-    return <div className='gw-selectors-outermost'>
+    return <div className='rcjspp-selectors-outermost'>
       {rangeFinder}
       {selectors}
-      <style>{`
-        @media print {
-          .gw-selectors-outermost {
-            display: none;
-          }
-        }
-        .gw-sel-style-col-header {
-          width: 10%;
-          padding-left: 7px;
-        }     
-        .gw-sel-style-select-shade {
-          width: 40px;
-        } 
-        .gw-sel-style-row-label {
-          display: block;
-          width: 20%;
-          height: 100%;
-          overflow: scroll;
-          cursor: pointer;
-          color: #aaa;
-          padding-left: 10px;
-        }
-        .gw-sel-style-row-active {
-          color: inherit;
-        }
-        .gw-sel-style-header-row {
-          background-color: white;
-          opacity: 0.85;
-          justify-content: flex-end;
-          width: 100%;
-          height: 45px;
-          padding-top: 5px;
-        }
-        .gw-selectors {
-          top: 100%;
-          flex-direction: column;
-          background-color: white;
-          width: 100%;
-          width: 100vw;
-          z-index: 9999;
-        }
-        @media(min-width: 800px){
-          .gw-selectors {
-            overflow-y: scroll;
-          }
-        }
-        .gw-pre-set-save-container {
-          background-color: white;
-          display: block;
-          height: 75px;
-        }
-      `}</style>
     </div>;
   }
 }
