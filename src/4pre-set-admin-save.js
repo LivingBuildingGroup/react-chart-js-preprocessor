@@ -1,4 +1,5 @@
 import React from 'react';
+import * as icons from 'something-rather-iconic';
 
 export default class AdminSave extends React.Component {
   constructor(props){
@@ -40,12 +41,11 @@ export default class AdminSave extends React.Component {
 
   listAllPreSetIconsAsOptions(){
     // this is a method, vs helper function, ONLY because it uses JSX
-    const iconsPreSets = this.props.icons || {};
     const preSetIconNames = [];
     const preSetIconComponents = [];
-    for(let name in iconsPreSets){
+    for(let name in icons){
       preSetIconNames.push(name);
-      preSetIconComponents.push(iconsPreSets[name]);
+      preSetIconComponents.push(icons[name]);
     }
     const preSetIconJSXOptions = preSetIconNames.map((name,i)=>{
       return <option key={i}
@@ -187,7 +187,7 @@ export default class AdminSave extends React.Component {
       {this.state.isNew ? 'name' : 'new name (only if changing)'}
     </label>
 
-    const IconPreview = this.state.icon && typeof this.props.icons[this.state.icon] === 'function' ? this.props.icons[this.state.icon] : null ;
+    const IconPreview = this.state.icon && typeof icons[this.state.icon] === 'function' ? icons[this.state.icon] : null ;
     const iconPreview = IconPreview ? <IconPreview style={{height: 16}}/> : null ;
 
     const iconSelector = <label className='rcjspp-pre-set-input-label'>

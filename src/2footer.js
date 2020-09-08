@@ -2,6 +2,7 @@ import React                    from 'react';
 import { isObjectLiteral }      from 'conjunction-junction';
 import { 
   calcMinimumWindowDimensions } from 'browser-helpers';
+import * as icons               from 'something-rather-iconic';
 
 const Dummy = function(){
   return null;
@@ -80,9 +81,8 @@ export default function Footer (props){
     'transparent' : 
     '' ;
 
-  const i = props.icons || {} ;
-  const IconLeft  = typeof i.CaretLeft  === 'function' ? i.CaretLeft  : typeof i.caret_left  === 'function' ? i.caret_left : Dummy;
-  const IconRight = typeof i.CaretRight === 'function' ? i.CaretRight : typeof i.caret_right === 'function' ? i.caret_right: Dummy;
+  const IconLeft  = typeof icons.CaretLeft  === 'function' ? icons.CaretLeft  : Dummy;
+  const IconRight = typeof icons.CaretRight === 'function' ? icons.CaretRight : Dummy;
 
   const win = typeof window !== 'undefined' ? window : {} ;
   const { cssWidthOuter } = calcMinimumWindowDimensions(win);

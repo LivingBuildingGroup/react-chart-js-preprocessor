@@ -99,9 +99,7 @@ export default class RCJSPP extends React.Component {
       cssHeightSelectors:          isPrimitiveNumber(this.props.cssHeightSelectors) ? this.props.cssHeightSelectors : 'auto',
       cssCanvasHeight:             0,
       cssCanvasWidth:              0,
-      
-      icons:                       this.props.icons,
-      
+            
       selectorsPopover:       false,
       selectorsInFocus:       'none', // this updates in componentDidMount
       preSetSaveAllow:        true,
@@ -719,7 +717,6 @@ export default class RCJSPP extends React.Component {
       selectorsInFocus   ={s.selectorsInFocus}
       cssDivSelectors    ={s.cssDivSelectors}
       cssStyleColorsNamed={s.cssStyleColorsNamed}
-      icons              ={s.icons}
       preSetSaveAllow    ={s.preSetSaveAllow}
       groupTrue          ={s.groupTrue}
       groupAllow         ={s.groupAllow}
@@ -765,7 +762,6 @@ export default class RCJSPP extends React.Component {
       advanceAllow          ={s.advanceAllow}
       retreatAllow          ={s.retreatAllow}
       waitingOnDataFromProps={s.waitingOnDataFromProps}
-      icons                 ={s.icons}
       cssDivFooter          ={s.cssDivFooter}
       bp                    ={bp}
       googleTagManagerClass

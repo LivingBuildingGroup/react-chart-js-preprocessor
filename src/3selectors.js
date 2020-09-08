@@ -133,7 +133,6 @@ export default class Selectors extends React.Component{
 
     const preSetSave = p.preSetSaveAllow && this.state.ready ?
       <AdminSave
-        icons              ={p.icons}
         preSetIds          ={p.preSetIds}
         preSets            ={p.preSets}
         preSetIdActive     ={p.preSetIdActive}

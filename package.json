@@ -22,7 +22,8 @@
     "conjunction-junction": "^3.13.53",
     "graphing-helpers": "^5.2.16",
     "react-chartjs-2": "^2.8.0",
-    "pretty-colors": "^0.0.2"
+    "pretty-colors": "^0.0.2",
+    "something-rather-iconic": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
