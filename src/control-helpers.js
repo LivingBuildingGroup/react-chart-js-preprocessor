@@ -1,17 +1,18 @@
-import { isObjectLiteral } from 'conjunction-junction';
+import {
+  Print,
+  PaletteSolid,
+  ArrowsAltV,
+  Edit } from 'something-rather-iconic';
+ import { isObjectLiteral } from 'conjunction-junction';
 
-const Dummy = () => {
+function Dummy() {
   return null;
 };
+
 const iconStyle = {height: 20, width: 20};
 
 export const formatControlsWithoutPreSets = (state, that) => {
-  const icons = state.icons || {};
-  const Print        = typeof icons.Print        === 'function' ? icons.Print        : Dummy ;
-  const PaletteSolid = typeof icons.PaletteSolid === 'function' ? icons.PaletteSolid : Dummy ;
-  const ArrowsAltV   = typeof icons.ArrowsAltV   === 'function' ? icons.ArrowsAltV   : Dummy ;
-  const Edit         = typeof icons.Edit         === 'function' ? icons.Edit         : Dummy ;
-  
+
   const controlNamesTop = [];
   const controlIconsTop = [];
   const controlFuncsTop = [];

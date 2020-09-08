@@ -3,10 +3,6 @@ import React from 'react';
 export default function Controls (props){
 
   const controlsFromProps  = Array.isArray(props.controls)  ? props.controls  : [] ;
-  // const controlNames  = Array.isArray(props.controlNames)  ? props.controlNames  : [] ;
-  // const controlIcons  = Array.isArray(props.controlIcons)  ? props.controlIcons  : [] ;
-  // const controlFuncs  = Array.isArray(props.controlFuncs ) ? props.controlFuncs  : [] ;
-  // const controlLabels = Array.isArray(props.controlLabels) ? props.controlLabels : [] ;
 
   const controls = props.waitingOnPreSetIdFromProps ? null : // to force a re-render
     controlsFromProps.map((c,i)=>{ 

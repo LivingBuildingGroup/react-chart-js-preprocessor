@@ -2,7 +2,9 @@ import React                    from 'react';
 import { isObjectLiteral }      from 'conjunction-junction';
 import { 
   calcMinimumWindowDimensions } from 'browser-helpers';
-import * as icons               from 'something-rather-iconic';
+import {
+  CaretLeft,
+  CaretRight }                 from 'something-rather-iconic';
 
 const Dummy = function(){
   return null;
@@ -81,9 +83,6 @@ export default function Footer (props){
     'transparent' : 
     '' ;
 
-  const IconLeft  = typeof icons.CaretLeft  === 'function' ? icons.CaretLeft  : Dummy;
-  const IconRight = typeof icons.CaretRight === 'function' ? icons.CaretRight : Dummy;
-
   const win = typeof window !== 'undefined' ? window : {} ;
   const { cssWidthOuter } = calcMinimumWindowDimensions(win);
   const popoverRightClass = cssWidthOuter > props.bp ? 'tooltip-bottom-right' : 'tooltip-bottom-left';
@@ -98,7 +97,7 @@ export default function Footer (props){
       <div className='popover'>
         <p>retreat the graph to the prior event</p>
       </div>
-      <IconLeft style={{height: 36}} />
+      <CaretLeft style={{height: 36}} />
     </div> :
     <div className='rcjspp-advance-button rcjspp-control'/> ;
 
@@ -109,7 +108,7 @@ export default function Footer (props){
       <div className='popover'>
         <p>advance the graph to the next event</p>
       </div>
-      <IconRight style={{height: 36}} />
+      <CaretRight style={{height: 36}} />
     </div> :
     <div className='rcjspp-advance-button rcjspp-control'/> ;
 
