@@ -1,57 +1,46 @@
-import {
-  Print,
-  PaletteSolid,
-  ArrowsAltV,
-  Edit } from 'something-rather-iconic';
- import { isObjectLiteral } from 'conjunction-junction';
-
-function Dummy() {
-  return null;
-};
-
-const iconStyle = {height: 20, width: 20};
+import { isObjectLiteral } from 'conjunction-junction';
 
 export const formatControlsWithoutPreSets = (state, that) => {
 
   const controlNamesTop = [];
-  const controlIconsTop = [];
+  const controlIconNamesTop = [];
   const controlFuncsTop = [];
   const controlLabelsTop= [];
   const controlNamesBot = [];
-  const controlIconsBot = [];
+  const controlIconNamesBot = [];
   const controlFuncsBot = [];
   const controlLabelsBot= [];
   if(state.printAllow){
     controlNamesTop.push('print');
-    controlIconsTop.push(<Print style={iconStyle}/>);
+    controlIconNamesTop.push('Print');
     controlFuncsTop.push(that.printGraph);
     controlLabelsTop.push('Print the graph on letter size landscape (allow a few seconds for the graph to render before print preview starts).');
   }
   if(state.backgroundAllow){
     controlNamesTop.push('background');
-    controlIconsTop.push(<PaletteSolid style={iconStyle}/>);
+    controlIconNamesTop.push('PaletteSolid');
     controlFuncsTop.push(that.handleBackgroundChange);
     controlLabelsTop.push('Toggle white graph background');
   }
   if(state.yAxisAllow){
     controlNamesTop.push('y-Axis');
-    controlIconsTop.push(<ArrowsAltV style={iconStyle}/>);
+    controlIconNamesTop.push('ArrowsAltV');
     controlFuncsTop.push(that.handleYAxisSelector);
     controlLabelsTop.push('Toggle Y-Axis settings');
   }
   if(state.selectorsAllow){
     controlNamesBot.push('selector');
-    controlIconsBot.push(<Edit style={iconStyle}/>);
+    controlIconNamesBot.push('Edit');
     controlFuncsBot.push(that.toggleSelectorsPopover);
     controlLabelsBot.push('Open graph customization options');
   }
   return {
     controlNamesTop,
-    controlIconsTop,
+    controlIconNamesTop,
     controlFuncsTop,
     controlLabelsTop,
     controlNamesBot,
-    controlIconsBot,
+    controlIconNamesBot,
     controlFuncsBot,
     controlLabelsBot,
   };
@@ -62,7 +51,7 @@ export const formatPreSetsForControls = (preSets, icons={}, that) => {
     return { 
       preSetIds  : [],
       preSetNames: [],
-      preSetIcons: [],
+      preSetIconNames: [],
       preSetFuncs: [],
     };
   }
@@ -74,18 +63,15 @@ export const formatPreSetsForControls = (preSets, icons={}, that) => {
   const preSetNames = preSetIds.map(id=>{
     return preSets[id].name || 'pre-set';
   });
-  const preSetIcons = preSetIds.map(id=>{
-    const Icon = typeof icons[preSets[id].icon] === 'function' ?
-      icons[preSets[id].icon] : Dummy;
-    return <Icon style={iconStyle}/>
-  });
+  const preSetIconNames = preSetIds.map(id=>preSets[id].icon);
+    
   const preSetFuncs = preSetIds.map(id=>{
     return ()=>that.handlePreSetSelect(id);
   });
   return {
     preSetIds,
     preSetNames,
-    preSetIcons,
+    preSetIconNames,
     preSetFuncs,
   };
 };
@@ -93,11 +79,11 @@ export const formatPreSetsForControls = (preSets, icons={}, that) => {
 export const formatControls = (state, that) => {
   const {
     controlNamesTop,
-    controlIconsTop,
+    controlIconNamesTop,
     controlFuncsTop,
     controlLabelsTop,
     controlNamesBot,
-    controlIconsBot,
+    controlIconNamesBot,
     controlFuncsBot,
     controlLabelsBot,
   } = formatControlsWithoutPreSets(state, that);
@@ -105,7 +91,7 @@ export const formatControls = (state, that) => {
   const {
     preSetIds,
     preSetNames,
-    preSetIcons,
+    preSetIconNames,
     preSetFuncs,
   } = formatPreSetsForControls(state.preSets, state.icons, that);
 
@@ -119,10 +105,10 @@ export const formatControls = (state, that) => {
     ...preSetIds,
     ...controlNamesBot, 
   ];
-  const controlIcons = [
-    ...controlIconsTop, 
-    ...preSetIcons,
-    ...controlIconsBot, 
+  const controlIconNames = [
+    ...controlIconNamesTop, 
+    ...preSetIconNames,
+    ...controlIconNamesBot, 
   ];
   const controlFuncs = [
     ...controlFuncsTop, 
@@ -139,7 +125,7 @@ export const formatControls = (state, that) => {
     return {
       name: n,
       id:    controlIds[i],
-      icon:  controlIcons[i],
+      iconName:  controlIconNames[i],
       func:  controlFuncs[i],
       label: controlLabels[i],
     };

@@ -1,6 +1,9 @@
+import * as icons from 'something-rather-iconic';
 import React from 'react';
 
-export default function Controls (props){
+const iconStyle = {height: 20, width: 20};
+
+export default function Controls(props){
 
   const controlsFromProps  = Array.isArray(props.controls)  ? props.controls  : [] ;
 
@@ -28,11 +31,13 @@ export default function Controls (props){
       const vPosition = c === 'selector' ? 'bottom' : 'top'
       const googleTagManagerClass = `graph-control ${controlNameAsId} true1 true2`;
 
+      const iconName = icons[c.iconName] ? c.iconName : 'Tint';
+      const Icon = icons[iconName];
       return <div key={i} 
         className={`rcjspp-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
         onClick={c.func}>
         {popover}
-        {c.icon || null}
+        <Icon style={iconStyle}/>
       </div>
 
     });
