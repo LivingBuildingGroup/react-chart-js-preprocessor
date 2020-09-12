@@ -124,10 +124,10 @@ export const formatControls = (state, that) => {
   const controls = controlNames.map((n,i)=>{
     return {
       name: n,
-      id:    controlIds[i],
-      iconName:  controlIconNames[i],
-      func:  controlFuncs[i],
-      label: controlLabels[i],
+      id:       controlIds[i],
+      iconName: controlIconNames[i],
+      func:     controlFuncs[i],
+      label:    controlLabels[i],
     };
   })
   return {

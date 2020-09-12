@@ -4,11 +4,7 @@ import {
   calcMinimumWindowDimensions } from 'browser-helpers';
 import {
   CaretLeft,
-  CaretRight }                 from 'something-rather-iconic';
-
-const Dummy = function(){
-  return null;
-}
+  CaretRight }                  from 'something-rather-iconic';
 
 export default function Footer (props){
 
