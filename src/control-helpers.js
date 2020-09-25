@@ -86,9 +86,5 @@ export const formatControls = (state, that) => {
     ...controlsBot,
   ];
 
-  return {
-    preSetIds,
-    controlsOld,
-    controls,
-  };
+  return controls;
 };

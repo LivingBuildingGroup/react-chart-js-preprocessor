@@ -5,8 +5,8 @@ export default class AdminSave extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      preSetIds: this.props.preSetIds || [] ,
-      preSets:   this.props.preSets || {} ,
+      // preSetIds: this.props.preSetIds || [] ,
+      // preSets:   this.props.preSets || {} ,
 
       id:       this.props.preSetIdActive,
       name:     '',
@@ -28,7 +28,8 @@ export default class AdminSave extends React.Component {
   }
 
   readPreSetFromSelected(){
-    const thisPreSet = this.state.preSets[this.state.id];
+    const preSets = this.props.preSets || {};
+    const thisPreSet = preSets[this.state.id];
     if(thisPreSet){
       this.setState({
         name:     thisPreSet.name,
@@ -91,13 +92,12 @@ export default class AdminSave extends React.Component {
     event.preventDefault();
     // const stylesDefault = this.props.styles; // used if no styles explicitly sent
     const preSet = {
-      id:       this.state.isNew ? null : this.state.id, // system-assigned
-
-      type:     this.state.type, // admin
-      def:      this.state.def,
-      name:     this.state.name,
-      icon:     this.state.icon,
-      permissions: this.state.isPublic ? ['grd','public'] : ['grd'],
+      id:                 this.state.isNew ? null : this.state.id, // system-assigned
+      type:               this.state.type, // admin
+      def:                this.state.def,
+      name:               this.state.name,
+      icon:               this.state.icon,
+      permissions:        this.state.isPublic ? ['grd','public'] : ['grd'],
       preSetSaveSettings: this.state.preSetSaveSettings,
     };
     console.log('preSet to save', preSet);

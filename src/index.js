@@ -130,7 +130,7 @@ export default class RCJSPP extends React.Component {
       preSetSaveSettings:     {useOnlyExplicitStylesWhenUngrouped: false, prefixGroups: false, prefixGroupsSub: false, preSetSaveAsType: 'single', ...this.props.preSetSaveSettings } ,
       preSets:                this.props.preSets        || {},
       preSetIdActive:         this.props.preSetIdActive || '' ,
-      preSetIds:              [],
+      // preSetIds:              [],
       // preSetStyleOptionsJSX:  [[]],
 
       keyToCompareOnAdvance: this.props.keyToCompareOnAdvance ? this.props.keyToCompareOnAdvance :
@@ -193,7 +193,8 @@ export default class RCJSPP extends React.Component {
     })
     .then(()=>{
       const that = this;
-      this.setState(formatControls(this.state, that)); // formatControls returns an object
+      const controls = formatControls(this.state, that);
+      this.setState({controls});
     })
     .then(()=>{
       const selectorsInFocus =
@@ -730,7 +731,7 @@ export default class RCJSPP extends React.Component {
       preSetGlobalPalettes    ={s.preSetGlobalPalettes}
       preSetGlobalPalette     ={s.preSetGlobalPalette}
       preSetGlobalColorOptions={s.preSetGlobalColorOptions}
-      preSetIds               ={s.preSetIds}
+      // preSetIds               ={s.preSetIds}
       preSetIdActive          ={s.preSetIdActive}
       layersThatHaveUnits     ={s.layersThatHaveUnits}
       layersSelected          ={s.layersSelected}
