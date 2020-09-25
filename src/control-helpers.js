@@ -94,7 +94,7 @@ export const formatPreSetsForControls = (preSets, icons={}, that) => {
   const preSetIds = [];
   for(let id in preSets){
     const thisPreset = preSets[id];
-    controlPresets.push({
+    controlsPresets.push({
       name:     thisPreset.name || 'pre-set',
       id:       'print',
       iconName: thisPreset.icon || 'CoffeePot',
