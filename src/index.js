@@ -247,6 +247,7 @@ export default class RCJSPP extends React.Component {
       const graphInfo = createGraphInfoOnGroupOrMount(this.state);
       /* createGraphInfoOnGroupOrMount returns
           layersThatHaveUnits, 
+          layersThatHaveNoUnits,
           layersAllPrefixed,
           legendObject,
           layersGroupedByUnits,
