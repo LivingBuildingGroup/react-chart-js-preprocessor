@@ -151,10 +151,6 @@ export default class RCJSPP extends React.Component {
       yAxisUnitOptions:   Array.isArray(this.props.yAxisUnitOptions) && this.props.yAxisUnitOptions[0] ? this.props.yAxisUnitOptions[0] : {} ,
       yAxisInFocus:       0,
 
-      // callback functions to access parent
-      handleParentBackgroundColor: typeof this.props.handleBackgroundColor === 'function' ? this.props.handleBackgroundColor : ()=>{} ,
-      handlePreSetSave:            typeof this.props.handlePreSetSave === 'function' ? this.props.handlePreSetSave : ()=>{} ,
-      handleFetchAdvanceRequest:   this.props.handleFetchAdvanceRequest,
     };
 
     this.toggleLayerGroup       = this.toggleLayerGroup.bind(this);
@@ -390,14 +386,18 @@ export default class RCJSPP extends React.Component {
   handleBackgroundChange(color){
     // toggle background between white and black, graph font color is opposite
     // hides then shows graph to force a re-render of the canvas
-    const cssBackground = 
-      typeof color === 'string' ?
-        color :
-      this.state.cssBackground === 'white' ?
-        'gray' : 
-        'white' ;
-    this.state.handleParentBackgroundColor(cssBackground);
-    this.handleGraphChange({cssBackground});
+    if(typeof this.props.handlePreSetSave === 'function'){
+      const cssBackground = 
+        typeof color === 'string' ?
+          color :
+        this.state.cssBackground === 'white' ?
+          'gray' : 
+          'white' ;
+      this.state.handleParentBackgroundColor(cssBackground);
+      this.handleGraphChange({cssBackground});
+    } else {
+      console.warn('handlePreSetSave is not a function');
+    }
   }
 
   printGraph(){
@@ -619,7 +619,8 @@ export default class RCJSPP extends React.Component {
     }
     console.log('hydratedPreSet',hydratedPreSet);
     return;
-    // const updatedPreSet = this.state.handlePreSetSave(hydratedPreSet);
+    // if (typeof this.props.handlePreSetSave === 'function'){
+    // const updatedPreSet = this.props.handlePreSetSave(hydratedPreSet);
     // console.log('updatedPreSet',updatedPreSet);
     // if(isObjectLiteral(updatedPreSet)){
     //   if(updatedPreSet.id){
@@ -671,13 +672,17 @@ export default class RCJSPP extends React.Component {
   // @@@@@@@@@@@@@@@@@@ NAVIGATION @@@@@@@@@@@@@@@@
 
   graphAdvance(advanceBy) {
-    if(typeof this.state.handleFetchAdvanceRequest === 'function'){
+    console.log('advanceBy',advanceBy);
+    if(typeof this.props.handleFetchAdvanceRequest === 'function'){
       this.setState({waitingOnDataFromProps: true});
       // the timeout is because the spinner doesn't load instantly
       setTimeout(()=>{
-        this.state.handleFetchAdvanceRequest(advanceBy);
+        this.props.handleFetchAdvanceRequest(advanceBy);
       }, 200);
+    } else {
+      console.warn('handleFetchAdvanceRequest is not a function')
     }
+
   }
   
   render() {
