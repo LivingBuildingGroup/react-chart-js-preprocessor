@@ -396,7 +396,7 @@ export default class RCJSPP extends React.Component {
       this.props.handleBackgroundColor(cssBackground);
       this.handleGraphChange({cssBackground});
     } else {
-      console.warn('handleParentBackgroundColor is not a function');
+      console.warn('handleBackgroundColor is not a function');
     }
   }
 

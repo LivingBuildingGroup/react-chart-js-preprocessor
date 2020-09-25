@@ -42,10 +42,10 @@ export default function Controls(props){
 
     });
     
-  if(Array.isArray(controls)){
-    if(controls.length === 1) {
-      controls.unshift(<div key='extra'></div>);
-    }
+  // if only one control, adding one more causes
+  // the single control to be positioned lower (more visible)
+  if(Array.isArray(controls) && controls.length === 1) {
+    controls.unshift(<div key='extra'></div>);
   }
 
   return <div className='rcjspp-controls-outermost'>
