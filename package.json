@@ -1,6 +1,6 @@
 {
   "name": "react-chart-js-preprocessor",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "description": "Preprocessor to accept data and simple configuration, then create powerful controllers that generate and manage inputs to react-chart-js",
   "main": "build/index.js",
   "license": "MIT",
