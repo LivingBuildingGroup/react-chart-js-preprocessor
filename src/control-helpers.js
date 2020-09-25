@@ -81,9 +81,9 @@ export const formatControlsWithoutPreSets = (state, that) => {
 };
 
 export const formatPreSetsForControls = (preSets, icons={}, that) => {
-  const controlPresets = [];
+  const controlsPresets = [];
   if(!isObjectLiteral(preSets)) {
-    return [];
+    return {controlsPresets};
     return { 
       preSetIds  : [],
       preSetNames: [],
