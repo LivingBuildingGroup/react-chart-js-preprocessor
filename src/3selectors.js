@@ -123,7 +123,6 @@ export default class Selectors extends React.Component{
       preSetGlobalPalette: this.props.preSetGlobalPalette,
       cssStyleColorsNamed: this.props.cssStyleColorsNamed,
     });
-    // console.log('handlePreSetEdit property',property,'value', value, 'styles', styles);
     this.props.receiveNewStyles(styles);
   }
 

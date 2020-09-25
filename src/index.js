@@ -386,17 +386,17 @@ export default class RCJSPP extends React.Component {
   handleBackgroundChange(color){
     // toggle background between white and black, graph font color is opposite
     // hides then shows graph to force a re-render of the canvas
-    if(typeof this.props.handlePreSetSave === 'function'){
+    if(typeof this.props.handleParentBackgroundColor === 'function'){
       const cssBackground = 
         typeof color === 'string' ?
           color :
         this.state.cssBackground === 'white' ?
           'gray' : 
           'white' ;
-      this.state.handleParentBackgroundColor(cssBackground);
+      this.props.handleParentBackgroundColor(cssBackground);
       this.handleGraphChange({cssBackground});
     } else {
-      console.warn('handlePreSetSave is not a function');
+      console.warn('handleParentBackgroundColor is not a function');
     }
   }
 
@@ -672,12 +672,9 @@ export default class RCJSPP extends React.Component {
   // @@@@@@@@@@@@@@@@@@ NAVIGATION @@@@@@@@@@@@@@@@
 
   graphAdvance(advanceBy) {
-    console.log('advanceBy in RCJSPP',advanceBy);
     if(typeof this.props.handleFetchAdvanceRequest === 'function'){
-      console.log('this.props.handleFetchAdvanceRequest is a function');
       this.setState({waitingOnDataFromProps: true});
       // the timeout is because the spinner doesn't load instantly
-      console.log('trigger fetch now')
       this.props.handleFetchAdvanceRequest(advanceBy);
     } else {
       console.warn('handleFetchAdvanceRequest is not a function')
