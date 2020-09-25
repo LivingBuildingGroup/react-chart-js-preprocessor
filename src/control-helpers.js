@@ -19,7 +19,7 @@ export const formatControlsWithoutPreSets = (state, that) => {
   if(state.backgroundAllow){
     controlNamesTop.push('background');
     controlIconNamesTop.push('PaletteSolid');
-    controlFuncsTop.push(that.handleBackgroundChange);
+    controlFuncsTop.push(that.handleBackgroundColor);
     controlLabelsTop.push('Toggle white graph background');
   }
   if(state.yAxisAllow){
