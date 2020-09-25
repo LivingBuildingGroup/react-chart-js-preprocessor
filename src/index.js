@@ -161,7 +161,7 @@ export default class RCJSPP extends React.Component {
     this.handleRangeChange      = this.handleRangeChange.bind(this);
     this.handleTickChange       = this.handleTickChange.bind(this);
     this.toggleLayerGroup       = this.toggleLayerGroup.bind(this);
-    this.handleBackgroundChange = this.handleBackgroundChange.bind(this);
+    this.handleBackgroundColor  = this.handleBackgroundColor.bind(this);
     this.printGraph             = this.printGraph.bind(this);
     this.handlePreSetSelect     = this.handlePreSetSelect.bind(this);
     this.handlePreSetSave       = this.handlePreSetSave.bind(this)
@@ -383,17 +383,17 @@ export default class RCJSPP extends React.Component {
 
   // @@@@@@@@@@@@@@@@@ MINOR CONTROLS @@@@@@@@@@@@@@@@
 
-  handleBackgroundChange(color){
+  handleBackgroundColor(color){
     // toggle background between white and black, graph font color is opposite
     // hides then shows graph to force a re-render of the canvas
-    if(typeof this.props.handleParentBackgroundColor === 'function'){
+    if(typeof this.props.handleBackgroundColor === 'function'){
       const cssBackground = 
         typeof color === 'string' ?
           color :
         this.state.cssBackground === 'white' ?
           'gray' : 
           'white' ;
-      this.props.handleParentBackgroundColor(cssBackground);
+      this.props.handleBackgroundColor(cssBackground);
       this.handleGraphChange({cssBackground});
     } else {
       console.warn('handleParentBackgroundColor is not a function');
@@ -404,7 +404,7 @@ export default class RCJSPP extends React.Component {
     if(this.state.cssBackground=== 'white') { // if already white, print, else, turn white, wait, then print
       window.print();
     } else {
-      this.handleBackgroundChange('white');
+      this.handleBackgroundColor('white');
       setTimeout(()=>{
         window.print();
       }, 2000); // 2000 seems to be long enough to complete canvas animations before printing
