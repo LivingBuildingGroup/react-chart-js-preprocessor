@@ -32,6 +32,9 @@ export default function Controls(props){
       const googleTagManagerClass = `graph-control ${controlNameAsId} true1 true2`;
 
       const iconName = icons[c.iconName] ? c.iconName : 'ExclamationTriangle';
+      if(!icons[c.iconName]){
+        console.log('did not find icon', c.iconName)
+      }
       const Icon = icons[iconName];
       return <div key={i} 
         className={`rcjspp-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}

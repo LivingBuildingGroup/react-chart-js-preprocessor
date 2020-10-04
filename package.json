@@ -23,7 +23,7 @@
     "graphing-helpers": "^5.2.18",
     "react-chartjs-2": "^2.8.0",
     "pretty-colors": "^0.0.2",
-    "something-rather-iconic": "^1.0.3"
+    "something-rather-iconic": "^1.0.9"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
