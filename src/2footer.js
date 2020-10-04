@@ -1,4 +1,3 @@
-import React                    from 'react';
 import { isObjectLiteral }      from 'conjunction-junction';
 import { 
   calcMinimumWindowDimensions } from 'browser-helpers';

@@ -8,7 +8,9 @@
     "start": "webpack --watch",
     "build": "webpack",
     "test": "mocha",
-    "compile": "babel src -d compile"
+    "compile": "babel src -d compile",
+    "install-peers": "install-peers",
+    "postinstall": "install-peers"
   },
   "author": {
     "name": "Brad Garner",
@@ -17,7 +19,7 @@
   "peerDependencies": {
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "browser-helpers": "^0.1.4",
+    "browser-helpers": "^0.1.1",
     "chart.js": "^2.9.3",
     "conjunction-junction": "^3.13.53",
     "graphing-helpers": "^5.2.18",
@@ -31,6 +33,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.24.1",
+    "install-peers-cli": "^2.2.0",
     "node-pre-gyp": "^0.13.0",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",

@@ -1,5 +1,4 @@
 import * as icons from 'something-rather-iconic';
-import React from 'react';
 
 const iconStyle = {height: 20, width: 20};
 
