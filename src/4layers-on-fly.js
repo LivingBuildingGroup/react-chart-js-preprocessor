@@ -51,7 +51,21 @@ export default function LayersOnFly (props){
     </div> );
   });
 
+  const noneAreChecked = Array.isArray(props.layersSelected) &&
+    props.layersSelected.length === 0;
+
+  const uncheckAll = <label className='rcjspp-sel-label-radio'>
+    <input
+      type='checkbox'
+      className='rcjspp-sel-input-radio'
+      onChange={e=>props.handleLayerSelection(e)} 
+      checked={noneAreChecked}
+      value='de-select-all' />
+    Deselect all layers
+  </label>
+
   return <div className='rcjspp-sel-inner-container'>
+    {uncheckAll}
     <div className='rcjspp-sel-checkbox-container'>
       {layerCheckboxes}
     </div>

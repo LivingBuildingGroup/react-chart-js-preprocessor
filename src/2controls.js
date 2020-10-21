@@ -32,7 +32,7 @@ export default function Controls(props){
 
       const iconName = icons[c.iconName] ? c.iconName : 'ExclamationTriangle';
       if(!icons[c.iconName]){
-        console.log('did not find icon', c.iconName)
+        console.log('did not find icon', c.iconName,'. Check pre-sets.')
       }
       const Icon = icons[iconName];
       return <div key={i} 
