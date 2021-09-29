@@ -302,7 +302,7 @@ export default class RCJSPP extends React.Component {
     if(this.state.waitingOnDataFromProps) {
       this.advanceDataFromProps();
     } else if(this.state.allowNewDataAsProps){
-      if(this.state.dataType1 !== this.props.dataType1){
+      if(this.state.dataType1Raw !== this.props.dataType1){
         this.updateDataFromProps();
       }
     }
@@ -312,12 +312,8 @@ export default class RCJSPP extends React.Component {
   // @@@@@@@@@@@@@@@@@@ MAJOR RENDERING @@@@@@@@@@@@@@@@
 
   updateDataFromProps(){
-    // const graphData = this.state.graphData || {};
-    // const datasets = graphData.datasets || {};
-    // const data = Array.isArray(datasets.data) ? [...datasets.data] : [];
-    // const labels = Array.isArray(graphData.labels) ? [...graphData.labels] : []
 
-    const dataType1 = Array.isArray(this.state.dataType1) ? this.state.dataType1 : [];
+    const dataType1 = Array.isArray(this.state.dataType1Raw) ? this.state.dataType1Raw : [];
     const dataType1New = Array.isArray(this.props.dataType1) ? this.props.dataType1 : [];
 
     const newIsLonger = dataType1New.length > dataType1.length;
@@ -327,7 +323,7 @@ export default class RCJSPP extends React.Component {
       const dataType1Processed = [...dataType1, ...dataToAdd];
       return new Promise(resolve=>{
         resolve(
-          this.setState({dataType1Processed})
+          this.setState({dataType1Processed, dataType1Raw: dataType1New})
         );
       })
       .then(()=>{
@@ -763,7 +759,6 @@ export default class RCJSPP extends React.Component {
         options={s.graphOptions}
         height ={s.cssCanvasHeight}
         width  ={s.cssCanvasWidth } /> : null ;
-
     
     const selectors = this.state.selectorsInclude ? <Selectors
       graphName          ={s.graphName}
