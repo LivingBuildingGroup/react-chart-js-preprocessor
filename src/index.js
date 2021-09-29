@@ -303,20 +303,38 @@ export default class RCJSPP extends React.Component {
       this.advanceDataFromProps();
     } else if(this.state.allowNewDataAsProps){
       if(this.state.dataType1 !== this.props.dataType1){
-        return new Promise(resolve=>{
-          resolve(
-            this.setState({dataType1: this.props.dataType1})
-          )
-        })
-        .then(()=>{
-          this.handleGraphChange({});
-        })
+        this.updateDataFromProps();
       }
     }
     // this.assignNewPreSetId();
   }
 
   // @@@@@@@@@@@@@@@@@@ MAJOR RENDERING @@@@@@@@@@@@@@@@
+
+  updateDataFromProps(){
+    const graphData = this.state.graphData || {};
+    const datasets = graphData.datasets || {};
+    const data = Array.isArray(datasets.data) ? [...datasets.data] : [];
+    const labels = Array.isArray(graphData.labels) ? [...graphData.labels] : []
+
+    const dataType1 = Array.isArray(this.state.dataType1) ? this.state.dataType1 : [];
+    const dataType1New = Array.isArray(this.props.dataType1) ? this.props.dataType1 : [];
+
+    const newIsLonger = dataType1New.length > dataType1.length;
+    if(newIsLonger > 0){
+      const dataToAdd = dataType1New.slice(dataType1New.length-newIsLonger,dataType1New.length);
+      const dataType1Processed = [...dataType1, ...dataToAdd];
+      return new Promise(resolve=>{
+        resolve(
+          this.setState({dataType1Processed})
+        );
+      })
+      .then(()=>{
+        this.handleGraphChange({});
+        return;
+      })
+    }
+  }
 
   handleGroupBy(event){
     // handleGroupBy should ONLY run from subcomponents
@@ -367,8 +385,7 @@ export default class RCJSPP extends React.Component {
        xIdealTickSpacingPrior
      */
     this.setState(graphKeys);
-    if(graphKeys.needRefresh ||
-      this.state.allowNewDataAsProps){
+    if(graphKeys.needRefresh){
       this.refreshGraph();
     }
   }
