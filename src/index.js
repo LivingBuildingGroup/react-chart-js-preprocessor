@@ -86,7 +86,7 @@ export default class RCJSPP extends React.Component {
       dataType2Processed: [[]],
 
       allowNewDataAsProps: this.props.allowNewDataAsProps,
-      
+
       indexAbbrev:        0,
       indexLabels:        1,
       indexUnits:         2,
@@ -302,14 +302,16 @@ export default class RCJSPP extends React.Component {
     if(this.state.waitingOnDataFromProps) {
       this.advanceDataFromProps();
     } else if(this.state.allowNewDataAsProps){
-      return new Promise(resolve=>{
-        resolve(
-          this.setState({dataType1: this.props.dataType1})
-        )
-      })
-      .then(()=>{
-        this.handleGraphChange({});
-      })
+      if(this.state.dataType1 !== this.props.dataType1){
+        return new Promise(resolve=>{
+          resolve(
+            this.setState({dataType1: this.props.dataType1})
+          )
+        })
+        .then(()=>{
+          this.handleGraphChange({});
+        })
+      }
     }
     // this.assignNewPreSetId();
   }
