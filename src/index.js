@@ -312,16 +312,17 @@ export default class RCJSPP extends React.Component {
   // @@@@@@@@@@@@@@@@@@ MAJOR RENDERING @@@@@@@@@@@@@@@@
 
   updateDataFromProps(){
-    const graphData = this.state.graphData || {};
-    const datasets = graphData.datasets || {};
-    const data = Array.isArray(datasets.data) ? [...datasets.data] : [];
-    const labels = Array.isArray(graphData.labels) ? [...graphData.labels] : []
+    // const graphData = this.state.graphData || {};
+    // const datasets = graphData.datasets || {};
+    // const data = Array.isArray(datasets.data) ? [...datasets.data] : [];
+    // const labels = Array.isArray(graphData.labels) ? [...graphData.labels] : []
 
     const dataType1 = Array.isArray(this.state.dataType1) ? this.state.dataType1 : [];
     const dataType1New = Array.isArray(this.props.dataType1) ? this.props.dataType1 : [];
 
     const newIsLonger = dataType1New.length > dataType1.length;
     if(newIsLonger > 0){
+      this.setState({dataType1:dataType1New})
       const dataToAdd = dataType1New.slice(dataType1New.length-newIsLonger,dataType1New.length);
       const dataType1Processed = [...dataType1, ...dataToAdd];
       return new Promise(resolve=>{
