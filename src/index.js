@@ -367,7 +367,8 @@ export default class RCJSPP extends React.Component {
        xIdealTickSpacingPrior
      */
     this.setState(graphKeys);
-    if(graphKeys.needRefresh){
+    if(graphKeys.needRefresh ||
+      this.state.allowNewDataAsProps){
       this.refreshGraph();
     }
   }
