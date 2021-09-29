@@ -85,6 +85,8 @@ export default class RCJSPP extends React.Component {
       dataType2Raw:       Array.isArray(this.props.dataType2) ? this.props.dataType2 : [[]],
       dataType2Processed: [[]],
 
+      allowNewDataAsProps: this.props.allowNewDataAsProps,
+      
       indexAbbrev:        0,
       indexLabels:        1,
       indexUnits:         2,
@@ -297,7 +299,18 @@ export default class RCJSPP extends React.Component {
   };
 
   componentDidUpdate(){
-    this.advanceDataFromProps();
+    if(this.state.waitingOnDataFromProps) {
+      this.advanceDataFromProps();
+    } else if(this.state.allowNewDataAsProps){
+      return new Promise(resolve=>{
+        resolve(
+          this.setState({dataType1: this.props.dataType1})
+        )
+      })
+      .then(()=>{
+        this.handleGraphChange({});
+      })
+    }
     // this.assignNewPreSetId();
   }
 
