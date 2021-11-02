@@ -6,7 +6,7 @@ import {
   isObjectLiteral}              from 'conjunction-junction';
 import { calcDimensions }       from 'browser-helpers';
 import { 
-    createPreSetGlobalPalettes,
+    createPresetGlobalPalettes,
     createNamed,
     selectPalette,
     listBright }                from 'pretty-colors';
@@ -14,9 +14,9 @@ import {
   createGraph,
   formatGraphKeysInput,
   createGraphInfoOnGroupOrMount,
-  unpackPreSet,
-  selectDefaultPreSet,
-  applyPreSetGlobalColorToStyles,
+  unpackPreset,
+  selectDefaultPreset,
+  applyPresetGlobalColorToStyles,
   createLayersSelected,
   toggleLayerGroup,
   createGroupByData,
@@ -38,7 +38,7 @@ export default class RCJSPP extends React.Component {
       ready:                false, // so graph doesn't load before data
       paused:               true,
       needRefresh:          false,
-      waitingOnPreSetIdFromProps: false,
+      waitingOnPresetIdFromProps: false,
       waitingOnDataFromProps: false,
 
       // keys mostly just initialized data types, see componentDidMount() for initialization
@@ -104,7 +104,7 @@ export default class RCJSPP extends React.Component {
             
       selectorsPopover:       false,
       selectorsInFocus:       'none', // this updates in componentDidMount
-      preSetSaveAllow:        true,
+      presetSaveAllow:        true,
       // configure settings in control bar
       selectorsAllow:         typeof this.props.selectorsAllow  === 'boolean' ? this.props.selectorsAllow  : true,
       selectorsInclude:       typeof this.props.selectorsInclude=== 'boolean' ? this.props.selectorsInclude: true,
@@ -124,16 +124,16 @@ export default class RCJSPP extends React.Component {
       groupsSub:              this.props.groupsSub,
       groups:                 [],
 
-      preSetGroupEditMode:    typeof this.props.preSetGroupEditMode === 'boolean' ? this.props.preSetGroupEditMode : false ,
-      preSetGlobalPalettes:   [],
-      preSetGlobalPalette:    '',
-      preSetGlobalColorOptions: [],
+      presetGroupEditMode:    typeof this.props.presetGroupEditMode === 'boolean' ? this.props.presetGroupEditMode : false ,
+      presetGlobalPalettes:   [],
+      presetGlobalPalette:    '',
+      presetGlobalColorOptions: [],
       
-      preSetSaveSettings:     {useOnlyExplicitStylesWhenUngrouped: false, prefixGroups: false, prefixGroupsSub: false, preSetSaveAsType: 'single', ...this.props.preSetSaveSettings } ,
-      preSets:                this.props.preSets        || {},
-      preSetIdActive:         this.props.preSetIdActive || '' ,
-      // preSetIds:              [],
-      // preSetStyleOptionsJSX:  [[]],
+      presetSaveSettings:     {useOnlyExplicitStylesWhenUngrouped: false, prefixGroups: false, prefixGroupsSub: false, presetSaveAsType: 'single', ...this.props.presetSaveSettings } ,
+      presets:                this.props.presets        || {},
+      presetIdActive:         this.props.presetIdActive || '' ,
+      // presetIds:              [],
+      // presetStyleOptionsJSX:  [[]],
 
       keyToCompareOnAdvance: this.props.keyToCompareOnAdvance ? this.props.keyToCompareOnAdvance :
       this.props.keyToCompareOnNewData ? this.props.keyToCompareOnNewData : 'xLabel',
@@ -165,8 +165,7 @@ export default class RCJSPP extends React.Component {
     this.toggleLayerGroup       = this.toggleLayerGroup.bind(this);
     this.handleBackgroundColor  = this.handleBackgroundColor.bind(this);
     this.printGraph             = this.printGraph.bind(this);
-    this.handlePreSetSelect     = this.handlePreSetSelect.bind(this);
-    this.handlePreSetSave       = this.handlePreSetSave.bind(this)
+    this.handlePresetSelect     = this.handlePresetSelect.bind(this);
     this.receiveNewStyles       = this.receiveNewStyles.bind(this);
     this.graphAdvance           = this.graphAdvance.bind(this);
     this.advanceDataFromProps   = this.advanceDataFromProps.bind(this);
@@ -204,26 +203,26 @@ export default class RCJSPP extends React.Component {
         this.props.selectorsInFocus ? 
         this.props.selectorsInFocus :
         'layers' ;
-      const preSetIdActive = 
-        this.props.preSets[this.props.preSetIdActive] ?
-        this.props.preSetIdActive : 
-        selectDefaultPreSet(this.state.preSets, this.state.graphName);
+      const presetIdActive = 
+        this.props.presets[this.props.presetIdActive] ?
+        this.props.presetIdActive : 
+        selectDefaultPreset(this.state.presets, this.state.graphName);
       this.setState({
         selectorsInFocus,
-        preSetIdActive
+        presetIdActive
       });
       return;
     })
     .then(()=>{
       // options and pallettes are necessary for tests, even when editing is not allowed
       // all these are necessary for editing
-      const preSetGlobalColorOptions = listBright();
-      const preSetGlobalPalettes = createPreSetGlobalPalettes();
-      const preSetGlobalPalette = preSetGlobalPalettes[preSetGlobalColorOptions[0]];
+      const presetGlobalColorOptions = listBright();
+      const presetGlobalPalettes = createPresetGlobalPalettes();
+      const presetGlobalPalette = presetGlobalPalettes[presetGlobalColorOptions[0]];
       this.setState({
-        preSetGlobalPalettes,
-        preSetGlobalPalette,
-        preSetGlobalColorOptions,
+        presetGlobalPalettes,
+        presetGlobalPalette,
+        presetGlobalColorOptions,
       });
       return;
     })
@@ -261,8 +260,8 @@ export default class RCJSPP extends React.Component {
       return;
     })
     .then(()=>{
-      if(this.state.preSetIdActive){
-        this.handlePreSetSelect(this.state.preSetIdActive);
+      if(this.state.presetIdActive){
+        this.handlePresetSelect(this.state.presetIdActive);
         return;
       } else {
         const {
@@ -291,7 +290,6 @@ export default class RCJSPP extends React.Component {
         this.updateDataFromProps();
       }
     }
-    // this.assignNewPreSetId();
   }
 
   // @@@@@@@@@@@@@@@@@@ MAJOR RENDERING @@@@@@@@@@@@@@@@
@@ -495,39 +493,6 @@ export default class RCJSPP extends React.Component {
 
   // @@@@@@@@@@@@@@@@@@ PRESETS @@@@@@@@@@@@@@@@
 
-  // assignNewPreSetId(){
-  //   // if we saved a preSet, wait for its ID
-  //   // when received, re-load controls
-  //   if(this.state.waitingOnPreSetIdFromProps){
-  //     if(!this.state.preSetIdActive){
-  //       let id;
-  //       for (let i in this.props.preSets){
-  //         if(this.props.preSets[i].name === this.state.preSetNameNew) {
-  //           id = i;
-  //         }
-  //       }
-  //       if(id){
-  //         const newPreSets = {
-  //           ...this.state.preSets,
-  //           [id]: this.props.preSets[id],
-  //         }
-  //         return new Promise((resolve, reject)=>{
-  //           resolve(
-  //             this.setState({
-  //               preSetIdActive: id,
-  //               preSets: newPreSets, 
-  //               waitingOnPreSetIdFromProps: false,
-  //             })
-  //           );
-  //         })
-  //         .then(()=>{
-  //           this.loadControls({id: id});
-  //         });
-  //       }
-  //     } 
-  //   }
-  // }
-
   advanceDataFromProps() {
     if(this.state.waitingOnDataFromProps) {
       // compare ex. dataType1Raw[0][key] against new data [0][key] to see if new data actually arrived
@@ -575,20 +540,20 @@ export default class RCJSPP extends React.Component {
     }
   }
 
-  handlePreSetSelect(id){
-    // onMount, it will try to find a preSet id; if no preSets exist, this catches it, unpauses, and stops
+  handlePresetSelect(id){
+    // onMount, it will try to find a preset id; if no presets exist, this catches it, unpauses, and stops
     const pausedState = !id ?
       {
         paused: false,
-        preSetSaveAllow: true,
+        presetSaveAllow: true,
       } 
       : {
-        preSetSaveAllow: false, // forces pre-set save component to unmount while selection occurs, then after selection, it remounts (and updates)
+        presetSaveAllow: false, // forces pre-set save component to unmount while selection occurs, then after selection, it remounts (and updates)
       };
 
     // this will select all keys in a pre-set list
-    const thisPreSet = this.state.preSets[id];
-    if(!isObjectLiteral(thisPreSet)) return;
+    const thisPreset = this.state.presets[id];
+    if(!isObjectLiteral(thisPreset)) return;
 
     return new Promise((resolve, reject)=>{
       resolve(
@@ -596,11 +561,11 @@ export default class RCJSPP extends React.Component {
       );
     })
     .then(()=>{
-      const unpackedPreSet = unpackPreSet(this.state, thisPreSet, id);
-      /* unpackPreSet returns:
+      const unpackedPreset = unpackPreset(this.state, thisPreset, id);
+      /* unpackPreset returns:
         groupColors,
         groupDotColors,
-        preSetIdActive,
+        presetIdActive,
         selector0,
         layersSelected,
         styles,
@@ -609,21 +574,21 @@ export default class RCJSPP extends React.Component {
       */
       const newState2 = {
         ...this.state,
-        ...unpackedPreSet,
+        ...unpackedPreset,
       }
       const layersSelected = createLayersSelected(newState2.selector0, newState2.layersSelected);
       this.setState({
-        ...unpackedPreSet,
+        ...unpackedPreset,
         layersSelected,
       });
     })
     .then(()=>{
-      if(this.state.preSetGroupEditMode){
-        // this is ONLY used in editing mode for group preSets
-        const preSetGlobalPalette = this.state.preSetGlobalPalettes[listBright()[0]];
-        const styles = applyPreSetGlobalColorToStyles({
+      if(this.state.presetGroupEditMode){
+        // this is ONLY used in editing mode for group presets
+        const presetGlobalPalette = this.state.presetGlobalPalettes[listBright()[0]];
+        const styles = applyPresetGlobalColorToStyles({
           styles: this.state.styles, 
-          preSetGlobalPalette,
+          presetGlobalPalette,
         });
         this.receiveNewStyles(styles);
       }
@@ -631,7 +596,7 @@ export default class RCJSPP extends React.Component {
     .then(()=>{
       this.setState({
         paused: false,
-        preSetSaveAllow: true,
+        presetSaveAllow: true,
       }); // defaults to true on load if preset is active, so this reverses that
       return;
     })
@@ -641,54 +606,16 @@ export default class RCJSPP extends React.Component {
     })
   }
 
-  handlePreSetSave(preSet){
-    if(!isObjectLiteral(preSet)) return;
-    const hydratedPreSet = {
-      graphName: this.state.graphName, // meta
-      ...preSet, // admin
-      layersSelected: this.state.layersSelected, // layers
-      styles: this.state.styles,
-    }
-    console.log('hydratedPreSet',hydratedPreSet);
-    return;
-    // if (typeof this.props.handlePreSetSave === 'function'){
-    // const updatedPreSet = this.props.handlePreSetSave(hydratedPreSet);
-    // console.log('updatedPreSet',updatedPreSet);
-    // if(isObjectLiteral(updatedPreSet)){
-    //   if(updatedPreSet.id){
-    //     return new Promise((resolve, reject)=>{
-    //       resolve(
-    //         this.setState({
-    //           preSetIdActive: updatedPreSet.id,
-    //           preSets: {
-    //             ...this.state.preSets,
-    //             [updatedPreSet.id]: updatedPreSet,
-    //           }
-    //         })
-    //       );
-    //     })
-    //     .then(()=>{
-    //       this.handlePreSetSelect(updatedPreSet.id)
-    //       // this.loadControls();
-    //     })
-    //   } else {
-    //     console.error('there was a problem saving the pre-set (no id):', preSet)
-    //   }
-    // } else {
-    //   console.error('there was a problem saving the pre-set (no object returned):', preSet)
-    // }
-  }
-
   receiveNewStyles(styles, psgc){
-    const preSetGlobalColor = psgc ? psgc : this.state.preSetGlobalColor ;
-    const preSetGlobalPalette = this.state.preSetGlobalPalettes[preSetGlobalColor];
+    const presetGlobalColor = psgc ? psgc : this.state.presetGlobalColor ;
+    const presetGlobalPalette = this.state.presetGlobalPalettes[presetGlobalColor];
 
     return new Promise((resolve, reject)=>{
       resolve(
         this.setState({
           styles,
-          preSetGlobalColor,
-          preSetGlobalPalette,
+          presetGlobalColor,
+          presetGlobalPalette,
         })
       );
     })
@@ -731,11 +658,11 @@ export default class RCJSPP extends React.Component {
 
     const controls = <Controls
       controls        ={s.controls}
-      preSets         ={s.preSets}
-      preSetIdActive  ={s.preSetIdActive}
+      presets         ={s.presets}
+      presetIdActive  ={s.presetIdActive}
       selectorsPopover={s.selectorsPopover}
       cssBackground   ={s.cssBackground}
-      waitingOnPreSetIdFromProps={s.waitingOnPreSetIdFromProps}
+      waitingOnPresetIdFromProps={s.waitingOnPresetIdFromProps}
       toggleSelectorsInFocus={this.toggleSelectorsInFocus} />
     
     const graph = s.ready && !s.hide && !s.paused ?
@@ -750,25 +677,25 @@ export default class RCJSPP extends React.Component {
       selectorsInFocus   ={s.selectorsInFocus}
       cssDivSelectors    ={s.cssDivSelectors}
       cssStyleColorsNamed={s.cssStyleColorsNamed}
-      preSetSaveAllow    ={s.preSetSaveAllow}
+      presetSaveAllow    ={s.presetSaveAllow}
       groupTrue          ={s.groupTrue}
       groupAllow         ={s.groupAllow}
       xStart             ={s.xStart}
       xEnd               ={s.xEnd}
-      preSets            ={s.preSets}
+      presets            ={s.presets}
       xIdealTickSpacing  ={s.xIdealTickSpacing}
       layerGroupByJSXOptions  ={s.layerGroupByJSXOptions}
-      preSetGlobalPalettes    ={s.preSetGlobalPalettes}
-      preSetGlobalPalette     ={s.preSetGlobalPalette}
-      preSetGlobalColorOptions={s.preSetGlobalColorOptions}
-      // preSetIds               ={s.preSetIds}
-      preSetIdActive          ={s.preSetIdActive}
+      presetGlobalPalettes    ={s.presetGlobalPalettes}
+      presetGlobalPalette     ={s.presetGlobalPalette}
+      presetGlobalColorOptions={s.presetGlobalColorOptions}
+      // presetIds               ={s.presetIds}
+      presetIdActive          ={s.presetIdActive}
       layersThatHaveUnits     ={s.layersThatHaveUnits}
       layersSelected          ={s.layersSelected}
       legendLabels            ={s.legendLabels}
       legendDefinitions       ={s.legendDefinitions}
-      preSetGroupEditMode     ={s.preSetGroupEditMode}
-      preSetSaveSettings      ={s.preSetSaveSettings}
+      presetGroupEditMode     ={s.presetGroupEditMode}
+      presetSaveSettings      ={s.presetSaveSettings}
       styles                  ={s.styles}
 
       layerUnitsArray     ={s.layerUnitsArray}
@@ -781,10 +708,7 @@ export default class RCJSPP extends React.Component {
       handleRangeChange   ={this.handleRangeChange}
       handleTickChange    ={this.handleTickChange}
       handleGroupBy       ={this.handleGroupBy}
-      handlePreSetSave    ={this.handlePreSetSave}
-      receiveNewStyles    ={this.receiveNewStyles}
-      handleLayerSelection={this.handleLayerSelection}
-    /> : null ;
+      handleLayerSelection={this.handleLayerSelection} /> : null ;
 
 
     const footer = this.state.footerInclude ? <Footer

@@ -47,18 +47,18 @@ export const formatControlsTopAndBot = (state, that) => {
   };
 };
 
-export const formatControlsPresets = (preSets, that) => {
+export const formatControlsPresets = (presets, that) => {
   const controlsPresets = [];
-  if(!isObjectLiteral(preSets)) {
+  if(!isObjectLiteral(presets)) {
     return controlsPresets;
   }
-  for(let id in preSets){
-    const thisPreset = preSets[id];
+  for(let id in presets){
+    const thisPreset = presets[id];
     controlsPresets.push({
       name:     thisPreset.name || 'pre-set',
       id,
       iconName: thisPreset.iconName || 'CoffeePot',
-      func:     ()=>that.handlePreSetSelect(id),
+      func:     ()=>that.handlePresetSelect(id),
       label:    thisPreset.namePreset || 'pre-set',
     });
   }
@@ -78,7 +78,7 @@ export const formatControls = (state, that) => {
     controlsBot,
   } = formatControlsTopAndBot(state, that);
   
-  const controlsPresets = formatControlsPresets(state.preSets, that);
+  const controlsPresets = formatControlsPresets(state.presets, that);
 
   const controls = [
     ...controlsTop,

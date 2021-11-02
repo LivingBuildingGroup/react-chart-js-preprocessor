@@ -34,7 +34,7 @@
     "browser-helpers": "^0.1.1",
     "chart.js": "^2.9.4",
     "conjunction-junction": "^3.14.48",
-    "graphing-helpers": "^5.2.22",
+    "graphing-helpers": "^5.3.0",
     "node-pre-gyp": "^0.13.0",
     "path": "^0.12.7",
     "pretty-colors": "^0.0.2",
