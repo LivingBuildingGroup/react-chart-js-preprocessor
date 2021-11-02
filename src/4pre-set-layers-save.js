@@ -1,6 +1,5 @@
 import React                  from 'react';
 import { isObjectLiteral }    from 'conjunction-junction';
-// import { parseSelectorValue } from '../rcjspp-graphing-helpers/pre-set-selectors';
 import { parseSelectorValue } from 'graphing-helpers';
 
 export default function LayersSave (props){

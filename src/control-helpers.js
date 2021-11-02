@@ -57,9 +57,9 @@ export const formatControlsPresets = (preSets, that) => {
     controlsPresets.push({
       name:     thisPreset.name || 'pre-set',
       id,
-      iconName: thisPreset.icon || 'CoffeePot',
+      iconName: thisPreset.iconName || 'CoffeePot',
       func:     ()=>that.handlePreSetSelect(id),
-      label:    thisPreset.name || 'pre-set',
+      label:    thisPreset.namePreset || 'pre-set',
     });
   }
   controlsPresets.sort((a,b)=>{

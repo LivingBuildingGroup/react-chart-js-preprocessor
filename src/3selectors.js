@@ -1,11 +1,5 @@
 import React               from 'react';
-import { parseEvent }      from 'conjunction-junction'; 
-// import { 
-//   formatPreSetSelectorColumns, } from '../rcjspp-graphing-helpers/pre-set-selectors';
-// import {  
-//   applyPreSetGlobalColorToStyles,
-//   editOneStyle }                 from '../rcjspp-graphing-helpers/pre-set-edit';
-   
+import { parseEvent }      from 'conjunction-junction';    
 import { 
   formatPreSetSelectorColumns, 
   applyPreSetGlobalColorToStyles,
