@@ -155,7 +155,6 @@ export default class RCJSPP extends React.Component {
 
     };
 
-    this.toggleLayerGroup       = this.toggleLayerGroup.bind(this);
     this.handleGroupBy          = this.handleGroupBy.bind(this);
     this.handleLayerSelection   = this.handleLayerSelection.bind(this);
     this.toggleSelectorsPopover = this.toggleSelectorsPopover.bind(this);

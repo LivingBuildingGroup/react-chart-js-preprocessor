@@ -15,7 +15,6 @@ export default class Selectors extends React.Component{
       presetColumns:          [],
       ready: false,
     };
-    this.handlePresetEdit       =this.handlePresetEdit.bind(this);
   }
 
   componentDidMount(){
