@@ -1,144 +1,90 @@
 import { isObjectLiteral } from 'conjunction-junction';
 
-const Dummy = () => {
-  return null;
-};
-const iconStyle = {height: 20, width: 20};
+export const formatControlsTopAndBot = (state, that) => {
 
-export const formatControlsWithoutPreSets = (state, that) => {
-  const icons = state.icons || {};
-  const Print        = typeof icons.Print        === 'function' ? icons.Print        : Dummy ;
-  const PaletteSolid = typeof icons.PaletteSolid === 'function' ? icons.PaletteSolid : Dummy ;
-  const ArrowsAltV   = typeof icons.ArrowsAltV   === 'function' ? icons.ArrowsAltV   : Dummy ;
-  const Edit         = typeof icons.Edit         === 'function' ? icons.Edit         : Dummy ;
-  
-  const controlNamesTop = [];
-  const controlIconsTop = [];
-  const controlFuncsTop = [];
-  const controlLabelsTop= [];
-  const controlNamesBot = [];
-  const controlIconsBot = [];
-  const controlFuncsBot = [];
-  const controlLabelsBot= [];
+  const controlsTop = [];
+  const controlsBot = [];
+
   if(state.printAllow){
-    controlNamesTop.push('print');
-    controlIconsTop.push(<Print style={iconStyle}/>);
-    controlFuncsTop.push(that.printGraph);
-    controlLabelsTop.push('Print the graph on letter size landscape (allow a few seconds for the graph to render before print preview starts).');
+    controlsTop.push({
+      name:     'print',
+      id:       'print',
+      iconName: 'Print',
+      func:     that.printGraph,
+      label:    'Print the graph on letter size landscape (allow a few seconds for the graph to render before print preview starts).',
+    });
   }
   if(state.backgroundAllow){
-    controlNamesTop.push('background');
-    controlIconsTop.push(<PaletteSolid style={iconStyle}/>);
-    controlFuncsTop.push(that.handleBackgroundChange);
-    controlLabelsTop.push('Toggle white graph background');
+    controlsTop.push({
+      name:     'background',
+      id:       'background',
+      iconName: 'PaletteSolid',
+      func:     that.handleBackgroundColor,
+      label:    'Toggle between white and dark gray graph background.',
+    });
   }
   if(state.yAxisAllow){
-    controlNamesTop.push('y-Axis');
-    controlIconsTop.push(<ArrowsAltV style={iconStyle}/>);
-    controlFuncsTop.push(that.handleYAxisSelector);
-    controlLabelsTop.push('Toggle Y-Axis settings');
+    controlsTop.push({
+      name:     'y-Axis',
+      id:       'y-Axis',
+      iconName: 'ArrowsAltV',
+      func:     that.handleYAxisSelector,
+      label:    'Toggle Y-Axis settings',
+    });
   }
   if(state.selectorsAllow){
-    controlNamesBot.push('selector');
-    controlIconsBot.push(<Edit style={iconStyle}/>);
-    controlFuncsBot.push(that.toggleSelectorsPopover);
-    controlLabelsBot.push('Open graph customization options');
+    controlsBot.push({
+      name:     'selector',
+      id:       'selector',
+      iconName: 'Edit',
+      func:     that.toggleSelectorsPopover,
+      label:    'Open graph customization options',
+    });
   }
   return {
-    controlNamesTop,
-    controlIconsTop,
-    controlFuncsTop,
-    controlLabelsTop,
-    controlNamesBot,
-    controlIconsBot,
-    controlFuncsBot,
-    controlLabelsBot,
+    controlsTop,
+    controlsBot,
   };
 };
 
-export const formatPreSetsForControls = (preSets, icons={}, that) => {
-  if(!isObjectLiteral(preSets)) {
-    return { 
-      preSetIds  : [],
-      preSetNames: [],
-      preSetIcons: [],
-      preSetFuncs: [],
-    };
+export const formatControlsPresets = (presets, that) => {
+  const controlsPresets = [];
+  if(!isObjectLiteral(presets)) {
+    return controlsPresets;
   }
-  const preSetIds = [];
-  for(let id in preSets){
-    preSetIds.push(id);
+  for(let id in presets){
+    const thisPreset = presets[id];
+    controlsPresets.push({
+      name:     thisPreset.name || 'pre-set',
+      id,
+      iconName: thisPreset.iconName || 'CoffeePot',
+      func:     ()=>that.handlePresetSelect(id),
+      label:    thisPreset.namePreset || 'pre-set',
+    });
   }
-  preSetIds.sort();
-  const preSetNames = preSetIds.map(id=>{
-    return preSets[id].name || 'pre-set';
+  controlsPresets.sort((a,b)=>{
+    if(a.id > b.id){
+      return 1;
+    }
+    return -1;
   });
-  const preSetIcons = preSetIds.map(id=>{
-    const Icon = typeof icons[preSets[id].icon] === 'function' ?
-      icons[preSets[id].icon] : Dummy;
-    return <Icon style={iconStyle}/>
-  });
-  const preSetFuncs = preSetIds.map(id=>{
-    return ()=>that.handlePreSetSelect(id);
-  });
-  return {
-    preSetIds,
-    preSetNames,
-    preSetIcons,
-    preSetFuncs,
-  };
+
+  return controlsPresets;
 };
 
 export const formatControls = (state, that) => {
   const {
-    controlNamesTop,
-    controlIconsTop,
-    controlFuncsTop,
-    controlLabelsTop,
-    controlNamesBot,
-    controlIconsBot,
-    controlFuncsBot,
-    controlLabelsBot,
-  } = formatControlsWithoutPreSets(state, that);
+    controlsTop,
+    controlsBot,
+  } = formatControlsTopAndBot(state, that);
   
-  const {
-    preSetIds,
-    preSetNames,
-    preSetIcons,
-    preSetFuncs,
-  } = formatPreSetsForControls(state.preSets, state.icons, that);
+  const controlsPresets = formatControlsPresets(state.presets, that);
 
-  const controlNames = [
-    ...controlNamesTop, 
-    ...preSetNames,
-    ...controlNamesBot, 
+  const controls = [
+    ...controlsTop,
+    ...controlsPresets,
+    ...controlsBot,
   ];
-  const controlIcons = [
-    ...controlIconsTop, 
-    ...preSetIcons,
-    ...controlIconsBot, 
-  ];
-  const controlFuncs = [
-    ...controlFuncsTop, 
-    ...preSetFuncs,
-    ...controlFuncsBot, 
-  ];
-  const controlLabels = [
-    ...controlLabelsTop, 
-    ...preSetNames,
-    ...controlLabelsBot, 
-  ];
-  return {
-    preSetIds,
-    controlNames,
-    controlIcons,
-    controlFuncs,
-    controlLabels,
-  };
+
+  return controls;
 };
-
-// export default {
-//   formatControlsWithoutPreSets,
-//   formatPreSetsForControls,
-//   formatControls,
-// };

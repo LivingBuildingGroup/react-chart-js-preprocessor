@@ -1,6 +1,6 @@
 {
   "name": "react-chart-js-preprocessor",
-  "version": "0.5.0",
+  "version": "0.7.1",
   "description": "Preprocessor to accept data and simple configuration, then create powerful controllers that generate and manage inputs to react-chart-js",
   "main": "build/index.js",
   "license": "MIT",
@@ -14,18 +14,16 @@
     "name": "Brad Garner",
     "email": "brad@bradgarner.com"
   },
-  "dependencies": {
-    "node-pre-gyp": "^0.13.0"
-  },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "browser-helpers": "^0.0.4",
-    "chart.js": "^2.7.3",
-    "conjunction-junction": "^3.9.9",
-    "graphing-helpers": "^5.1.10",
-    "react-chartjs-2": "^2.7.4",
-    "pretty-colors": "^0.0.2"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "browser-helpers": "^0.1.1",
+    "chart.js": "^2.9.3",
+    "conjunction-junction": "^3.13.53",
+    "graphing-helpers": "^5.2.18",
+    "react-chartjs-2": "^2.8.0",
+    "pretty-colors": "^0.0.2",
+    "something-rather-iconic": "^1.0.9"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -33,17 +31,19 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.24.1",
-    "browser-helpers": "0.0.4",
-    "chart.js": "^2.9.3",
-    "conjunction-junction": "^3.13.38",
-    "graphing-helpers": "^5.1.10",
+    "browser-helpers": "^0.1.1",
+    "chart.js": "^2.9.4",
+    "conjunction-junction": "^3.14.48",
+    "graphing-helpers": "^5.3.0",
+    "node-pre-gyp": "^0.13.0",
     "path": "^0.12.7",
-    "pretty-colors": "0.0.2",
+    "pretty-colors": "^0.1.0",
     "prop-types": "^15.6.0",
     "react": "^16.12.0",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.12.0",
-    "webpack": "^4.41.5",
+    "something-rather-iconic": "^1.0.9",
+    "webpack": "^5.55.1",
     "webpack-cli": "^3.3.10"
   }
 }

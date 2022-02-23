@@ -32,6 +32,13 @@ module.exports = {
     }),
   ],
   externals: {
-    'react': 'commonjs react' // this line is just to use the React dependency of our parent-testing-project instead of using our own React.
+    'react': 'commonjs react', // this line is just to use the React dependency of our parent-testing-project instead of using our own React.
+    'react-dom': 'react-dom',
+    'browser-helpers': 'browser-helpers',
+    'chart.js': 'chart.js',
+    'conjunction-junction': 'conjunction-junction',
+    'graphing-helpers': 'graphing-helpers',
+    'react-chartjs-2': 'react-chartjs-2',
+    'pretty-colors': 'pretty-colors',
   }
 };

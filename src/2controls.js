@@ -1,89 +1,57 @@
-import React from 'react';
+import * as icons from 'something-rather-iconic';
 
-export default function Controls (props){
+const iconStyle = {height: 20, width: 20};
 
-  const controlNames  = Array.isArray(props.controlNames)  ? props.controlNames  : [] ;
-  const controlIcons  = Array.isArray(props.controlIcons)  ? props.controlIcons  : [] ;
-  const controlFuncs  = Array.isArray(props.controlFuncs ) ? props.controlFuncs  : [] ;
-  const controlLabels = Array.isArray(props.controlLabels) ? props.controlLabels : [] ;
+export default function Controls(props){
 
-  const controls = props.waitingOnPreSetIdFromProps ? null : // to force a re-render
-    controlNames.map((c,i)=>{ 
-      const controlNameAsArr = typeof c === 'string' ? c.split(' '): [] ;
+  const controlsFromProps  = Array.isArray(props.controls)  ? props.controls  : [] ;
+
+  const controls = props.waitingOnPresetIdFromProps ? null : // to force a re-render
+    controlsFromProps.map((c,i)=>{ 
+      const controlNameAsArr = typeof c.name === 'string' ? c.name.split(' '): [] ;
       const controlNameAsId = controlNameAsArr.join('-');
       const activeClass = 
-        props.preSets[props.preSetIdActive] &&
-        props.preSets[props.preSetIdActive].name === c ?
-        'gw-pre-set-control-active' : 
-        `gw-control-over-${props.cssBackground}` ;
-      const popover = c === 'selector' && props.selectorsPopover ?
+        props.presets[props.presetIdActive] &&
+        props.presets[props.presetIdActive].name === c.name ?
+        'rcjspp-pre-set-control-active' : 
+        `rcjspp-control-over-${props.cssBackground}` ;
+
+      const popover = c.name === 'selector' && props.selectorsPopover ?
         <div className='popover popover-constant popover-bottom-right'>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('none')}>Hide selectors</p>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('layers')}>Layer selectors</p>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-selected')}>Graphic selectors (current layers)</p>
-          <p className='gw-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-all')}>Graphic selectors (all layers)</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('none')}>Hide selectors</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('layers')}>Layer selectors</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-selected')}>Graphic selectors (current layers)</p>
+          <p className='rcjspp-sel-popover' onClick={()=>props.toggleSelectorsInFocus('edit-all')}>Graphic selectors (all layers)</p>
         </div> :
         <div className='popover'>
-          <p>{controlLabels[i]}</p>
+          <p>{c.label}</p>
         </div>
+
       const vPosition = c === 'selector' ? 'bottom' : 'top'
       const googleTagManagerClass = `graph-control ${controlNameAsId} true1 true2`;
+
+      const iconName = icons[c.iconName] ? c.iconName : 'ExclamationTriangle';
+      if(!icons[c.iconName]){
+        console.log('did not find icon', c.iconName,'. Check pre-sets.')
+      }
+      const Icon = icons[iconName];
       return <div key={i} 
-        className={`gw-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
-        onClick={controlFuncs[i]}>
+        className={`rcjspp-control tooltip tooltip-${vPosition}-right ${activeClass} ${googleTagManagerClass}`}
+        onClick={c.func}>
         {popover}
-        {controlIcons[i] || null}
+        <Icon style={iconStyle}/>
       </div>
+
     });
-  if(Array.isArray(controls)){
-    if(controls.length === 1) {
-      controls.unshift(<div key='extra'></div>);
-    }
+    
+  // if only one control, adding one more causes
+  // the single control to be positioned lower (more visible)
+  if(Array.isArray(controls) && controls.length === 1) {
+    controls.unshift(<div key='extra'></div>);
   }
 
-  return <div className='gw-controls-outermost'>
+  return <div className='rcjspp-controls-outermost'>
     {controls}
-    <style>{`
-    .gw-controls-outermost {
-      top: 0px;
-      height: 100%;
-      width: 30px;
-      padding-right: 0;
-      margin-right: 20px;
-      flex-direction: column;
-      justify-content: space-around;
-      z-index: 9999;
-    }
-    .tooltip .popover p.gw-sel-popover:hover {
-      color: rgb(103, 175, 103) !important;
-    }
-    .gw-control {
-      cursor: pointer;
-      min-height: 25px;
-    }
-    .gw-control.gw-control-over-white{
-      color: #333;
-    }
-    .gw-control.gw-control-over-gray {
-      color: white;
-    }
-    .gw-control.gw-pre-set-control-active {
-      color: orange;
-    }
-    @media print {
-      .gw-control {
-        display: none !important;
-      }
-    }
-    .gw-control.gw-control-print {
-      display: none;
-    }
-    @media (min-width: 800px) {
-      .gw-control.gw-control-print {
-        display: flex;
-      }
-    }
-    `}</style>
   </div>;
 
 }
