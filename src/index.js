@@ -189,14 +189,6 @@ export default class RCJSPP extends React.Component {
       );
     })
     .then(()=>{
-      this.createGroupByOptionsJSX();
-    })
-    .then(()=>{
-      const that = this;
-      const controls = formatControls(this.state, that);
-      this.setState({controls});
-    })
-    .then(()=>{
       const selectorsInFocus =
         !this.state.selectorsAllow ? 'none' :
         this.props.selectorsInFocus ? 
@@ -212,6 +204,14 @@ export default class RCJSPP extends React.Component {
         presetIdActive
       });
       return;
+    })
+    .then(()=>{
+      this.createGroupByOptionsJSX();
+    })
+    .then(()=>{
+      const that = this;
+      const controls = formatControls(this.state, that);
+      this.setState({controls});
     })
     .then(()=>{
       // options and pallettes are necessary for tests, even when editing is not allowed
