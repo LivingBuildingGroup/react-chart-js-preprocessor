@@ -203,6 +203,7 @@ export default class RCJSPP extends React.Component {
         this.props.selectorsInFocus :
         'layers' ;
       const presetIdActive = 
+        this.props.presets && 
         this.props.presets[this.props.presetIdActive] ?
         this.props.presetIdActive : 
         selectDefaultPreset(this.state.presets, this.state.graphName);

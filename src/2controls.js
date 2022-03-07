@@ -11,6 +11,7 @@ export default function Controls(props){
       const controlNameAsArr = typeof c.name === 'string' ? c.name.split(' '): [] ;
       const controlNameAsId = controlNameAsArr.join('-');
       const activeClass = 
+        props.presets && 
         props.presets[props.presetIdActive] &&
         props.presets[props.presetIdActive].name === c.name ?
         'rcjspp-pre-set-control-active' : 
