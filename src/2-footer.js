@@ -119,7 +119,7 @@ export default function Footer (props){
     </div>
     <div className='rcjspp-footer-bottom'>
       <p className='rcjspp-footer-description'>
-        {typeof props.legendDescription === 'string' ? props.legendDescription : ''}
+        We used to allow a legend description here...
       </p>
     </div>
   </div>

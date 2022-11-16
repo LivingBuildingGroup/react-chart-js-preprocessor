@@ -6,16 +6,15 @@ export default function Controls(props){
 
   const controlsFromProps  = Array.isArray(props.controls)  ? props.controls  : [] ;
 
-  const controls = props.waitingOnPresetIdFromProps ? null : // to force a re-render
-    controlsFromProps.map((c,i)=>{ 
-      const controlNameAsArr = typeof c.name === 'string' ? c.name.split(' '): [] ;
-      const controlNameAsId = controlNameAsArr.join('-');
-      const activeClass = 
-        props.presets && 
-        props.presets[props.presetIdActive] &&
-        props.presets[props.presetIdActive].name === c.name ?
-        'rcjspp-pre-set-control-active' : 
-        `rcjspp-control-over-${props.cssBackground}` ;
+  const controls = controlsFromProps.map((c,i)=>{ 
+    const controlNameAsArr = typeof c.name === 'string' ? c.name.split(' '): [] ;
+    const controlNameAsId = controlNameAsArr.join('-');
+    const activeClass = 
+      props.presets && 
+      props.presets[props.presetIdActive] &&
+      props.presets[props.presetIdActive].name === c.name ?
+      'rcjspp-pre-set-control-active' : 
+      `rcjspp-control-over-${props.cssBackground}` ;
 
       const popover = c.name === 'selector' && props.selectorsPopover ?
         <div className='popover popover-constant popover-bottom-right'>

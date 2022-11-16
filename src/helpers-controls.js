@@ -1,6 +1,6 @@
 import { isObjectLiteral } from 'conjunction-junction';
 
-export const formatControlsTopAndBot = (state, that) => {
+export const formatControlsTopAndBot = (state, functionHash) => {
 
   const controlsTop = [];
   const controlsBot = [];
@@ -10,7 +10,7 @@ export const formatControlsTopAndBot = (state, that) => {
       name:     'print',
       id:       'print',
       iconName: 'Print',
-      func:     that.printGraph,
+      func:     functionHash.printGraph,
       label:    'Print the graph on letter size landscape (allow a few seconds for the graph to render before print preview starts).',
     });
   }
@@ -19,7 +19,7 @@ export const formatControlsTopAndBot = (state, that) => {
       name:     'background',
       id:       'background',
       iconName: 'PaletteSolid',
-      func:     that.handleBackgroundColor,
+      func:     functionHash.handleBackgroundColor,
       label:    'Toggle between white and dark gray graph background.',
     });
   }
@@ -28,7 +28,7 @@ export const formatControlsTopAndBot = (state, that) => {
       name:     'y-Axis',
       id:       'y-Axis',
       iconName: 'ArrowsAltV',
-      func:     that.handleYAxisSelector,
+      func:     functionHash.handleYAxisSelector,
       label:    'Toggle Y-Axis settings',
     });
   }
@@ -37,7 +37,7 @@ export const formatControlsTopAndBot = (state, that) => {
       name:     'selector',
       id:       'selector',
       iconName: 'Edit',
-      func:     that.toggleSelectorsPopover,
+      func:     functionHash.toggleSelectorsPopover,
       label:    'Open graph customization options',
     });
   }
@@ -47,18 +47,22 @@ export const formatControlsTopAndBot = (state, that) => {
   };
 };
 
-export const formatControlsPresets = (presets, that) => {
+export const formatControls = (state, functionHash) => {
+  const {
+    controlsTop,
+    controlsBot,
+  } = formatControlsTopAndBot(state, functionHash);
+  
+  const presets = state.presets || {};
+
   const controlsPresets = [];
-  if(!isObjectLiteral(presets)) {
-    return controlsPresets;
-  }
   for(let id in presets){
     const thisPreset = presets[id];
     controlsPresets.push({
       name:     thisPreset.name || 'pre-set',
       id,
       iconName: thisPreset.iconName || 'CoffeePot',
-      func:     ()=>that.handlePresetSelect(id),
+      func:     ()=>functionHash.handlePresetSelect(id),
       label:    thisPreset.namePreset || 'pre-set',
     });
   }
@@ -68,17 +72,6 @@ export const formatControlsPresets = (presets, that) => {
     }
     return -1;
   });
-
-  return controlsPresets;
-};
-
-export const formatControls = (state, that) => {
-  const {
-    controlsTop,
-    controlsBot,
-  } = formatControlsTopAndBot(state, that);
-  
-  const controlsPresets = formatControlsPresets(state.presets, that);
 
   const controls = [
     ...controlsTop,

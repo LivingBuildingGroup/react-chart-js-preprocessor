@@ -1,15 +1,5 @@
 export default function RangeFinder (props){
 
-  const groupBy =
-    !props.groupTrue && props.groupAllow ?
-    <label className='rcjspp-sel-row-form-label'>
-      Group By
-      <select className='rcjspp-sel-input'
-        onChange={e=>props.handleGroupBy(e)} >
-        {props.layerGroupByJSXOptions}
-      </select>
-    </label> : null ;
-
   return <div className='rcjspp-sel-row-form'>
     <label className='rcjspp-sel-row-form-label'>
       Start of Range
@@ -39,7 +29,17 @@ export default function RangeFinder (props){
         onChange={e=>props.handleTickChange(e)} 
         value={props.xIdealTickSpacing} />
     </label>
-    {groupBy}
+    {
+      !props.isGrouped && props.groupAllow ?
+        <label className='rcjspp-sel-row-form-label'>
+          Group By
+          <select className='rcjspp-sel-input'
+            onChange={e=>props.handleGroupBy(e)} >
+            {props.layerGroupByJSXOptions}
+          </select>
+       </label> : 
+       null 
+    }
   </div>
 
 }
