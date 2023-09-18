@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = RCJSPP;
 var _react = _interopRequireWildcard(require("react"));
 var _reactChartjs = require("react-chartjs-2");
+var _chart = require("chart.js");
 var _conjunctionJunction = require("conjunction-junction");
 var _browserHelpers = require("browser-helpers");
 var _prettyColors = require("pretty-colors");
@@ -36,6 +37,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+_chart.Chart.register(_chart.CategoryScale, _chart.LinearScale, _chart.PointElement, _chart.LineElement, _chart.Title, _chart.Tooltip, _chart.Legend);
 var indexAbbrev = 0;
 var indexLabels = 1;
 var indexUnits = 2;
@@ -178,113 +180,149 @@ function RCJSPP(props) {
     _useState38 = _slicedToArray(_useState37, 2),
     graphOptions = _useState38[0],
     setGraphOptions = _useState38[1];
-  // data
-  var _useState39 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.dataType) ? props.dataType : 1),
+  var _useState39 = (0, _react.useState)({}),
     _useState40 = _slicedToArray(_useState39, 2),
-    dataType = _useState40[0],
-    setDataType = _useState40[1];
-  var _useState41 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.dataConvertFrom) ? props.dataConvertFrom : 1),
+    actualGraphData = _useState40[0],
+    setActualGraphData = _useState40[1];
+  (0, _react.useEffect)(function () {
+    if (layersSelected.length > 0 && dataType1.length > 0) {
+      var dataSetMap = layersSelected.map(function (layer) {
+        return {
+          "label": layer,
+          "data": dataType1.map(function (dataPoint) {
+            return dataPoint[layer];
+          }),
+          "borderColor": styles[layer].color,
+          "backgroundColor": styles[layer].color
+        };
+      });
+      setActualGraphData({
+        labels: layersSelected,
+        dataSets: dataSetMap
+      });
+      var options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          },
+          title: {
+            display: true,
+            text: graphName
+          }
+        }
+      };
+      setGraphOptions(options);
+    }
+  }, [layersSelected]);
+
+  // data
+  var _useState41 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.dataType) ? props.dataType : 1),
     _useState42 = _slicedToArray(_useState41, 2),
-    dataConvertFrom = _useState42[0],
-    setDataConvertFrom = _useState42[1]; // convert from what to 1
-  var _useState43 = (0, _react.useState)(Array.isArray(props.dataType1) ? props.dataType1 : []),
+    dataType = _useState42[0],
+    setDataType = _useState42[1];
+  var _useState43 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.dataConvertFrom) ? props.dataConvertFrom : 1),
     _useState44 = _slicedToArray(_useState43, 2),
-    dataType1Raw = _useState44[0],
-    setDataType1Raw = _useState44[1];
-  var _useState45 = (0, _react.useState)(Array.isArray(props.dataType1) ? props.dataType1.map(function (d) {
+    dataConvertFrom = _useState44[0],
+    setDataConvertFrom = _useState44[1]; // convert from what to 1
+  var _useState45 = (0, _react.useState)(Array.isArray(props.dataType1) ? props.dataType1 : []),
+    _useState46 = _slicedToArray(_useState45, 2),
+    dataType1Raw = _useState46[0],
+    setDataType1Raw = _useState46[1];
+  var _useState47 = (0, _react.useState)(Array.isArray(props.dataType1) ? props.dataType1.map(function (d) {
       return Object.assign({}, d);
     }) : []),
-    _useState46 = _slicedToArray(_useState45, 2),
-    dataType1 = _useState46[0],
-    setDataType1 = _useState46[1];
-  var _useState47 = (0, _react.useState)(Array.isArray(props.dataType2) ? props.dataType2 : [[]]),
     _useState48 = _slicedToArray(_useState47, 2),
-    dataType2Raw = _useState48[0],
-    setDataType2Raw = _useState48[1];
-  var _useState49 = (0, _react.useState)(props.titleText || 'data'),
+    dataType1 = _useState48[0],
+    setDataType1 = _useState48[1];
+  var _useState49 = (0, _react.useState)(Array.isArray(props.dataType2) ? props.dataType2 : [[]]),
     _useState50 = _slicedToArray(_useState49, 2),
-    titleText = _useState50[0],
-    setTitleText = _useState50[1];
-  var _useState51 = (0, _react.useState)({}),
+    dataType2Raw = _useState50[0],
+    setDataType2Raw = _useState50[1];
+  var _useState51 = (0, _react.useState)(props.titleText || 'data'),
     _useState52 = _slicedToArray(_useState51, 2),
-    styles = _useState52[0],
-    setStyles = _useState52[1]; // populated on presetSelect
-
-  var _useState53 = (0, _react.useState)(props.groupColors || {}),
+    titleText = _useState52[0],
+    setTitleText = _useState52[1];
+  var _useState53 = (0, _react.useState)({}),
     _useState54 = _slicedToArray(_useState53, 2),
-    groupColors = _useState54[0],
-    setGroupColors = _useState54[1];
-  var _useState55 = (0, _react.useState)({}),
+    styles = _useState54[0],
+    setStyles = _useState54[1]; // populated on presetSelect
+
+  var _useState55 = (0, _react.useState)(props.groupColors || {}),
     _useState56 = _slicedToArray(_useState55, 2),
-    groupDotColors = _useState56[0],
-    setGroupDotColors = _useState56[1];
-  var _useState57 = (0, _react.useState)(typeof props.isGrouped === 'boolean' ? props.isGrouped : false),
+    groupColors = _useState56[0],
+    setGroupColors = _useState56[1];
+  var _useState57 = (0, _react.useState)({}),
     _useState58 = _slicedToArray(_useState57, 2),
-    isGrouped = _useState58[0],
-    setIsGrouped = _useState58[1];
-  var _useState59 = (0, _react.useState)(props.groupByOnMount),
-    _useState60 = _slicedToArray(_useState59, 1),
-    groupByOnMount = _useState60[0];
-  var _useState61 = (0, _react.useState)(props.groupsSub),
-    _useState62 = _slicedToArray(_useState61, 2),
-    groupsSub = _useState62[0],
-    setGroupsSub = _useState62[1];
-  var _useState63 = (0, _react.useState)([]),
+    groupDotColors = _useState58[0],
+    setGroupDotColors = _useState58[1];
+  var _useState59 = (0, _react.useState)(typeof props.isGrouped === 'boolean' ? props.isGrouped : false),
+    _useState60 = _slicedToArray(_useState59, 2),
+    isGrouped = _useState60[0],
+    setIsGrouped = _useState60[1];
+  var _useState61 = (0, _react.useState)(props.groupByOnMount),
+    _useState62 = _slicedToArray(_useState61, 1),
+    groupByOnMount = _useState62[0];
+  var _useState63 = (0, _react.useState)(props.groupsSub),
     _useState64 = _slicedToArray(_useState63, 2),
-    groups = _useState64[0],
-    setGroups = _useState64[1];
+    groupsSub = _useState64[0],
+    setGroupsSub = _useState64[1];
   var _useState65 = (0, _react.useState)([]),
     _useState66 = _slicedToArray(_useState65, 2),
-    presetGlobalPalettes = _useState66[0],
-    setPresetGlobalPalettes = _useState66[1];
-  var _useState67 = (0, _react.useState)(''),
+    groups = _useState66[0],
+    setGroups = _useState66[1];
+  var _useState67 = (0, _react.useState)([]),
     _useState68 = _slicedToArray(_useState67, 2),
-    presetGlobalPalette = _useState68[0],
-    setPresetGlobalPalette = _useState68[1];
-  var _useState69 = (0, _react.useState)([]),
+    presetGlobalPalettes = _useState68[0],
+    setPresetGlobalPalettes = _useState68[1];
+  var _useState69 = (0, _react.useState)(''),
     _useState70 = _slicedToArray(_useState69, 2),
-    presetGlobalColorOptions = _useState70[0],
-    setPresetGlobalColorOptions = _useState70[1];
-  var _useState71 = (0, _react.useState)(props.presetIdActive || ''),
+    presetGlobalPalette = _useState70[0],
+    setPresetGlobalPalette = _useState70[1];
+  var _useState71 = (0, _react.useState)([]),
     _useState72 = _slicedToArray(_useState71, 2),
-    presetIdActive = _useState72[0],
-    setPresetIdActive = _useState72[1];
-  var _useState73 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xStart) ? props.xStart : 0),
+    presetGlobalColorOptions = _useState72[0],
+    setPresetGlobalColorOptions = _useState72[1];
+  var _useState73 = (0, _react.useState)(props.presetIdActive || ''),
     _useState74 = _slicedToArray(_useState73, 2),
-    xStart = _useState74[0],
-    setXStart = _useState74[1];
-  var _useState75 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xEnd) ? props.xEnd : 1000),
+    presetIdActive = _useState74[0],
+    setPresetIdActive = _useState74[1];
+  var _useState75 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xStart) ? props.xStart : 0),
     _useState76 = _slicedToArray(_useState75, 2),
-    xEnd = _useState76[0],
-    setXEnd = _useState76[1];
-  var _useState77 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xIdealTickSpacing) ? props.xIdealTickSpacing : 6),
+    xStart = _useState76[0],
+    setXStart = _useState76[1];
+  var _useState77 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xEnd) ? props.xEnd : 1000),
     _useState78 = _slicedToArray(_useState77, 2),
-    xIdealTickSpacing = _useState78[0],
-    setXIdealTickSpacing = _useState78[1];
-  var _useState79 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xMaxTickSpacing) ? props.xMaxTickSpacing : 50),
+    xEnd = _useState78[0],
+    setXEnd = _useState78[1];
+  var _useState79 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xIdealTickSpacing) ? props.xIdealTickSpacing : 6),
     _useState80 = _slicedToArray(_useState79, 2),
-    xMaxTickSpacing = _useState80[0],
-    setXMaxTickSpacing = _useState80[1];
-  var _useState81 = (0, _react.useState)(props.xLabelKey || null),
+    xIdealTickSpacing = _useState80[0],
+    setXIdealTickSpacing = _useState80[1];
+  var _useState81 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xMaxTickSpacing) ? props.xMaxTickSpacing : 50),
     _useState82 = _slicedToArray(_useState81, 2),
-    xLabelKey = _useState82[0],
-    setXLabelKey = _useState82[1];
-  var _useState83 = (0, _react.useState)(props.xLabel),
+    xMaxTickSpacing = _useState82[0],
+    setXMaxTickSpacing = _useState82[1];
+  var _useState83 = (0, _react.useState)(props.xLabelKey || null),
     _useState84 = _slicedToArray(_useState83, 2),
-    xLabel = _useState84[0],
-    setXLabel = _useState84[1];
-  var _useState85 = (0, _react.useState)([]),
+    xLabelKey = _useState84[0],
+    setXLabelKey = _useState84[1];
+  var _useState85 = (0, _react.useState)(props.xLabel),
     _useState86 = _slicedToArray(_useState85, 2),
-    yAxisArray = _useState86[0],
-    setYAxisArray = _useState86[1]; // used as history in createGraph()
-  var _useState87 = (0, _react.useState)(Array.isArray(props.yAxisUnitOptions) && props.yAxisUnitOptions[0] ? props.yAxisUnitOptions[0] : {}),
+    xLabel = _useState86[0],
+    setXLabel = _useState86[1];
+  var _useState87 = (0, _react.useState)([]),
     _useState88 = _slicedToArray(_useState87, 2),
-    yAxisUnitOptions = _useState88[0],
-    setYAxisUnitOptions = _useState88[1];
-  var _useState89 = (0, _react.useState)(0),
+    yAxisArray = _useState88[0],
+    setYAxisArray = _useState88[1]; // used as history in createGraph()
+  var _useState89 = (0, _react.useState)(Array.isArray(props.yAxisUnitOptions) && props.yAxisUnitOptions[0] ? props.yAxisUnitOptions[0] : {}),
     _useState90 = _slicedToArray(_useState89, 2),
-    yAxisInFocus = _useState90[0],
-    setYAxisInFocus = _useState90[1];
+    yAxisUnitOptions = _useState90[0],
+    setYAxisUnitOptions = _useState90[1];
+  var _useState91 = (0, _react.useState)(0),
+    _useState92 = _slicedToArray(_useState91, 2),
+    yAxisInFocus = _useState92[0],
+    setYAxisInFocus = _useState92[1];
   var packGraphState = function packGraphState(gs, full) {
     var graphState = {
       // modified via          used by
@@ -704,7 +742,7 @@ function RCJSPP(props) {
     }
   };
 
-  var _useState91 = (0, _react.useState)((0, _helpersControls.formatControls)({
+  var _useState93 = (0, _react.useState)((0, _helpersControls.formatControls)({
       printAllow: allowed.printAllow,
       // all below are set on mount, not changed after
       backgroundAllow: allowed.backgroundAllow,
@@ -718,8 +756,8 @@ function RCJSPP(props) {
       toggleSelectorsPopover: toggleSelectorsPopover,
       handlePresetSelect: handlePresetSelect
     })),
-    _useState92 = _slicedToArray(_useState91, 1),
-    controls = _useState92[0];
+    _useState94 = _slicedToArray(_useState93, 1),
+    controls = _useState94[0];
 
   // @@@@@@@@@@@@@@@@@@ RENDER @@@@@@@@@@@@@@@@
 
@@ -740,10 +778,8 @@ function RCJSPP(props) {
     toggleSelectorsInFocus: toggleSelectorsInFocus
   });
   var graph = isReady && !isHidden ? /*#__PURE__*/_react["default"].createElement(_reactChartjs.Line, {
-    data: graphData,
-    options: graphOptions,
-    height: css.cssCanvasHeight,
-    width: css.cssCanvasWidth
+    data: actaulGraphData,
+    options: graphOptions
   }) : null;
   var selectors = allowed.selectorsInclude ? /*#__PURE__*/_react["default"].createElement(_selectors["default"], {
     cssDivSelectors: css.cssDivSelectors,

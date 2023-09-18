@@ -1,9 +1,25 @@
 import React, 
   { useEffect, useState }       from 'react';
 import { Line }                 from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title } from 'chart.js';
-
-ChartJS.register(LineElement, PointElement, LinearScale, Title);
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend,
+  } from 'chart.js';
+  ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	Title,
+	Tooltip,
+	Legend
+  );
 import { 
   isPrimitiveNumber,
   parseEvent,
@@ -102,7 +118,7 @@ export default function RCJSPP(props) {
 	});
 
 	// @@@@@@@@@@@@@@ STATE: GRAPH @@@@@@@@@@@@@@@@
-
+	
 	const [presets] = useState(props.presets || {});
 
 	const [cssBackground, setCssBackground] = useState(props.cssBackground || 'gray');
@@ -116,12 +132,44 @@ export default function RCJSPP(props) {
 		Array.isArray(props.layersSelected) ? 
 		props.layersSelected : []); // use as many keys as desired
 
+
+		
 	const [graphData, setGraphData] = useState( {}); // pass as props to graph
 	const [graphOptions,  setGraphOptions] = useState( {   // pass as props to graph
 		scales: {
 			yAxes: [],
 		},
 	});
+
+const [actualGraphData, setActualGraphData] = useState({})
+
+useEffect(()=>{
+if(layersSelected.length>0&&dataType1.length>0){
+     const dataSetMap = layersSelected.map((layer)=>{
+		return ({  "label": layer,
+			"data": dataType1.map((dataPoint)=> dataPoint[layer]),
+			"borderColor": styles[layer].color,
+			"backgroundColor": styles[layer].color
+		})
+	 })
+	 setActualGraphData({labels:layersSelected,
+		dataSets:dataSetMap})
+		const options = {
+			responsive:true,
+			plugins: {
+				legend: {
+					position: 'bottom',
+				},
+				title:{
+					display:true,
+					text:graphName
+				}
+			}
+		}
+		setGraphOptions(options)
+}
+},[layersSelected])
+
 	// data
 	const [dataType, setDataType] = useState(
 		isPrimitiveNumber(props.dataType) ? props.dataType : 1);
@@ -648,11 +696,10 @@ export default function RCJSPP(props) {
 		toggleSelectorsInFocus={toggleSelectorsInFocus} />
 	
 	const graph = isReady && !isHidden ?
-		<Line 
-			data   ={graphData   } 
+		   <Line 
+			data   ={actaulGraphData   } 
 			options={graphOptions}
-			height ={css.cssCanvasHeight}
-			width  ={css.cssCanvasWidth } /> : null ;
+			 /> : null ;
 	
 	const selectors = allowed.selectorsInclude ? <Selectors
 		cssDivSelectors     ={css.cssDivSelectors}
