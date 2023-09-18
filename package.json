@@ -1,6 +1,6 @@
 {
   "name": "react-chart-js-preprocessor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Preprocessor to accept data and simple configuration, then create powerful controllers that generate and manage inputs to react-chart-js",
   "main": "build/index.js",
   "license": "MIT",
@@ -16,17 +16,21 @@
   },
   "peerDependencies": {
     "browser-helpers": "^0.1.1",
-    "chart.js": "^2.9.4",
+    "chart.js": "^4.4.0",
     "conjunction-junction": "^3.13.53",
     "pretty-colors": "^0.1.0",
     "react": "^18",
-    "react-chartjs-2": "^2.8.0",
+    "react-chartjs-2": "^2.11.2",
     "react-dom": "^18",
     "something-rather-iconic": "^1.0.37"
   },
   "devDependencies": {
-    "babel-core": "^6.21.0",
-    "babel-loader": "^7.1.4",
+    "@babel/plugin-proposal-function-bind": "^7.22.5",
+    "@babel/preset-env": "^7.22.20",
+    "@babel/preset-react": "^7.22.15",
+    "@babel/preset-stage-0": "^7.8.3",
+    "babel-core": "^4.7.16",
+    "babel-loader": "^9.1.3",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.24.1",
