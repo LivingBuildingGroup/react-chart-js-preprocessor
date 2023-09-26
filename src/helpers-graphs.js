@@ -442,6 +442,7 @@ const defaultXAxis = {
     fontSize: 12,
   },
   ticks: {
+    ...defaultXAxis.ticks,
     display: true,
     autoSkip: true,
     callback: (value, index, values) => {
@@ -481,13 +482,18 @@ const createXAxis = options => {
       axisColor: gridLinesColor,
     }
   );
+  const xMaxTickLim = 
+  (max-min)> 1000 ? (max-min) /100 :
+  (max-min)> 6000  ? (max-min)/50:
+  (max-min)> 100 ? (max-min)/10:
+  6;
   const ticks = Object.assign({},
     defaultXAxis.ticks,
     {
       fontColor: scaleAndTickColor,
       min: min || 0,
       max: max || 500,
-      maxTicksLimit: maxTicksLimit || 100,
+      maxTicksLimit: xMaxTickLim || 100,
       autoSkip: false, // To avoid autoskipping of ticks
       callback: (value, index, values) => {
         return tickValues.includes(value) ? value : null;
