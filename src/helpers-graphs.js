@@ -422,10 +422,10 @@ const calcTicks = (min, max, increment) => {
   }
   return ticks;
 };
-const generateTicks = (min, max, increment) => {
+const generateTicks = (labels, min, max, increment) => {
   let ticks = [];
   for (let i = min; i <= max; i += increment) {
-    ticks.push(data.labels[i]);
+    ticks.push(labels[i]);
   }
   return ticks;
 };
@@ -458,7 +458,7 @@ const defaultXAxis = {
 };
 
 const createXAxis = options => {
-  const { label, cssBackground, min, max, maxTicksLimit } = options;
+  const { labels, cssBackground, min, max, maxTicksLimit } = options;
   const zeroLineColor = 
     cssBackground === 'white' ?
       'black':
@@ -471,6 +471,8 @@ const createXAxis = options => {
     cssBackground === 'white' ?
       'rgb(0, 0, 77)':
       'white';
+      const incrementSize = Math.ceil((max - min) / (maxTicksLimit - 1));
+      const tickValues = generateTicks(labels, min, max, incrementSize);
   const gridLines = Object.assign({},
     defaultXAxis.gridLines,
     {
@@ -486,6 +488,10 @@ const createXAxis = options => {
       min: min || 0,
       max: max || 500,
       maxTicksLimit: maxTicksLimit || 100,
+      autoSkip: false, // To avoid autoskipping of ticks
+      callback: (value, index, values) => {
+        return tickValues.includes(value) ? value : null;
+      }
     }
   );
   const scaleLabel = 
@@ -645,7 +651,7 @@ const createGraphOptions = options => {
   };
   const arrayOfYOptions = createYAxesOptions(yAxesOptions);
   const xAxisOptions = {
-    label: xLabel ? xLabel : null ,
+    labels: xLabel ? xLabel : [],
     cssBackground,
     min: minX,
     max: maxX,
@@ -765,6 +771,7 @@ const createGraph = gs => {
 
   const pointsToAdd = calcTicks( graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
   const maxTicks = pointsToAdd.length;
+  
   const dataType0Processed = conformDataLength(
     dataType0Raw, 
     first, 

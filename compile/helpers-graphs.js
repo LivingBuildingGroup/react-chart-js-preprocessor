@@ -345,10 +345,10 @@ var calcTicks = function calcTicks(min, max, increment) {
   }
   return ticks;
 };
-var generateTicks = function generateTicks(min, max, increment) {
+var generateTicks = function generateTicks(labels, min, max, increment) {
   var ticks = [];
   for (var i = min; i <= max; i += increment) {
-    ticks.push(data.labels[i]);
+    ticks.push(labels[i]);
   }
   return ticks;
 };
@@ -382,7 +382,7 @@ var defaultXAxis = {
 };
 
 var createXAxis = function createXAxis(options) {
-  var label = options.label,
+  var labels = options.labels,
     cssBackground = options.cssBackground,
     min = options.min,
     max = options.max,
@@ -390,6 +390,8 @@ var createXAxis = function createXAxis(options) {
   var zeroLineColor = cssBackground === 'white' ? 'black' : 'white';
   var gridLinesColor = cssBackground === 'white' ? 'rgba(68,68,68,0.5)' : 'rgba(119,119,119,0.5)';
   var scaleAndTickColor = cssBackground === 'white' ? 'rgb(0, 0, 77)' : 'white';
+  var incrementSize = Math.ceil((max - min) / (maxTicksLimit - 1));
+  var tickValues = generateTicks(labels, min, max, incrementSize);
   var gridLines = Object.assign({}, defaultXAxis.gridLines, {
     zeroLineColor: zeroLineColor,
     color: gridLinesColor,
@@ -399,7 +401,12 @@ var createXAxis = function createXAxis(options) {
     fontColor: scaleAndTickColor,
     min: min || 0,
     max: max || 500,
-    maxTicksLimit: maxTicksLimit || 100
+    maxTicksLimit: maxTicksLimit || 100,
+    autoSkip: false,
+    // To avoid autoskipping of ticks
+    callback: function callback(value, index, values) {
+      return tickValues.includes(value) ? value : null;
+    }
   });
   var scaleLabel = label ? Object.assign({}, defaultXAxis.scaleLabel, {
     labelString: label,
@@ -534,7 +541,7 @@ var createGraphOptions = function createGraphOptions(options) {
   };
   var arrayOfYOptions = createYAxesOptions(yAxesOptions);
   var xAxisOptions = {
-    label: xLabel ? xLabel : null,
+    labels: xLabel ? xLabel : [],
     cssBackground: cssBackground,
     min: minX,
     max: maxX,
