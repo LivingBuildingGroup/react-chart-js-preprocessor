@@ -427,7 +427,13 @@ const calcTicks = (dataLength, idealSpacing) => {
     pointsToAdd,
   };
 };
-
+const generateTicks = (min, max, increment) => {
+  let ticks = [];
+  for (let i = min; i <= max; i += increment) {
+    ticks.push(data.labels[i]);
+  }
+  return ticks;
+};
 const defaultXAxis = {
   display: true,
   // type: 'linear',
@@ -443,6 +449,10 @@ const defaultXAxis = {
   ticks: {
     display: true,
     autoSkip: true,
+    callback: (value, index, values) => {
+      const customTicks = generateTicks(minX, maxX, incrementSize);
+      return customTicks.includes(value) ? value : null;
+    }
     // stepSize: 6, // this is not working
     // min: 0,   // changing these will change the dataset displayed
     // max: 186, // ""
