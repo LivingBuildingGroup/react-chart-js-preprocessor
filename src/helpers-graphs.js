@@ -413,19 +413,14 @@ const createGraphData = graphState => {
 
 // @@@@@@@@@@@@@@@@ AXES @@@@@@@@@@@@@@
 
-const calcTicks = (dataLength, idealSpacing) => {
+const calcTicks = (min, max, increment) => {
   // dataLength should be the data we want to show, i.e. after cropping (by the user), if any
   // dataLength should be 1 over ideal, so the final label is an even increment
-  const maxTicks = Math.ceil((dataLength-1)/idealSpacing);
-  const lengthRoundUp = idealSpacing * maxTicks;
-
-  const pointsToAdd = lengthRoundUp - dataLength - 1;
-
-  return {
-    maxTicks,
-    lengthRoundUp,
-    pointsToAdd,
-  };
+  let ticks = [];
+  for (let i = min; i <= max; i += increment) {
+    ticks.push(data.labels[i]);
+  }
+  return ticks;
 };
 const generateTicks = (min, max, increment) => {
   let ticks = [];
@@ -658,6 +653,11 @@ const createGraphOptions = options => {
   };
 
   return {
+    elements: {
+      line: {
+          tension: 0, // disables bezier curves
+      }
+    },
     responsive: true,
     tooltips: {
       mode: 'label'
@@ -763,12 +763,8 @@ const createGraph = gs => {
     dataLength,
   } = calcDataLength(dataType0Raw, graphState.xStart, graphState.xEnd);
 
-  const {
-    maxTicks, // testing only
-    lengthRoundUp,
-    pointsToAdd,
-  } = calcTicks(dataLength, graphState.xIdealTickSpacing);
-
+  const pointsToAdd = calcTicks( graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
+  const maxTicks = pointsToAdd.length;
   const dataType0Processed = conformDataLength(
     dataType0Raw, 
     first, 
@@ -781,7 +777,7 @@ const createGraph = gs => {
     xLabel:           graphState.xLabel, 
     cssBackground:    graphState.cssBackground,
     minX:             first,
-    maxX:             lengthRoundUp, 
+    maxX:             graphState.xEnd, 
     maxTicksLimitX:   maxTicks,
     yAxisUnitOptions: graphState.yAxisUnitOptions,
   };
