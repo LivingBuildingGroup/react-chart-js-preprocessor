@@ -361,7 +361,20 @@ const editDatapoint = input => {
     }
   );
 };
+const filterData = (originalData, labels, minX, maxX, incrementSize) => {
+  const filteredData = [];
+  const filteredLabels = [];
+  
+  for (let i = minX; i <= maxX; i += incrementSize) {
+      filteredData.push(originalData[i]);
+      filteredLabels.push(labels[i]);
+  }
 
+  return {
+      data: filteredData,
+      labels: filteredLabels
+  };
+}
 const createGraphData = graphState => {
   // create entirely new data
   const { 
@@ -375,7 +388,13 @@ const createGraphData = graphState => {
     stylesArray,
     xLabelsArray,
   } = graphState;
-
+  const xMaxTickLim = 
+  (graphState.xStart-graphState.xEnd)> 1000 ? (graphState.xStart-graphState.xEnd) /100 :
+  (graphState.xStart-graphState.xEnd)> 6000  ? (graphState.xStart-graphState.xEnd)/50:
+  (graphState.xStart-graphState.xEnd)> 100 ? (graphState.xStart-graphState.xEnd)/10:
+  6;
+  const { data: filteredData, labels: filteredLabels } = 
+  filterData(dataType0Processed[0], xLabelsArray, graphState.xStart, graphState.xEnd, xMaxTickLim); // You will need to define minX, maxX, and incrementSize
 
   const datasets = Array.isArray(layersSelected) ? 
     layersSelected.map((k,i)=>{
@@ -384,14 +403,12 @@ const createGraphData = graphState => {
       const yAxisID = unitsIndex < 0 ?
         yAxisIdArray[0] :
         yAxisIdArray[unitsIndex];
-      return Object.assign({},
-        stylesArray[i],
-        {
+        return {
+          ...stylesArray[i],
           label: dataLabelArray[i],
           yAxisID,
-          data: dataType0Processed[i],
-        }
-      );
+          data: filteredData
+        };
     }) : [] ;
 
   const startAt = 0 ;
