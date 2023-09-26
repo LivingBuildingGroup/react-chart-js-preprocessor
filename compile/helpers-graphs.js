@@ -336,17 +336,14 @@ var createGraphData = function createGraphData(graphState) {
 
 // @@@@@@@@@@@@@@@@ AXES @@@@@@@@@@@@@@
 
-var calcTicks = function calcTicks(dataLength, idealSpacing) {
+var calcTicks = function calcTicks(min, max, increment) {
   // dataLength should be the data we want to show, i.e. after cropping (by the user), if any
   // dataLength should be 1 over ideal, so the final label is an even increment
-  var maxTicks = Math.ceil((dataLength - 1) / idealSpacing);
-  var lengthRoundUp = idealSpacing * maxTicks;
-  var pointsToAdd = lengthRoundUp - dataLength - 1;
-  return {
-    maxTicks: maxTicks,
-    lengthRoundUp: lengthRoundUp,
-    pointsToAdd: pointsToAdd
-  };
+  var ticks = [];
+  for (var i = min; i <= max; i += increment) {
+    ticks.push(data.labels[i]);
+  }
+  return ticks;
 };
 var generateTicks = function generateTicks(min, max, increment) {
   var ticks = [];
@@ -544,6 +541,12 @@ var createGraphOptions = function createGraphOptions(options) {
     maxTicksLimit: maxTicksLimitX
   };
   return {
+    elements: {
+      line: {
+        tension: 0 // disables bezier curves
+      }
+    },
+
     responsive: true,
     tooltips: {
       mode: 'label'
@@ -629,17 +632,15 @@ var createGraph = function createGraph(gs) {
   var _calcDataLength = calcDataLength(dataType0Raw, graphState.xStart, graphState.xEnd),
     first = _calcDataLength.first,
     dataLength = _calcDataLength.dataLength;
-  var _calcTicks = calcTicks(dataLength, graphState.xIdealTickSpacing),
-    maxTicks = _calcTicks.maxTicks,
-    lengthRoundUp = _calcTicks.lengthRoundUp,
-    pointsToAdd = _calcTicks.pointsToAdd;
+  var pointsToAdd = calcTicks(graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
+  var maxTicks = pointsToAdd.length;
   var dataType0Processed = conformDataLength(dataType0Raw, first, lengthRoundUp, pointsToAdd);
   var optionsInput = {
     yLabel: yAxisArray,
     xLabel: graphState.xLabel,
     cssBackground: graphState.cssBackground,
     minX: first,
-    maxX: lengthRoundUp,
+    maxX: graphState.xEnd,
     maxTicksLimitX: maxTicks,
     yAxisUnitOptions: graphState.yAxisUnitOptions
   };
