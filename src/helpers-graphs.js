@@ -361,7 +361,7 @@ const editDatapoint = input => {
     }
   );
 };
-const filterData = (originalData, labels, minX, maxX, incrementSize) => {
+const filterData = (originalData, labels, minX, maxX, incrementSize, verbose = false) => {
   const filteredData = [];
   const filteredLabels = [];
   
@@ -369,7 +369,9 @@ const filterData = (originalData, labels, minX, maxX, incrementSize) => {
       filteredData.push(originalData[i]);
       filteredLabels.push(labels[i]);
   }
-
+ if (verbose){
+  console.log({minX:minX, maxX:maxX, dataLength: filteredData.length, data: filteredData, labels: filteredLabels,})
+ }
   return {
       data: filteredData,
       labels: filteredLabels
@@ -387,6 +389,7 @@ const createGraphData = graphState => {
     yAxisIdArray,
     stylesArray,
     xLabelsArray,
+    verbose
   } = graphState;
   const xMaxTickLim = 
   (graphState.xStart-graphState.xEnd)> 1000 ? (graphState.xStart-graphState.xEnd) /100 :
@@ -394,7 +397,7 @@ const createGraphData = graphState => {
   (graphState.xStart-graphState.xEnd)> 100 ? (graphState.xStart-graphState.xEnd)/10:
   6;
   const { data: filteredDataType0Processed, labels: filteredLabels } = 
-  filterData(dataType0Processed[0], labels, minX, maxX, incrementSize); // You will need to define minX, maxX, and incrementSize
+  filterData(dataType0Processed[0], labels, minX, maxX, incrementSize, verbose); // You will need to define minX, maxX, and incrementSize
 
 const datasets = Array.isArray(layersSelected) ? 
 layersSelected.map((k, i) => {
@@ -405,7 +408,7 @@ layersSelected.map((k, i) => {
     yAxisIdArray[unitsIndex];
   
   // Filter each dataset based on the same range
-  const { data: filteredData } = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize);
+  const { data: filteredData } = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize, verbose);
 
   return {
     ...stylesArray[i],

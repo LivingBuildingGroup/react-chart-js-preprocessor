@@ -310,11 +310,21 @@ var editDatapoint = function editDatapoint(input) {
   });
 };
 var filterData = function filterData(originalData, labels, minX, maxX, incrementSize) {
+  var verbose = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
   var filteredData = [];
   var filteredLabels = [];
   for (var i = minX; i <= maxX; i += incrementSize) {
     filteredData.push(originalData[i]);
     filteredLabels.push(labels[i]);
+  }
+  if (verbose) {
+    console.log({
+      minX: minX,
+      maxX: maxX,
+      dataLength: filteredData.length,
+      data: filteredData,
+      labels: filteredLabels
+    });
   }
   return {
     data: filteredData,
@@ -329,9 +339,10 @@ var createGraphData = function createGraphData(graphState) {
     yAxisArray = graphState.yAxisArray,
     yAxisIdArray = graphState.yAxisIdArray,
     stylesArray = graphState.stylesArray,
-    xLabelsArray = graphState.xLabelsArray;
+    xLabelsArray = graphState.xLabelsArray,
+    verbose = graphState.verbose;
   var xMaxTickLim = graphState.xStart - graphState.xEnd > 1000 ? (graphState.xStart - graphState.xEnd) / 100 : graphState.xStart - graphState.xEnd > 6000 ? (graphState.xStart - graphState.xEnd) / 50 : graphState.xStart - graphState.xEnd > 100 ? (graphState.xStart - graphState.xEnd) / 10 : 6;
-  var _filterData = filterData(dataType0Processed[0], labels, minX, maxX, incrementSize),
+  var _filterData = filterData(dataType0Processed[0], labels, minX, maxX, incrementSize, verbose),
     filteredDataType0Processed = _filterData.data,
     filteredLabels = _filterData.labels; // You will need to define minX, maxX, and incrementSize
 
@@ -343,7 +354,7 @@ var createGraphData = function createGraphData(graphState) {
     var yAxisID = unitsIndex < 0 ? yAxisIdArray[0] : yAxisIdArray[unitsIndex];
 
     // Filter each dataset based on the same range
-    var _filterData2 = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize),
+    var _filterData2 = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize, verbose),
       filteredData = _filterData2.data;
     return _objectSpread(_objectSpread({}, stylesArray[i]), {}, {
       label: dataLabelArray[i],

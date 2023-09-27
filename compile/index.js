@@ -57,7 +57,7 @@ var deepCopy = function deepCopy(o) {
 };
 function RCJSPP(props) {
   // @@@@@@@@@@@@@@ STATE CONSTANTS @@@@@@@@@@@@@@@@
-
+  var verbose = !!props.verbose;
   var _useState = (0, _react.useState)(props.legendHash || {}),
     _useState2 = _slicedToArray(_useState, 2),
     legendHash = _useState2[0],
@@ -427,6 +427,7 @@ function RCJSPP(props) {
       setPresetGlobalPalettes(graphState.presetGlobalPalettes);
       setPresetGlobalPalette(graphState.presetGlobalPalette);
       var graphInfo = (0, _helpersGraphs.createGraphInfoOnGroupOrMount)(graphState, legendHash, indexUnits);
+      graphState.verbose = verbose;
       graphState.layersThatHaveUnits = graphInfo.layersThatHaveUnits;
       graphState.layersAllPrefixed = graphInfo.layersAllPrefixed;
       graphState.layersGroupedByUnits = graphInfo.layersGroupedByUnits;

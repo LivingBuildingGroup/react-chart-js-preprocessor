@@ -48,6 +48,7 @@ const deepCopy = o => {
 export default function RCJSPP(props) {
   
 	// @@@@@@@@@@@@@@ STATE CONSTANTS @@@@@@@@@@@@@@@@
+	const verbose = !!props.verbose;
 
 	const [legendHash, setLegendHash] = useState(props.legendHash || {});
 	const [legendDescription, setLegendDescription] = useState(props.legendDescription || '');
@@ -288,6 +289,7 @@ export default function RCJSPP(props) {
 			setPresetGlobalPalette(graphState.presetGlobalPalette);
 
 			const graphInfo = createGraphInfoOnGroupOrMount(graphState, legendHash, indexUnits);
+			graphState.verbose              = verbose;
 			graphState.layersThatHaveUnits  = graphInfo.layersThatHaveUnits;
 			graphState.layersAllPrefixed    = graphInfo.layersAllPrefixed;
 			graphState.layersGroupedByUnits = graphInfo.layersGroupedByUnits;
