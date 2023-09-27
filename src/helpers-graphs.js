@@ -361,7 +361,7 @@ const editDatapoint = input => {
     }
   );
 };
-const filterData = (originalData, labels, minX, maxX, incrementSize, verbose = false) => {
+const filterData = (originalData, labels, minX, maxX, incrementSize, verbose) => {
   const filteredData = [];
   const filteredLabels = [];
   
@@ -369,8 +369,10 @@ const filterData = (originalData, labels, minX, maxX, incrementSize, verbose = f
       filteredData.push(originalData[i]);
       filteredLabels.push(labels[i]);
   }
- if (verbose){
-  console.log({minX:minX, maxX:maxX, dataLength: filteredData.length, data: filteredData, labels: filteredLabels,})
+ if (!!verbose){
+  console.log({minX:minX, maxX:maxX, dataLength: filteredData.length, data: filteredData, labels: filteredLabels},"DATASET LENGTH")
+ } else {
+  console.log(filteredData.length, "LENGTH OF DATASET")
  }
   return {
       data: filteredData,

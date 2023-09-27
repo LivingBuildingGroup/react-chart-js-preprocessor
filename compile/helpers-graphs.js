@@ -309,22 +309,23 @@ var editDatapoint = function editDatapoint(input) {
     datasets: newDatasets
   });
 };
-var filterData = function filterData(originalData, labels, minX, maxX, incrementSize) {
-  var verbose = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : false;
+var filterData = function filterData(originalData, labels, minX, maxX, incrementSize, verbose) {
   var filteredData = [];
   var filteredLabels = [];
   for (var i = minX; i <= maxX; i += incrementSize) {
     filteredData.push(originalData[i]);
     filteredLabels.push(labels[i]);
   }
-  if (verbose) {
+  if (!!verbose) {
     console.log({
       minX: minX,
       maxX: maxX,
       dataLength: filteredData.length,
       data: filteredData,
       labels: filteredLabels
-    });
+    }, "DATASET LENGTH");
+  } else {
+    console.log(filteredData.length, "LENGTH OF DATASET");
   }
   return {
     data: filteredData,
