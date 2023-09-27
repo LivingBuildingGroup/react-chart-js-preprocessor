@@ -309,6 +309,18 @@ var editDatapoint = function editDatapoint(input) {
     datasets: newDatasets
   });
 };
+var filterData = function filterData(originalData, labels, minX, maxX, incrementSize) {
+  var filteredData = [];
+  var filteredLabels = [];
+  for (var i = minX; i <= maxX; i += incrementSize) {
+    filteredData.push(originalData[i]);
+    filteredLabels.push(labels[i]);
+  }
+  return {
+    data: filteredData,
+    labels: filteredLabels
+  };
+};
 var createGraphData = function createGraphData(graphState) {
   // create entirely new data
   var layersSelected = graphState.layersSelected,
@@ -318,24 +330,29 @@ var createGraphData = function createGraphData(graphState) {
     yAxisIdArray = graphState.yAxisIdArray,
     stylesArray = graphState.stylesArray,
     xLabelsArray = graphState.xLabelsArray;
+  var xMaxTickLim = graphState.xStart - graphState.xEnd > 1000 ? (graphState.xStart - graphState.xEnd) / 100 : graphState.xStart - graphState.xEnd > 6000 ? (graphState.xStart - graphState.xEnd) / 50 : graphState.xStart - graphState.xEnd > 100 ? (graphState.xStart - graphState.xEnd) / 10 : 6;
+  var _filterData = filterData(dataType0Processed[0], labels, minX, maxX, incrementSize),
+    filteredDataType0Processed = _filterData.data,
+    filteredLabels = _filterData.labels; // You will need to define minX, maxX, and incrementSize
+
   var datasets = Array.isArray(layersSelected) ? layersSelected.map(function (k, i) {
     var units = yAxisArray[i];
     var unitsIndex = yAxisArray.findIndex(function (u) {
       return u === units;
     });
     var yAxisID = unitsIndex < 0 ? yAxisIdArray[0] : yAxisIdArray[unitsIndex];
-    return Object.assign({}, stylesArray[i], {
+
+    // Filter each dataset based on the same range
+    var _filterData2 = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize),
+      filteredData = _filterData2.data;
+    return _objectSpread(_objectSpread({}, stylesArray[i]), {}, {
       label: dataLabelArray[i],
       yAxisID: yAxisID,
-      data: dataType0Processed[i]
+      data: filteredData
     });
   }) : [];
-  var startAt = 0;
-  var labels = Array.isArray(xLabelsArray) ? xLabelsArray : !Array.isArray(dataType0Processed) ? [] : !Array.isArray(dataType0Processed[0]) ? [] : dataType0Processed[0].map(function (_, i) {
-    return i + startAt;
-  });
   return {
-    labels: labels,
+    labels: filteredLabels,
     datasets: datasets
   };
 };
@@ -648,7 +665,7 @@ var createGraph = function createGraph(gs) {
     dataLength = _calcDataLength.dataLength;
   var pointsToAdd = calcTicks(graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
   var maxTicks = pointsToAdd.length;
-  var dataType0Processed = conformDataLength(dataType0Raw, first, lengthRoundUp, pointsToAdd);
+  var dataType0Processed = conformDataLength(dataType0Raw, first, dataLength, pointsToAdd);
   var optionsInput = {
     yLabel: yAxisArray,
     xLabel: graphState.xLabel,

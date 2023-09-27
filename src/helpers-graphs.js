@@ -393,38 +393,32 @@ const createGraphData = graphState => {
   (graphState.xStart-graphState.xEnd)> 6000  ? (graphState.xStart-graphState.xEnd)/50:
   (graphState.xStart-graphState.xEnd)> 100 ? (graphState.xStart-graphState.xEnd)/10:
   6;
-  const { data: filteredData, labels: filteredLabels } = 
-  filterData(dataType0Processed[0], xLabelsArray, graphState.xStart, graphState.xEnd, xMaxTickLim); // You will need to define minX, maxX, and incrementSize
+  const { data: filteredDataType0Processed, labels: filteredLabels } = 
+  filterData(dataType0Processed[0], labels, minX, maxX, incrementSize); // You will need to define minX, maxX, and incrementSize
 
-  const datasets = Array.isArray(layersSelected) ? 
-    layersSelected.map((k,i)=>{
-      const units = yAxisArray[i] ;
-      const unitsIndex = yAxisArray.findIndex(u=>u === units);
-      const yAxisID = unitsIndex < 0 ?
-        yAxisIdArray[0] :
-        yAxisIdArray[unitsIndex];
-        return {
-          ...stylesArray[i],
-          label: dataLabelArray[i],
-          yAxisID,
-          data: filteredData
-        };
-    }) : [] ;
-
-  const startAt = 0 ;
-  const labels = 
-    Array.isArray(xLabelsArray) ?
-      xLabelsArray : 
-      !Array.isArray(dataType0Processed) ?
-        [] :
-        !Array.isArray(dataType0Processed[0]) ?
-          [] :
-          dataType0Processed[0].map((_,i)=>i+startAt);
+const datasets = Array.isArray(layersSelected) ? 
+layersSelected.map((k, i) => {
+  const units = yAxisArray[i] ;
+  const unitsIndex = yAxisArray.findIndex(u => u === units);
+  const yAxisID = unitsIndex < 0 ?
+    yAxisIdArray[0] :
+    yAxisIdArray[unitsIndex];
+  
+  // Filter each dataset based on the same range
+  const { data: filteredData } = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize);
 
   return {
-    labels,
-    datasets,
+    ...stylesArray[i],
+    label: dataLabelArray[i],
+    yAxisID,
+    data: filteredData
   };
+}) : [] ;
+
+return {
+labels: filteredLabels,
+datasets
+};
 
 };
 
@@ -798,7 +792,7 @@ const createGraph = gs => {
   const dataType0Processed = conformDataLength(
     dataType0Raw, 
     first, 
-    lengthRoundUp, 
+    dataLength, 
     pointsToAdd
   );
   
