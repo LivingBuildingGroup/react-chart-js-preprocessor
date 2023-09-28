@@ -224,14 +224,47 @@ var consoleDeveloperWarnings = function consoleDeveloperWarnings(props) {
       notes: 'if you are seeing this message, you have developer warnings turned on'
     }
   };
-  for (var prop in expected) {
+  var _loop = function _loop() {
     var theProp = expected[prop];
     var youSent = props[prop];
-    var problem = expected[prop].type === ['string', 'object'] && !(isObjectLiteral(youSent) || typeof youSent === 'string') ? 'not object or string' : expected[prop].type === 'object' && !isObjectLiteral(youSent) ? 'not object' : expected[prop].type === 'array' && !Array.isArray(youSent) ? 'not array' : expected[prop].type === 'number' && !isPrimitiveNumber(youSent) ? 'not number' : expected[prop].type === 'string' && typeof youSent !== 'string' ? 'not string' : expected[prop].type === 'boolean' && typeof youSent !== 'boolean' ? 'not boolean' : null;
+    // Helper function to check if two arrays are equal
+    var arraysEqual = function arraysEqual(a, b) {
+      if (a.length !== b.length) return false;
+      return a.every(function (value, index) {
+        return value === b[index];
+      });
+    };
+
+    // Check the type of youSent against expected type
+    var getTypeProblem = function getTypeProblem(youSent, expectedType) {
+      if (arraysEqual(expectedType, ['string', 'object']) && !(isObjectLiteral(youSent) || typeof youSent === 'string')) {
+        return 'not object or string';
+      }
+      if (expectedType === 'object' && !isObjectLiteral(youSent)) {
+        return 'not object';
+      }
+      if (expectedType === 'array' && !Array.isArray(youSent)) {
+        return 'not array';
+      }
+      if (expectedType === 'number' && !isPrimitiveNumber(youSent)) {
+        return 'not number';
+      }
+      if (expectedType === 'string' && typeof youSent !== 'string') {
+        return 'not string';
+      }
+      if (expectedType === 'boolean' && typeof youSent !== 'boolean') {
+        return 'not boolean';
+      }
+      return null;
+    };
+    var problem = getTypeProblem(youSent, expected[prop].type);
     var method = theProp.required === true && problem ? 'error' : theProp.required && problem ? 'warn' : problem && options.all ? 'log' : null;
     if (method) {
       console[method](prop, theProp.type, theProp.notes, 'you sent: ', Array.isArray(youSent) ? 'array' : _typeof(youSent), youSent);
     }
+  };
+  for (var prop in expected) {
+    _loop();
   }
 };
 module.exports = {

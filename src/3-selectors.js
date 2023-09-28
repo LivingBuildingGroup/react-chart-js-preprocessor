@@ -1,6 +1,6 @@
 import LayersOnFly              from './4-layers-on-fly';
 import RangeFinder              from './4-range-finder';
-
+import React from 'react';
 export default function Selectors(props) {
 
   const p = props;

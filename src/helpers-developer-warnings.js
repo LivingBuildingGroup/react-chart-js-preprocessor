@@ -226,21 +226,37 @@ const consoleDeveloperWarnings = (props, options={}) => {
   for(let prop in expected){
     const theProp = expected[prop];
     const youSent = props[prop];
-    const problem = 
-    (expected[prop].type === ['string','object'] && 
-      !(isObjectLiteral(youSent) || typeof youSent === 'string') )?
-      'not object or string' :
-      ( expected[prop].type === 'object' && !isObjectLiteral(youSent)) ?
-        'not object' :
-        ( expected[prop].type === 'array' && !Array.isArray(youSent)) ?
-          'not array' :
-          ( expected[prop].type === 'number' && !isPrimitiveNumber(youSent)) ?
-            'not number' :
-            ( expected[prop].type === 'string' && typeof youSent !== 'string') ?
-              'not string' :
-              ( expected[prop].type === 'boolean' && typeof youSent !== 'boolean') ?
-                'not boolean' :
-                null ;
+   // Helper function to check if two arrays are equal
+const arraysEqual = (a, b) => {
+  if (a.length !== b.length) return false;
+  return a.every((value, index) => value === b[index]);
+};
+
+// Check the type of youSent against expected type
+const getTypeProblem = (youSent, expectedType) => {
+  if (arraysEqual(expectedType, ['string', 'object']) && !(isObjectLiteral(youSent) || typeof youSent === 'string')) {
+    return 'not object or string';
+  } 
+  if (expectedType === 'object' && !isObjectLiteral(youSent)) {
+    return 'not object';
+  } 
+  if (expectedType === 'array' && !Array.isArray(youSent)) {
+    return 'not array';
+  } 
+  if (expectedType === 'number' && !isPrimitiveNumber(youSent)) {
+    return 'not number';
+  } 
+  if (expectedType === 'string' && typeof youSent !== 'string') {
+    return 'not string';
+  } 
+  if (expectedType === 'boolean' && typeof youSent !== 'boolean') {
+    return 'not boolean';
+  } 
+
+  return null;
+};
+
+const problem = getTypeProblem(youSent, expected[prop].type);
     const method = 
       theProp.required === true && problem ?
         'error' :
