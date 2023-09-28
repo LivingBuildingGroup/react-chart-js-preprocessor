@@ -398,8 +398,13 @@ const createGraphData = graphState => {
   (graphState.xStart-graphState.xEnd)> 6000  ? (graphState.xStart-graphState.xEnd)/50:
   (graphState.xStart-graphState.xEnd)> 100 ? (graphState.xStart-graphState.xEnd)/10:
   6;
+
+   const minX = graphState.xStart;
+   const maxX = graphState.xEnd;
+   const incrementSize = graphState.incrementSize;
+
   const { data: filteredDataType0Processed, labels: filteredLabels } = 
-  filterData(dataType0Processed[0], labels, minX, maxX, incrementSize, verbose); // You will need to define minX, maxX, and incrementSize
+  filterData(dataType0Processed[0], dataLabelArray, minX, maxX, incrementSize, verbose); // You will need to define minX, maxX, and incrementSize
 
 const datasets = Array.isArray(layersSelected) ? 
 layersSelected.map((k, i) => {
@@ -410,7 +415,7 @@ layersSelected.map((k, i) => {
     yAxisIdArray[unitsIndex];
   
   // Filter each dataset based on the same range
-  const { data: filteredData } = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize, verbose);
+  const { data: filteredData } = filterData(filteredDataType0Processed[i], filteredLabels, minX, maxX, incrementSize, verbose);
 
   return {
     ...stylesArray[i],
@@ -445,6 +450,14 @@ const generateTicks = (labels, min, max, increment) => {
   }
   return ticks;
 };
+const defaultTickProperties = {
+  display:true,
+  autoSkip:true,
+  callback: function callback(value,index,values){
+     var customTicks = generateTicks(minX, maxX, incrementSize);
+    return customTicks.includes(value) ? value : null;
+  } 
+}
 const defaultXAxis = {
   display: true,
   // type: 'linear',

@@ -343,7 +343,10 @@ var createGraphData = function createGraphData(graphState) {
     xLabelsArray = graphState.xLabelsArray,
     verbose = graphState.verbose;
   var xMaxTickLim = graphState.xStart - graphState.xEnd > 1000 ? (graphState.xStart - graphState.xEnd) / 100 : graphState.xStart - graphState.xEnd > 6000 ? (graphState.xStart - graphState.xEnd) / 50 : graphState.xStart - graphState.xEnd > 100 ? (graphState.xStart - graphState.xEnd) / 10 : 6;
-  var _filterData = filterData(dataType0Processed[0], labels, minX, maxX, incrementSize, verbose),
+  var minX = graphState.xStart;
+  var maxX = graphState.xEnd;
+  var incrementSize = graphState.incrementSize;
+  var _filterData = filterData(dataType0Processed[0], dataLabelArray, minX, maxX, incrementSize, verbose),
     filteredDataType0Processed = _filterData.data,
     filteredLabels = _filterData.labels; // You will need to define minX, maxX, and incrementSize
 
@@ -355,7 +358,7 @@ var createGraphData = function createGraphData(graphState) {
     var yAxisID = unitsIndex < 0 ? yAxisIdArray[0] : yAxisIdArray[unitsIndex];
 
     // Filter each dataset based on the same range
-    var _filterData2 = filterData(filteredDataType0Processed[i], labels, minX, maxX, incrementSize, verbose),
+    var _filterData2 = filterData(filteredDataType0Processed[i], filteredLabels, minX, maxX, incrementSize, verbose),
       filteredData = _filterData2.data;
     return _objectSpread(_objectSpread({}, stylesArray[i]), {}, {
       label: dataLabelArray[i],
@@ -386,6 +389,14 @@ var generateTicks = function generateTicks(labels, min, max, increment) {
     ticks.push(labels[i]);
   }
   return ticks;
+};
+var defaultTickProperties = {
+  display: true,
+  autoSkip: true,
+  callback: function callback(value, index, values) {
+    var customTicks = generateTicks(minX, maxX, incrementSize);
+    return customTicks.includes(value) ? value : null;
+  }
 };
 var defaultXAxis = {
   display: true,
