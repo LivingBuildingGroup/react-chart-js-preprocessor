@@ -609,7 +609,7 @@ export default function RCJSPP(props) {
 		}
 	};
 
-	const [controls] = useState(
+	const [controls, setControls] = useState(
 		formatControls(
 			{
 				printAllow:      allowed.printAllow, // all below are set on mount, not changed after

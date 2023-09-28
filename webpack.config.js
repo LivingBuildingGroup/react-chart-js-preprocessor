@@ -11,26 +11,32 @@ module.exports = {
     filename: 'index.js',
     libraryTarget: 'commonjs2' // THIS IS THE MOST IMPORTANT LINE! :mindblow: I wasted more than 2 days until realize this was the line most important in all this guide.
   },
+  stats: 'minimal',
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(?:js|jsx|mjs|cjs)$/,
         include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|bower_components|build)/,
+        exclude: /(node_modules|build)/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env']
+            "presets": [
+              "@babel/preset-env",
+              "@babel/preset-react",
+              "react"
+          ],
+          "plugins": [
+            "@babel/plugin-proposal-function-bind"
+          ]
           }
         }
       }
     ]
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      'React': 'react',
-    }),
-  ],
+  resolve: {
+    extensions: ['.js', '.jsx']
+},
   externals: {
     'react': 'commonjs react', // this line is just to use the React dependency of our parent-testing-project instead of using our own React.
     'react-dom': 'react-dom',
@@ -40,5 +46,8 @@ module.exports = {
     'graphing-helpers': 'graphing-helpers',
     'react-chartjs-2': 'react-chartjs-2',
     'pretty-colors': 'pretty-colors',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
   }
 };

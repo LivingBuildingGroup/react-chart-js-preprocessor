@@ -719,8 +719,9 @@ function RCJSPP(props) {
       toggleSelectorsPopover: toggleSelectorsPopover,
       handlePresetSelect: handlePresetSelect
     })),
-    _useState92 = _slicedToArray(_useState91, 1),
-    controls = _useState92[0];
+    _useState92 = _slicedToArray(_useState91, 2),
+    controls = _useState92[0],
+    setControls = _useState92[1];
 
   // @@@@@@@@@@@@@@@@@@ RENDER @@@@@@@@@@@@@@@@
 

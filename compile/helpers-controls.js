@@ -11,7 +11,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-var formatControlsTopAndBot = function formatControlsTopAndBot(state, functionHash) {
+var formatControlsTopAndBot = exports.formatControlsTopAndBot = function formatControlsTopAndBot(state, functionHash) {
   var controlsTop = [];
   var controlsBot = [];
   if (state.printAllow) {
@@ -55,8 +55,7 @@ var formatControlsTopAndBot = function formatControlsTopAndBot(state, functionHa
     controlsBot: controlsBot
   };
 };
-exports.formatControlsTopAndBot = formatControlsTopAndBot;
-var formatControls = function formatControls(state, functionHash) {
+var formatControls = exports.formatControls = function formatControls(state, functionHash) {
   var _formatControlsTopAnd = formatControlsTopAndBot(state, functionHash),
     controlsTop = _formatControlsTopAnd.controlsTop,
     controlsBot = _formatControlsTopAnd.controlsBot;
@@ -86,4 +85,3 @@ var formatControls = function formatControls(state, functionHash) {
   var controls = [].concat(_toConsumableArray(controlsTop), controlsPresets, _toConsumableArray(controlsBot));
   return controls;
 };
-exports.formatControls = formatControls;
