@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = Controls;
 var icons = _interopRequireWildcard(require("something-rather-iconic"));
 var _react = _interopRequireDefault(require("react"));
+var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -20,31 +21,39 @@ function Controls(props) {
     var controlNameAsArr = typeof c.name === 'string' ? c.name.split(' ') : [];
     var controlNameAsId = controlNameAsArr.join('-');
     var activeClass = props.presets && props.presets[props.presetIdActive] && props.presets[props.presetIdActive].name === c.name ? 'rcjspp-pre-set-control-active' : "rcjspp-control-over-".concat(props.cssBackground);
-    var popover = c.name === 'selector' && props.selectorsPopover ? /*#__PURE__*/_react["default"].createElement("div", {
-      className: "popover popover-constant popover-bottom-right"
-    }, /*#__PURE__*/_react["default"].createElement("p", {
-      className: "rcjspp-sel-popover",
-      onClick: function onClick() {
-        return props.toggleSelectorsInFocus('none');
-      }
-    }, "Hide selectors"), /*#__PURE__*/_react["default"].createElement("p", {
-      className: "rcjspp-sel-popover",
-      onClick: function onClick() {
-        return props.toggleSelectorsInFocus('layers');
-      }
-    }, "Layer selectors"), /*#__PURE__*/_react["default"].createElement("p", {
-      className: "rcjspp-sel-popover",
-      onClick: function onClick() {
-        return props.toggleSelectorsInFocus('edit-selected');
-      }
-    }, "Graphic selectors (current layers)"), /*#__PURE__*/_react["default"].createElement("p", {
-      className: "rcjspp-sel-popover",
-      onClick: function onClick() {
-        return props.toggleSelectorsInFocus('edit-all');
-      }
-    }, "Graphic selectors (all layers)")) : /*#__PURE__*/_react["default"].createElement("div", {
-      className: "popover"
-    }, /*#__PURE__*/_react["default"].createElement("p", null, c.label));
+    var popover = c.name === 'selector' && props.selectorsPopover ? /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+      className: "popover popover-constant popover-bottom-right",
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
+        className: "rcjspp-sel-popover",
+        onClick: function onClick() {
+          return props.toggleSelectorsInFocus('none');
+        },
+        children: "Hide selectors"
+      }), /*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
+        className: "rcjspp-sel-popover",
+        onClick: function onClick() {
+          return props.toggleSelectorsInFocus('layers');
+        },
+        children: "Layer selectors"
+      }), /*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
+        className: "rcjspp-sel-popover",
+        onClick: function onClick() {
+          return props.toggleSelectorsInFocus('edit-selected');
+        },
+        children: "Graphic selectors (current layers)"
+      }), /*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
+        className: "rcjspp-sel-popover",
+        onClick: function onClick() {
+          return props.toggleSelectorsInFocus('edit-all');
+        },
+        children: "Graphic selectors (all layers)"
+      })]
+    }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+      className: "popover",
+      children: /*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
+        children: c.label
+      })
+    });
     var vPosition = c === 'selector' ? 'bottom' : 'top';
     var googleTagManagerClass = "graph-control ".concat(controlNameAsId, " true1 true2");
     var iconName = icons[c.iconName] ? c.iconName : 'ExclamationTriangle';
@@ -52,23 +61,22 @@ function Controls(props) {
       console.log('did not find icon', c.iconName, '. Check pre-sets.');
     }
     var Icon = icons[iconName];
-    return /*#__PURE__*/_react["default"].createElement("div", {
-      key: i,
+    return /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
       className: "rcjspp-control tooltip tooltip-".concat(vPosition, "-right ").concat(activeClass, " ").concat(googleTagManagerClass),
-      onClick: c.func
-    }, popover, /*#__PURE__*/_react["default"].createElement(Icon, {
-      style: iconStyle
-    }));
+      onClick: c.func,
+      children: [popover, /*#__PURE__*/(0, _jsxRuntime.jsx)(Icon, {
+        style: iconStyle
+      })]
+    }, i);
   });
 
   // if only one control, adding one more causes
   // the single control to be positioned lower (more visible)
   if (Array.isArray(controls) && controls.length === 1) {
-    controls.unshift( /*#__PURE__*/_react["default"].createElement("div", {
-      key: "extra"
-    }));
+    controls.unshift( /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {}, 'extra'));
   }
-  return /*#__PURE__*/_react["default"].createElement("div", {
-    className: "rcjspp-controls-outermost"
-  }, controls);
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+    className: "rcjspp-controls-outermost",
+    children: controls
+  });
 }

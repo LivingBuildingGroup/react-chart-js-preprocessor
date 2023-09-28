@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = Controls;
 var icons = _interopRequireWildcard(require("something-rather-iconic"));
 var _react = _interopRequireDefault(require("react"));
+var _jsxRuntime = require("react/jsx-runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -28,29 +29,31 @@ function Controls(props) {
       console.warn('did not find icon', c.iconName, '. Check presets.');
     }
     var Icon = icons[iconName];
-    return /*#__PURE__*/_react["default"].createElement("div", {
-      key: i,
+    return /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
       className: "rcjspp-control tooltip tooltip-".concat(vPosition, "-right ").concat(activeClass),
-      onClick: c.func
-    }, /*#__PURE__*/_react["default"].createElement("div", {
-      className: "popover"
-    }, Array.isArray(c.label) ? c.label.map(function (l, i) {
-      return /*#__PURE__*/_react["default"].createElement("p", {
-        key: i
-      }, l);
-    }) : /*#__PURE__*/_react["default"].createElement("p", null, c.label)), /*#__PURE__*/_react["default"].createElement(Icon, {
-      style: iconStyle
-    }));
+      onClick: c.func,
+      children: [/*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+        className: "popover",
+        children: Array.isArray(c.label) ? c.label.map(function (l, i) {
+          return /*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
+            children: l
+          }, i);
+        }) : /*#__PURE__*/(0, _jsxRuntime.jsx)("p", {
+          children: c.label
+        })
+      }), /*#__PURE__*/(0, _jsxRuntime.jsx)(Icon, {
+        style: iconStyle
+      })]
+    }, i);
   });
 
   // if only one control, adding one more causes
   // the single control to be positioned lower (more visible)
   if (Array.isArray(controls) && controls.length === 1) {
-    controls.unshift( /*#__PURE__*/_react["default"].createElement("div", {
-      key: "extra"
-    }));
+    controls.unshift( /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {}, 'extra'));
   }
-  return /*#__PURE__*/_react["default"].createElement("div", {
-    className: "rcjspp-controls-outermost"
-  }, controls);
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+    className: "rcjspp-controls-outermost",
+    children: controls
+  });
 }
