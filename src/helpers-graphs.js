@@ -471,19 +471,7 @@ const defaultXAxis = {
     fontSize: 12,
   },
   ticks: {
-    ...defaultXAxis.ticks,
-    display: true,
-    autoSkip: true,
-    callback: (value, index, values) => {
-      const customTicks = generateTicks(minX, maxX, incrementSize);
-      return customTicks.includes(value) ? value : null;
-    }
-    // stepSize: 6, // this is not working
-    // min: 0,   // changing these will change the dataset displayed
-    // max: 186, // ""
-    // maxTicksLimit: 100,
-    // suggestedMin: 6,   // not using these
-    // suggestedMax: 100, // ""
+    ...defaultTickProperties
   }
 };
 

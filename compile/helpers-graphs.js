@@ -411,22 +411,8 @@ var defaultXAxis = {
   pointLabels: {
     fontSize: 12
   },
-  ticks: _objectSpread(_objectSpread({}, defaultXAxis.ticks), {}, {
-    display: true,
-    autoSkip: true,
-    callback: function callback(value, index, values) {
-      var customTicks = generateTicks(minX, maxX, incrementSize);
-      return customTicks.includes(value) ? value : null;
-    }
-    // stepSize: 6, // this is not working
-    // min: 0,   // changing these will change the dataset displayed
-    // max: 186, // ""
-    // maxTicksLimit: 100,
-    // suggestedMin: 6,   // not using these
-    // suggestedMax: 100, // ""
-  })
+  ticks: _objectSpread({}, defaultTickProperties)
 };
-
 var createXAxis = function createXAxis(options) {
   var labels = options.labels,
     cssBackground = options.cssBackground,
