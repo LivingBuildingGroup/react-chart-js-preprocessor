@@ -1,5 +1,6 @@
 import * as icons from 'something-rather-iconic';
-import React from 'react';
+import React, { useState } from 'react';
+
 const iconStyle = {height: 20, width: 20};
 
 export default function Controls(props){

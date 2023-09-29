@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 export default function RangeFinder (props){
 
   return <div className='rcjspp-sel-row-form'>

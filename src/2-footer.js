@@ -4,7 +4,8 @@ import {
 import {
   CaretLeft,
   CaretRight }                  from 'something-rather-iconic';
-  import React from 'react';
+  import React, { useState } from 'react';
+
 export default function Footer (props){
 
   const formatTitle = (titleText, groupDotColors) => {

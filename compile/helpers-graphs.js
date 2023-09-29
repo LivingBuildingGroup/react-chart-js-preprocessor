@@ -374,12 +374,12 @@ var createGraphData = function createGraphData(graphState) {
 
 // @@@@@@@@@@@@@@@@ AXES @@@@@@@@@@@@@@
 
-var calcTicks = function calcTicks(min, max, increment) {
+var calcTicks = function calcTicks(labels, min, max, increment) {
   // dataLength should be the data we want to show, i.e. after cropping (by the user), if any
   // dataLength should be 1 over ideal, so the final label is an even increment
   var ticks = [];
   for (var i = min; i <= max; i += increment) {
-    ticks.push(data.labels[i]);
+    ticks.push(labels[i]);
   }
   return ticks;
 };
@@ -672,7 +672,7 @@ var createGraph = function createGraph(gs) {
   var _calcDataLength = calcDataLength(dataType0Raw, graphState.xStart, graphState.xEnd),
     first = _calcDataLength.first,
     dataLength = _calcDataLength.dataLength;
-  var pointsToAdd = calcTicks(graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
+  var pointsToAdd = calcTicks(dataLabelArray, graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
   var maxTicks = pointsToAdd.length;
   var dataType0Processed = conformDataLength(dataType0Raw, first, dataLength, pointsToAdd);
   var optionsInput = {

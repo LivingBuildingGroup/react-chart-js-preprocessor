@@ -434,12 +434,12 @@ datasets
 
 // @@@@@@@@@@@@@@@@ AXES @@@@@@@@@@@@@@
 
-const calcTicks = (min, max, increment) => {
+const calcTicks = (labels, min, max, increment) => {
   // dataLength should be the data we want to show, i.e. after cropping (by the user), if any
   // dataLength should be 1 over ideal, so the final label is an even increment
   let ticks = [];
   for (let i = min; i <= max; i += increment) {
-    ticks.push(data.labels[i]);
+    ticks.push(labels[i]);
   }
   return ticks;
 };
@@ -792,7 +792,7 @@ const createGraph = gs => {
     dataLength,
   } = calcDataLength(dataType0Raw, graphState.xStart, graphState.xEnd);
 
-  const pointsToAdd = calcTicks( graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
+  const pointsToAdd = calcTicks(dataLabelArray, graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
   const maxTicks = pointsToAdd.length;
   
   const dataType0Processed = conformDataLength(
