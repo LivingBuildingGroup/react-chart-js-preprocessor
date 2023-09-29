@@ -441,7 +441,7 @@ var createXAxis = function createXAxis(options) {
       return tickValues.includes(value) ? value : null;
     }
   });
-  var scaleLabel = label ? Object.assign({}, defaultXAxis.scaleLabel, {
+  var scaleLabel = labels ? Object.assign({}, defaultXAxis.scaleLabel, {
     labelString: label,
     fontColor: scaleAndTickColor
   }) : {

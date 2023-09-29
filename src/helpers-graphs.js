@@ -518,7 +518,7 @@ const createXAxis = options => {
     }
   );
   const scaleLabel = 
-    label ?
+    labels ?
       Object.assign({},
         defaultXAxis.scaleLabel,
         {
