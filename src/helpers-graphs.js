@@ -522,7 +522,7 @@ const createXAxis = options => {
       Object.assign({},
         defaultXAxis.scaleLabel,
         {
-          labelString: label,
+          labelString: labels,
           fontColor: scaleAndTickColor,
         } 
       ): { 

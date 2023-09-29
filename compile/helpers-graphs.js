@@ -442,7 +442,7 @@ var createXAxis = function createXAxis(options) {
     }
   });
   var scaleLabel = labels ? Object.assign({}, defaultXAxis.scaleLabel, {
-    labelString: label,
+    labelString: labels,
     fontColor: scaleAndTickColor
   }) : {
     display: false
