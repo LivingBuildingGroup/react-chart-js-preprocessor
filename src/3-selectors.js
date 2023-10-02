@@ -19,8 +19,11 @@ export default function Selectors(props) {
     groupAllow            ={p.groupAllow}
     handleGroupBy         ={p.handleGroupBy}
     xStart                ={p.xStart}
+    handleXStartChange    ={p.handleXStartChange}
     xEnd                  ={p.xEnd}
+    handleXEndChange      ={p.handleXEndChange}
     xIdealTickSpacing     ={p.xIdealTickSpacing}
+    handleXIdealTickSpacingChange = {p.handleXIdealTickSpacingChange}
     layerGroupByJSXOptions={layerGroupByJSXOptions}
     handleRangeChange     ={p.handleRangeChange}
     handleTickChange      ={p.handleTickChange} />

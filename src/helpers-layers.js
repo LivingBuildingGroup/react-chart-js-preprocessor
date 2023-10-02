@@ -138,6 +138,9 @@ const createLayerSelectorsInner = input => {
     const thisLayerInHash = legendHash[unPrefix];
     // console.log({layerName, split, unPrefix, thisLayerInHash});
     if(thisLayerInHash){
+      if (typeof thisLayerInHash === 'string') {
+        thisLayerInHash = { key: thisLayerInHash };  
+      }
       if(!thisLayerInHash.l){thisLayerInHash.l=layerName;}
       if(!thisLayerInHash.a){thisLayerInHash.a=thisLayerInHash.l;}
       if(!thisLayerInHash.d){thisLayerInHash.d=thisLayerInHash.l;}

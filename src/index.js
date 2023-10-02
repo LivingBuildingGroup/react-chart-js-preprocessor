@@ -49,7 +49,7 @@ export default function RCJSPP(props) {
   
 	// @@@@@@@@@@@@@@ STATE CONSTANTS @@@@@@@@@@@@@@@@
 	const verbose = !!props.verbose;
-
+    const legendUnits = props.legendUnits||{};
 	const [legendHash, setLegendHash] = useState(props.legendHash || {});
 	const [legendDescription, setLegendDescription] = useState(props.legendDescription || '');
 
@@ -153,10 +153,38 @@ export default function RCJSPP(props) {
 	
 	const [presetIdActive, setPresetIdActive] = useState(props.presetIdActive || '' );
 
-	const [xStart, setXStart] = useState(isPrimitiveNumber(props.xStart) ? props.xStart : 0); 
-	const [xEnd, setXEnd] = useState(isPrimitiveNumber(props.xEnd) ? props.xEnd : 1000); 
-	const [xIdealTickSpacing, setXIdealTickSpacing] = useState(isPrimitiveNumber(props.xIdealTickSpacing) ? props.xIdealTickSpacing : 6);
-	const [xMaxTickSpacing, setXMaxTickSpacing] = useState(isPrimitiveNumber(props.xMaxTickSpacing)   ? props.xMaxTickSpacing   : 50);
+	const [xStart, setXStart] = useState((props.xStart) ? props.xStart : 0); 
+	const handleXStartChange = (e) => {
+		const newValue = parseInt(e.target.value) < xEnd ? parseInt(e.target.value): xEnd-1;
+		setXStart(newValue); // Update the local state
+		props.handleChange('xStart', newValue); // Send the changes to parent
+		var graphState = packGraphState(_defineProperty({}, 'xStart', newValue));
+		var skipPacking = true;
+		handleGraphChange(graphState, skipPacking);
+	  };
+	  
+	const [xEnd, setXEnd] = useState((props.xEnd) ? props.xEnd : 1000); 
+	const handleXEndChange = (e) => {
+		const newValue = parseInt(e.target.value)  > xStart ? parseInt(e.target.value) : xStart+1;
+		setXEnd(newValue); // Update the local state
+		props.handleChange('xEnd', newValue); // Send the changes to parent
+		var graphState = packGraphState(_defineProperty({}, 'xEnd', newValue));
+		var skipPacking = true;
+		handleGraphChange(graphState, skipPacking);
+	  };
+	const [incrementSize, setIncrementSize] = useState((props.incrementSize) ? props.incrementSize : 6);
+	const [xIdealTickSpacing, setXIdealTickSpacing] = useState((props.xIdealTickSpacing) ? props.xIdealTickSpacing : 6);
+	const handleIncrementSizeChange = (e) => {
+		const newValue = e.target.value;
+		setXMaxTickSpacing(newValue); // Update the local state
+		setXIdealTickSpacing(newValue);
+		props.handleChange('incrementSize', newValue); // Send the changes to parent
+		var graphState = packGraphState(_defineProperty({}, 'xIdealTickSpacing', newValue));
+		var skipPacking = true;
+		handleGraphChange(graphState, skipPacking);
+	  
+	  };
+	const [xMaxTickSpacing, setXMaxTickSpacing] = useState((props.xMaxTickSpacing)   ? props.xMaxTickSpacing   : 50);
 	const [xLabelKey, setXLabelKey] = useState(props.xLabelKey         || null );
 	const [xLabel, setXLabel] = useState(props.xLabel);
 	
@@ -211,6 +239,7 @@ export default function RCJSPP(props) {
 			yAxisUnitOptions,        // handleYAxisSelector   createGraph
 			yAxisInFocus,            // handleYAxisSelector
 			legendHash,              // handleGroupBy         createGraph
+			legendUnits,
 			                         // createGraphInfoOnGroupOrMount
 			cssBackground,           // handleBackgroundColor createGraph
 			cssStyleColorsNamed: css.cssStyleColorsNamed,
@@ -666,8 +695,11 @@ export default function RCJSPP(props) {
 
 		isGrouped           ={isGrouped}
 		xStart              ={xStart}
+		handleXStartChange  ={handleXStartChange}
 		xEnd                ={xEnd}
+		handleXEndChange    ={handleXEndChange}
 		xIdealTickSpacing   ={xIdealTickSpacing}
+		handleXIdealTickSpacingChange ={handleIncrementSizeChange}
 		layersThatHaveUnits ={layersThatHaveUnits}
 		layersSelected      ={layersSelected}
 

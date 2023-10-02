@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
@@ -12,19 +12,19 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-var _require = require('conjunction-junction'),
+var _require = require("conjunction-junction"),
   isPrimitiveNumber = _require.isPrimitiveNumber,
   isObjectLiteral = _require.isObjectLiteral,
   immutableArrayInsert = _require.immutableArrayInsert,
   convertCcToSc = _require.convertCcToSc,
   convertScToSpace = _require.convertScToSpace;
-var _require2 = require('conjunction-junction/build/objects'),
+var _require2 = require("conjunction-junction/build/objects"),
   subArrayByKey = _require2.subArrayByKey;
-var _require3 = require('./helpers-layers'),
+var _require3 = require("./helpers-layers"),
   createLayerSelectors = _require3.createLayerSelectors;
-var _require4 = require('./helpers-styles'),
+var _require4 = require("./helpers-styles"),
   createStylesArray = _require4.createStylesArray;
-var alpha = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+var alpha = ["A", "B", "C", "D", "E", "F", "G", "H"];
 var indexLabel = 1;
 var indexUnit = 2;
 
@@ -39,23 +39,29 @@ var parseDataArraysByKeys = function parseDataArraysByKeys(dataObjectsArray, lay
   }
   var dataType0Processed = layersSelected.map(function (key) {
     return dataObjectsArray.map(function (k) {
-      return k[key];
+      if (key === "contribRunoffLTotal") {
+        return k.runoffLTotal;
+      } else {
+        return k[key];
+      }
     });
   });
   return dataType0Processed;
 };
 var parseLabelsByKeys = function parseLabelsByKeys(legendHash, layersSelected) {
   var dataLabelArray = layersSelected.map(function (key) {
-    var label = typeof legendHash[key] === 'string' ? legendHash[key] : legendHash[key] && legendHash[key].l ? legendHash[key].l : key;
+    var label = typeof legendHash[key] === "string" ? legendHash[key] : legendHash[key] && legendHash[key].l ? legendHash[key].l : key;
     return label;
   });
   return dataLabelArray;
 };
-var parseYAxisByKeys = function parseYAxisByKeys(legendHash, layersSelected) {
+var parseYAxisByKeys = function parseYAxisByKeys() {
+  var legendUnits = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var layersSelected = arguments.length > 1 ? arguments[1] : undefined;
   var axesUsed = [];
   var yAxisIdArray = [];
   var yAxisArray = layersSelected.map(function (layerName, i) {
-    var yAxisLabel = legendHash && legendHash[layerName] && typeof legendHash[layerName].u === 'string' ? convertScToSpace(legendHash[layerName].u) : 'units';
+    var yAxisLabel = legendUnits && legendUnits[layerName] && typeof legendUnits[layerName] === "string" ? convertScToSpace(legendUnits[layerName]) : "units";
     var axisIndex = axesUsed.findIndex(function (a) {
       return a === yAxisLabel;
     });
@@ -72,7 +78,7 @@ var parseYAxisByKeys = function parseYAxisByKeys(legendHash, layersSelected) {
     yAxisIdArray: yAxisIdArray
   };
 };
-var parseDataType1To0 = function parseDataType1To0(dataType1, legendHash, layersSelected) {
+var parseDataType1To0 = function parseDataType1To0(dataType1, legendHash, layersSelected, legendUnits) {
   if (!Array.isArray(dataType1) || !Array.isArray(layersSelected) || !isObjectLiteral(legendHash)) {
     return {
       dataType0Raw: [[]],
@@ -83,7 +89,7 @@ var parseDataType1To0 = function parseDataType1To0(dataType1, legendHash, layers
   }
   var dataType0Raw = parseDataArraysByKeys(dataType1, layersSelected);
   var dataLabelArray = parseLabelsByKeys(legendHash, layersSelected);
-  var _parseYAxisByKeys = parseYAxisByKeys(legendHash, layersSelected),
+  var _parseYAxisByKeys = parseYAxisByKeys(legendUnits, layersSelected),
     yAxisArray = _parseYAxisByKeys.yAxisArray,
     yAxisIdArray = _parseYAxisByKeys.yAxisIdArray;
   console.log({
@@ -97,7 +103,7 @@ var parseDataType1To0 = function parseDataType1To0(dataType1, legendHash, layers
     yAxisIdArray: yAxisIdArray
   };
 };
-var parseDataType2To0 = function parseDataType2To0(arraysOfDataObjects, arrayOfDataGroups, legendHash, layersSelectedRaw) {
+var parseDataType2To0 = function parseDataType2To0(arraysOfDataObjects, arrayOfDataGroups, legendHash, layersSelectedRaw, legendUnits) {
   if (!Array.isArray(arraysOfDataObjects) || !Array.isArray(arraysOfDataObjects[0]) || !Array.isArray(layersSelectedRaw) || !Array.isArray(arrayOfDataGroups) || !isObjectLiteral(legendHash)) {
     return {
       dataType0Raw: [[]],
@@ -111,7 +117,7 @@ var parseDataType2To0 = function parseDataType2To0(arraysOfDataObjects, arrayOfD
     var subgroup = parseDataArraysByKeys(group, layersSelectedRaw);
     dataType0Raw = [].concat(_toConsumableArray(dataType0Raw), _toConsumableArray(subgroup));
   });
-  var rawLabels = parseLabelsByKeys(legendHash, layersSelectedRaw);
+  var rawLabels = parseLabelsByKeys(legendUnits, layersSelectedRaw);
   var dataLabelArray = [];
   var layersSelected = [];
   arrayOfDataGroups.forEach(function (group) {
@@ -140,7 +146,7 @@ var parseDataType2To1 = function parseDataType2To1(arraysOfDataObjects, arrayOfD
     return {
       dataObjectsArray: [],
       dataLabelArray: [],
-      message: 'invalid data types'
+      message: "invalid data types"
     };
   }
   if (arrayOfDataGroups.length !== arraysOfDataObjects.length) {
@@ -168,7 +174,7 @@ var parseDataType2To1 = function parseDataType2To1(arraysOfDataObjects, arrayOfD
     return {
       dataObjectsArray: [],
       dataLabelArray: [],
-      message: 'expected a subarray, but found none'
+      message: "expected a subarray, but found none"
     };
   }
   var longestArray = arraysOfDataObjects[indexOfLongestArray];
@@ -181,7 +187,7 @@ var parseDataType2To1 = function parseDataType2To1(arraysOfDataObjects, arrayOfD
   // return new object with all keys prefixed
   arraysOfDataObjects.forEach(function (group, i) {
     var prefix = arrayOfDataGroups[i];
-    var prefixDivider = '__';
+    var prefixDivider = "__";
     group.forEach(function (innerObject, pt) {
       for (var key in innerObject) {
         // the double underscore is intentional
@@ -201,11 +207,10 @@ var parseDataType2To1 = function parseDataType2To1(arraysOfDataObjects, arrayOfD
   };
 };
 var parseDataType1 = function parseDataType1(gs) {
-  var keysSkip = ['xLabel'];
+  var keysSkip = ["xLabel"];
   var dataType1ParsedFrom2 = Array.isArray(gs.dataType2Raw) ? parseDataType2To1(gs.dataType2Raw, gs.groups, keysSkip).dataObjectsArray : [];
-  var dataType1 = gs.dataConvertFrom === 2 ? dataType1ParsedFrom2 : gs.dataConvertFrom === 0 ?
-  // <<< must be a future option
-  [] : Array.isArray(gs.dataType1Raw) ? gs.dataType1Raw.map(function (d) {
+  var dataType1 = gs.dataConvertFrom === 2 ? dataType1ParsedFrom2 : gs.dataConvertFrom === 0 // <<< must be a future option
+  ? [] : Array.isArray(gs.dataType1Raw) ? gs.dataType1Raw.map(function (d) {
     return Object.assign({}, d);
   }) : [];
   return dataType1;
@@ -234,7 +239,7 @@ var calcDataLength = function calcDataLength(dataType0Raw, start, end) {
   };
 };
 var conformDataLength = function conformDataLength(dataType0Raw, first, length, pointsToAdd) {
-  // assume 
+  // assume
   var oneDataset = !Array.isArray(dataType0Raw) ? [] : !Array.isArray(dataType0Raw[0]) ? [] : dataType0Raw[0];
   if (oneDataset.length === length) {
     return dataType0Raw;
@@ -262,10 +267,9 @@ var addDataset = function addDataset(input) {
     style = input.style,
     styles = input.styles;
   var gd = Object.assign({}, graphData);
-  var theLabel = typeof label === 'string' ? label : "dataset ".concat(gd.datasets.length);
-  var styl = style ? style : styles ? styles.style2 :
-  // make this pick from the array
-  gd.datasets[0];
+  var theLabel = typeof label === "string" ? label : "dataset ".concat(gd.datasets.length);
+  var styl = style ? style : styles ? styles.style2 // make this pick from the array
+  : gd.datasets[0];
   var newDataset = Object.assign({}, styl, {
     data: data,
     label: theLabel
@@ -279,7 +283,7 @@ var addDatapoints = function addDatapoints(input) {
   var graphData = input.graphData,
     data = input.data,
     label = input.label;
-  var newLabel = typeof label === 'string' ? label : "point".concat(graphData.labels.length);
+  var newLabel = typeof label === "string" ? label : "point".concat(graphData.labels.length);
   var newLabels = [].concat(_toConsumableArray(graphData.labels), [newLabel]);
   var newDatasets = graphData.datasets.map(function (d, i) {
     var newDat = [].concat(_toConsumableArray(d.data), [data[i]]);
@@ -309,23 +313,12 @@ var editDatapoint = function editDatapoint(input) {
     datasets: newDatasets
   });
 };
-var filterData = function filterData(originalData, labels, minX, maxX, incrementSize, verbose) {
+var filterData = function filterData(originalData, labelsArray, minX, maxX, incrementSize, verbose) {
   var filteredData = [];
   var filteredLabels = [];
   for (var i = minX; i <= maxX; i += incrementSize) {
     filteredData.push(originalData[i]);
-    filteredLabels.push(labels[i]);
-  }
-  if (!!verbose) {
-    console.log({
-      minX: minX,
-      maxX: maxX,
-      dataLength: filteredData.length,
-      data: filteredData,
-      labels: filteredLabels
-    }, "DATASET LENGTH");
-  } else {
-    console.log(filteredData.length, "LENGTH OF DATASET");
+    filteredLabels.push(labelsArray[i]);
   }
   return {
     data: filteredData,
@@ -346,10 +339,6 @@ var createGraphData = function createGraphData(graphState) {
   var minX = graphState.xStart;
   var maxX = graphState.xEnd;
   var incrementSize = graphState.incrementSize;
-  var _filterData = filterData(dataType0Processed[0], dataLabelArray, minX, maxX, incrementSize, verbose),
-    filteredDataType0Processed = _filterData.data,
-    filteredLabels = _filterData.labels; // You will need to define minX, maxX, and incrementSize
-
   var datasets = Array.isArray(layersSelected) ? layersSelected.map(function (k, i) {
     var units = yAxisArray[i];
     var unitsIndex = yAxisArray.findIndex(function (u) {
@@ -358,16 +347,16 @@ var createGraphData = function createGraphData(graphState) {
     var yAxisID = unitsIndex < 0 ? yAxisIdArray[0] : yAxisIdArray[unitsIndex];
 
     // Filter each dataset based on the same range
-    var _filterData2 = filterData(filteredDataType0Processed[i], filteredLabels, minX, maxX, incrementSize, verbose),
-      filteredData = _filterData2.data;
+    var filteredData = filterData(dataType0Processed[i], xLabelsArray, minX, maxX, incrementSize, verbose);
     return _objectSpread(_objectSpread({}, stylesArray[i]), {}, {
-      label: dataLabelArray[i],
+      label: layersSelected[i],
       yAxisID: yAxisID,
-      data: filteredData
+      data: filteredData.data,
+      labels: filteredData.labels
     });
   }) : [];
   return {
-    labels: filteredLabels,
+    labels: datasets[0].labels,
     datasets: datasets
   };
 };
@@ -393,10 +382,9 @@ var generateTicks = function generateTicks(labels, min, max, increment) {
 var defaultTickProperties = {
   display: true,
   autoSkip: true,
-  callback: function callback(value, index, values) {
-    var customTicks = generateTicks(minX, maxX, incrementSize);
-    return customTicks.includes(value) ? value : null;
-  }
+  min: 0,
+  max: 0,
+  increment: 0
 };
 var defaultXAxis = {
   display: true,
@@ -419,42 +407,43 @@ var createXAxis = function createXAxis(options) {
     min = options.min,
     max = options.max,
     maxTicksLimit = options.maxTicksLimit;
-  var zeroLineColor = cssBackground === 'white' ? 'black' : 'white';
-  var gridLinesColor = cssBackground === 'white' ? 'rgba(68,68,68,0.5)' : 'rgba(119,119,119,0.5)';
-  var scaleAndTickColor = cssBackground === 'white' ? 'rgb(0, 0, 77)' : 'white';
+  var zeroLineColor = cssBackground === "white" ? "black" : "white";
+  var gridLinesColor = cssBackground === "white" ? "rgba(68,68,68,0.5)" : "rgba(119,119,119,0.5)";
+  var scaleAndTickColor = cssBackground === "white" ? "rgb(0, 0, 77)" : "white";
   var incrementSize = Math.ceil((max - min) / (maxTicksLimit - 1));
-  var tickValues = generateTicks(labels, min, max, incrementSize);
+  var tickValues = generateTicks(labels, min, max, maxTicksLimit);
   var gridLines = Object.assign({}, defaultXAxis.gridLines, {
     zeroLineColor: zeroLineColor,
     color: gridLinesColor,
     axisColor: gridLinesColor
   });
   var xMaxTickLim = max - min > 1000 ? (max - min) / 100 : max - min > 6000 ? (max - min) / 50 : max - min > 100 ? (max - min) / 10 : 6;
+  if (typeof displayGridlines === "boolean" && !displayGridlines) {
+    gridLines.display = false;
+  }
   var ticks = Object.assign({}, defaultXAxis.ticks, {
-    fontColor: scaleAndTickColor,
-    min: min || 0,
-    max: max || 500,
-    maxTicksLimit: xMaxTickLim || 100,
-    autoSkip: false,
-    // To avoid autoskipping of ticks
-    callback: function callback(value, index, values) {
-      return tickValues.includes(value) ? value : null;
-    }
+    fontColor: "black",
+    min: min,
+    max: max,
+    stepSize: maxTicksLimit,
+    maxRotation: 45,
+    minRotation: 45
   });
   var scaleLabel = labels ? Object.assign({}, defaultXAxis.scaleLabel, {
-    labelString: labels,
-    fontColor: scaleAndTickColor
+    labelString: convertCcToSc(labels, " "),
+    fontColor: "black"
   }) : {
     display: false
   };
   return Object.assign({}, defaultXAxis, {
+    id: labels.toString(),
     gridLines: gridLines,
     ticks: ticks,
     scaleLabel: scaleLabel
   });
 };
 var defaultYAxis = {
-  type: 'linear',
+  type: "linear",
   display: true,
   gridLines: {
     display: true
@@ -478,15 +467,15 @@ var createYAxis = function createYAxis(options) {
     max = options.max,
     displayTicks = options.displayTicks,
     displayGridlines = options.displayGridlines;
-  var zeroLineColor = cssBackground === 'white' ? 'black' : 'white';
-  var gridLinesColor = cssBackground === 'white' ? 'rgba(68,68,68,0.5)' : 'rgba(119,119,119,0.5)';
-  var scaleAndTickColor = cssBackground === 'white' ? 'rgb(0, 0, 77)' : 'white';
+  var zeroLineColor = cssBackground === "white" ? "black" : "white";
+  var gridLinesColor = cssBackground === "white" ? "rgba(68,68,68,0.5)" : "rgba(119,119,119,0.5)";
+  var scaleAndTickColor = cssBackground === "white" ? "rgb(0, 0, 77)" : "white";
   var gridLines = Object.assign({}, defaultYAxis.gridLines, {
     zeroLineColor: zeroLineColor,
     color: gridLinesColor,
     axisColor: gridLinesColor
   });
-  if (typeof displayGridlines === 'boolean' && !displayGridlines) {
+  if (typeof displayGridlines === "boolean" && !displayGridlines) {
     gridLines.display = false;
   }
   var ticks = Object.assign({}, defaultYAxis.ticks, {
@@ -494,16 +483,16 @@ var createYAxis = function createYAxis(options) {
     min: min,
     max: max
   });
-  if (typeof displayTicks === 'boolean' && !displayTicks) {
+  if (typeof displayTicks === "boolean" && !displayTicks) {
     ticks.display = false;
   }
   var scaleLabel = Object.assign({}, defaultYAxis.scaleLabel, {
-    labelString: convertCcToSc(label, ' '),
+    labelString: convertCcToSc(label, " "),
     fontColor: scaleAndTickColor
   });
   return Object.assign({}, defaultYAxis, {
-    id: id || 'A',
-    position: 'left',
+    id: id || "A",
+    position: "left",
     gridLines: gridLines,
     ticks: ticks,
     scaleLabel: scaleLabel
@@ -512,36 +501,37 @@ var createYAxis = function createYAxis(options) {
 var createYAxesOptions = function createYAxesOptions(options) {
   var labels = options.labels,
     cssBackground = options.cssBackground,
+    yAxisRange = options.yAxisRange,
     yAxisUnitOptions = options.yAxisUnitOptions;
   var _yAxisUnitOptions = isObjectLiteral(yAxisUnitOptions) ? yAxisUnitOptions : {};
-  var labelsUsed = [];
   var subOptions = [];
   if (Array.isArray(labels)) {
-    labels.forEach(function (l) {
+    labels.forEach(function (l, i) {
       var thisOption = isObjectLiteral(_yAxisUnitOptions[l]) ? _yAxisUnitOptions[l] : {};
-      var usedIndex = labelsUsed.findIndex(function (u) {
-        return u === l;
+      var existingSubOption = subOptions.find(function (so) {
+        return so.label === l;
       });
-      var id;
-      if (usedIndex < 0) {
-        labelsUsed.push(l);
-        id = alpha[labelsUsed.length - 1];
-        var optionsToPush = {
+      if (existingSubOption) {
+        existingSubOption.min = Math.min(isNaN(existingSubOption.min) ? 0 : existingSubOption.min, isNaN(yAxisRange[i].min) ? 0 : yAxisRange[i].min);
+        existingSubOption.max = Math.max(isNaN(existingSubOption.max) ? 0 : existingSubOption.max, isNaN(yAxisRange[i].max) ? 0 : yAxisRange[i].max);
+      } else {
+        var id = alpha[subOptions.length];
+        var newSubOption = {
           label: l,
           id: id,
-          position: 'left',
+          position: "left",
           cssBackground: cssBackground,
-          min: thisOption.min,
-          max: thisOption.max,
+          min: yAxisRange[i].min,
+          max: yAxisRange[i].max,
           maxTicksLimitY: thisOption.maxTicksLimitY
         };
-        if (typeof thisOption.displayTicks === 'boolean') {
-          optionsToPush.displayTicks = thisOption.displayTicks;
+        if (typeof thisOption.displayTicks === "boolean") {
+          newSubOption.displayTicks = thisOption.displayTicks;
         }
-        if (typeof thisOption.displayGridlines === 'boolean') {
-          optionsToPush.displayGridlines = thisOption.displayGridlines;
+        if (typeof thisOption.displayGridlines === "boolean") {
+          newSubOption.displayGridlines = thisOption.displayGridlines;
         }
-        subOptions.push(optionsToPush);
+        subOptions.push(newSubOption);
       }
     });
   }
@@ -566,11 +556,13 @@ var createGraphOptions = function createGraphOptions(options) {
     minX = options.minX,
     maxX = options.maxX,
     maxTicksLimitX = options.maxTicksLimitX,
-    yAxisUnitOptions = options.yAxisUnitOptions;
+    yAxisUnitOptions = options.yAxisUnitOptions,
+    yAxisRange = options.yAxisRange;
   var yAxesOptions = {
     labels: Array.isArray(yLabel) ? yLabel : [],
     cssBackground: cssBackground,
-    yAxisUnitOptions: yAxisUnitOptions
+    yAxisUnitOptions: yAxisUnitOptions,
+    yAxisRange: yAxisRange
   };
   var arrayOfYOptions = createYAxesOptions(yAxesOptions);
   var xAxisOptions = {
@@ -589,16 +581,16 @@ var createGraphOptions = function createGraphOptions(options) {
 
     responsive: true,
     tooltips: {
-      mode: 'label'
+      mode: "label"
     },
     maintainAspectRatio: true,
     legend: {
       display: true,
       fullWidth: true,
       reverse: false,
-      position: 'bottom',
+      position: "bottom",
       labels: {
-        fontColor: cssBackground === 'white' ? 'black' : 'white'
+        fontColor: cssBackground === "white" ? "black" : "white"
       }
     },
     scales: {
@@ -611,17 +603,17 @@ var createGraphOptions = function createGraphOptions(options) {
 // @@@@@@@@@@@@@ REFRESH @@@@@@@@@@@
 
 var checkForGraphRefresh = function checkForGraphRefresh(graphOptions, graphOptionsPrior, cssBackground, cssBackgroundPrior, isTickChange) {
-  var message = 'ok';
+  var message = "ok";
   var needsRefresh = cssBackground !== cssBackgroundPrior;
   if (needsRefresh) return {
     needsRefresh: needsRefresh,
-    message: 'background changed'
+    message: "background changed"
   };
   if (isTickChange) {
     needsRefresh = true;
     return {
       needsRefresh: needsRefresh,
-      message: 'X-axis tick count changed'
+      message: "X-axis tick count changed"
     };
   }
   var yAxes = !graphOptions ? [] : !graphOptions.scales ? [] : !Array.isArray(graphOptions.scales.yAxes) ? [] : graphOptions.scales.yAxes;
@@ -636,8 +628,8 @@ var checkForGraphRefresh = function checkForGraphRefresh(graphOptions, graphOpti
   yAxes.forEach(function (a, i) {
     if (!needsRefresh) {
       // only check if we don't need a refresh so far
-      var oldLabel = !yAxesPrior[i].scaleLabel ? '<no scale label>' : !yAxesPrior[i].scaleLabel.labelString ? '<no label string>' : yAxesPrior[i].scaleLabel.labelString;
-      var newLabel = !a.scaleLabel ? '<no scale label>' : !a.scaleLabel.labelString ? '<no label string>' : a.scaleLabel.labelString;
+      var oldLabel = !yAxesPrior[i].scaleLabel ? "<no scale label>" : !yAxesPrior[i].scaleLabel.labelString ? "<no label string>" : yAxesPrior[i].scaleLabel.labelString;
+      var newLabel = !a.scaleLabel ? "<no scale label>" : !a.scaleLabel.labelString ? "<no label string>" : a.scaleLabel.labelString;
       if (a.id !== yAxesPrior[i].id) {
         needsRefresh = true;
         message = "id mismatch at index ".concat(i, " (old: ").concat(yAxesPrior[i].id, ", new: ").concat(a.id, ")");
@@ -664,7 +656,7 @@ var createGraph = function createGraph(gs) {
     )
   });
 
-  var _parseDataType1To = parseDataType1To0(graphState.dataType1, graphState.legendHash, graphState.layersSelected),
+  var _parseDataType1To = parseDataType1To0(graphState.dataType1, graphState.legendHash, graphState.layersSelected, graphState.legendUnits),
     dataType0Raw = _parseDataType1To.dataType0Raw,
     dataLabelArray = _parseDataType1To.dataLabelArray,
     yAxisArray = _parseDataType1To.yAxisArray,
@@ -675,25 +667,41 @@ var createGraph = function createGraph(gs) {
   var pointsToAdd = calcTicks(dataLabelArray, graphState.xStart, graphState.xEnd, graphState.xIdealTickSpacing);
   var maxTicks = pointsToAdd.length;
   var dataType0Processed = conformDataLength(dataType0Raw, first, dataLength, pointsToAdd);
+  var yAxisRange = dataType0Processed.map(function (dataSet) {
+    var filteredDataSet = dataSet.filter(function (val) {
+      return val !== null && val !== undefined;
+    });
+    var minVal = Math.max(0, Math.min.apply(Math, _toConsumableArray(filteredDataSet)));
+    var maxVal = Math.max.apply(Math, _toConsumableArray(filteredDataSet));
+    return {
+      min: minVal,
+      max: maxVal
+    };
+  });
   var optionsInput = {
     yLabel: yAxisArray,
     xLabel: graphState.xLabel,
     cssBackground: graphState.cssBackground,
-    minX: first,
+    minX: graphState.xStart,
     maxX: graphState.xEnd,
     maxTicksLimitX: maxTicks,
-    yAxisUnitOptions: graphState.yAxisUnitOptions
+    yAxisUnitOptions: graphState.yAxisUnitOptions,
+    yAxisRange: yAxisRange
   };
   var graphOptions = createGraphOptions(optionsInput);
   var _checkForGraphRefresh = checkForGraphRefresh(graphOptions, graphState.graphOptionsPrior, graphState.cssBackground, graphState.cssBackgroundPrior, graphState.isTickChange),
     needsRefresh = _checkForGraphRefresh.needsRefresh;
   var xLabelsArray = graphState.xLabelKey ? parseDataArraysByKeys(graphState.dataType1, [graphState.xLabelKey])[0] : null;
   var graphData = createGraphData({
+    incrementSize: Math.max(1, Math.min(graphState.xIdealTickSpacing, Math.round((graphState.xEnd - graphState.xStart) / 2))),
+    xStart: graphState.xStart,
+    xEnd: graphState.xEnd,
     layersSelected: graphState.layersSelected,
     dataType0Processed: dataType0Processed,
     dataLabelArray: dataLabelArray,
     yAxisArray: yAxisArray,
     yAxisIdArray: yAxisIdArray,
+    yAxisRange: yAxisRange,
     stylesArray: graphState.stylesArray,
     xLabelsArray: xLabelsArray
   });

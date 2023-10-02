@@ -1,5 +1,6 @@
 'use strict';
 
+function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
 var _require = require('conjunction-junction'),
   addAllItemsToArray = _require.addAllItemsToArray,
   removeAllItemsFromArray = _require.removeAllItemsFromArray,
@@ -108,6 +109,11 @@ var createLayerSelectorsInner = function createLayerSelectorsInner(input) {
     var thisLayerInHash = legendHash[unPrefix];
     // console.log({layerName, split, unPrefix, thisLayerInHash});
     if (thisLayerInHash) {
+      if (typeof thisLayerInHash === 'string') {
+        ({
+          key: thisLayerInHash
+        }), _readOnlyError("thisLayerInHash");
+      }
       if (!thisLayerInHash.l) {
         thisLayerInHash.l = layerName;
       }

@@ -20,7 +20,7 @@ function RangeFinder(props) {
         step: 1,
         className: "rcjspp-sel-input",
         onChange: function onChange(e) {
-          return props.handleRangeChange(e, 'xStart');
+          return props.handleXStartChange(e);
         },
         value: props.xStart
       })]
@@ -31,7 +31,7 @@ function RangeFinder(props) {
         step: 1,
         className: "rcjspp-sel-input",
         onChange: function onChange(e) {
-          return props.handleRangeChange(e, 'xEnd');
+          return props.handleXEndChange(e);
         },
         value: props.xEnd
       })]
@@ -42,7 +42,7 @@ function RangeFinder(props) {
         step: 1,
         className: "rcjspp-sel-input",
         onChange: function onChange(e) {
-          return props.handleTickChange(e);
+          return props.handleXIdealTickSpacingChange(e);
         },
         value: props.xIdealTickSpacing
       })]

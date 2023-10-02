@@ -27,8 +27,8 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty2(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -59,6 +59,7 @@ var deepCopy = function deepCopy(o) {
 function RCJSPP(props) {
   // @@@@@@@@@@@@@@ STATE CONSTANTS @@@@@@@@@@@@@@@@
   var verbose = !!props.verbose;
+  var legendUnits = props.legendUnits || {};
   var _useState = (0, _react.useState)(props.legendHash || {}),
     _useState2 = _slicedToArray(_useState, 2),
     legendHash = _useState2[0],
@@ -250,42 +251,71 @@ function RCJSPP(props) {
     _useState72 = _slicedToArray(_useState71, 2),
     presetIdActive = _useState72[0],
     setPresetIdActive = _useState72[1];
-  var _useState73 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xStart) ? props.xStart : 0),
+  var _useState73 = (0, _react.useState)(props.xStart ? props.xStart : 0),
     _useState74 = _slicedToArray(_useState73, 2),
     xStart = _useState74[0],
     setXStart = _useState74[1];
-  var _useState75 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xEnd) ? props.xEnd : 1000),
+  var handleXStartChange = function handleXStartChange(e) {
+    var newValue = parseInt(e.target.value) < xEnd ? parseInt(e.target.value) : xEnd - 1;
+    setXStart(newValue); // Update the local state
+    props.handleChange('xStart', newValue); // Send the changes to parent
+    var graphState = packGraphState(_defineProperty({}, 'xStart', newValue));
+    var skipPacking = true;
+    handleGraphChange(graphState, skipPacking);
+  };
+  var _useState75 = (0, _react.useState)(props.xEnd ? props.xEnd : 1000),
     _useState76 = _slicedToArray(_useState75, 2),
     xEnd = _useState76[0],
     setXEnd = _useState76[1];
-  var _useState77 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xIdealTickSpacing) ? props.xIdealTickSpacing : 6),
+  var handleXEndChange = function handleXEndChange(e) {
+    var newValue = parseInt(e.target.value) > xStart ? parseInt(e.target.value) : xStart + 1;
+    setXEnd(newValue); // Update the local state
+    props.handleChange('xEnd', newValue); // Send the changes to parent
+    var graphState = packGraphState(_defineProperty({}, 'xEnd', newValue));
+    var skipPacking = true;
+    handleGraphChange(graphState, skipPacking);
+  };
+  var _useState77 = (0, _react.useState)(props.incrementSize ? props.incrementSize : 6),
     _useState78 = _slicedToArray(_useState77, 2),
-    xIdealTickSpacing = _useState78[0],
-    setXIdealTickSpacing = _useState78[1];
-  var _useState79 = (0, _react.useState)((0, _conjunctionJunction.isPrimitiveNumber)(props.xMaxTickSpacing) ? props.xMaxTickSpacing : 50),
+    incrementSize = _useState78[0],
+    setIncrementSize = _useState78[1];
+  var _useState79 = (0, _react.useState)(props.xIdealTickSpacing ? props.xIdealTickSpacing : 6),
     _useState80 = _slicedToArray(_useState79, 2),
-    xMaxTickSpacing = _useState80[0],
-    setXMaxTickSpacing = _useState80[1];
-  var _useState81 = (0, _react.useState)(props.xLabelKey || null),
+    xIdealTickSpacing = _useState80[0],
+    setXIdealTickSpacing = _useState80[1];
+  var handleIncrementSizeChange = function handleIncrementSizeChange(e) {
+    var newValue = e.target.value;
+    setXMaxTickSpacing(newValue); // Update the local state
+    setXIdealTickSpacing(newValue);
+    props.handleChange('incrementSize', newValue); // Send the changes to parent
+    var graphState = packGraphState(_defineProperty({}, 'xIdealTickSpacing', newValue));
+    var skipPacking = true;
+    handleGraphChange(graphState, skipPacking);
+  };
+  var _useState81 = (0, _react.useState)(props.xMaxTickSpacing ? props.xMaxTickSpacing : 50),
     _useState82 = _slicedToArray(_useState81, 2),
-    xLabelKey = _useState82[0],
-    setXLabelKey = _useState82[1];
-  var _useState83 = (0, _react.useState)(props.xLabel),
+    xMaxTickSpacing = _useState82[0],
+    setXMaxTickSpacing = _useState82[1];
+  var _useState83 = (0, _react.useState)(props.xLabelKey || null),
     _useState84 = _slicedToArray(_useState83, 2),
-    xLabel = _useState84[0],
-    setXLabel = _useState84[1];
-  var _useState85 = (0, _react.useState)([]),
+    xLabelKey = _useState84[0],
+    setXLabelKey = _useState84[1];
+  var _useState85 = (0, _react.useState)(props.xLabel),
     _useState86 = _slicedToArray(_useState85, 2),
-    yAxisArray = _useState86[0],
-    setYAxisArray = _useState86[1]; // used as history in createGraph()
-  var _useState87 = (0, _react.useState)(Array.isArray(props.yAxisUnitOptions) && props.yAxisUnitOptions[0] ? props.yAxisUnitOptions[0] : {}),
+    xLabel = _useState86[0],
+    setXLabel = _useState86[1];
+  var _useState87 = (0, _react.useState)([]),
     _useState88 = _slicedToArray(_useState87, 2),
-    yAxisUnitOptions = _useState88[0],
-    setYAxisUnitOptions = _useState88[1];
-  var _useState89 = (0, _react.useState)(0),
+    yAxisArray = _useState88[0],
+    setYAxisArray = _useState88[1]; // used as history in createGraph()
+  var _useState89 = (0, _react.useState)(Array.isArray(props.yAxisUnitOptions) && props.yAxisUnitOptions[0] ? props.yAxisUnitOptions[0] : {}),
     _useState90 = _slicedToArray(_useState89, 2),
-    yAxisInFocus = _useState90[0],
-    setYAxisInFocus = _useState90[1];
+    yAxisUnitOptions = _useState90[0],
+    setYAxisUnitOptions = _useState90[1];
+  var _useState91 = (0, _react.useState)(0),
+    _useState92 = _slicedToArray(_useState91, 2),
+    yAxisInFocus = _useState92[0],
+    setYAxisInFocus = _useState92[1];
   var packGraphState = function packGraphState(gs, full) {
     var graphState = {
       // modified via          used by
@@ -364,6 +394,7 @@ function RCJSPP(props) {
       // handleYAxisSelector
       legendHash: legendHash,
       // handleGroupBy         createGraph
+      legendUnits: legendUnits,
       // createGraphInfoOnGroupOrMount
       cssBackground: cssBackground,
       // handleBackgroundColor createGraph
@@ -543,7 +574,7 @@ function RCJSPP(props) {
   var handleRangeChange = function handleRangeChange(event, key) {
     var value = parseInt(event.target.value, 10);
     if (key === 'xStart' || key === 'xEnd') {
-      var graphState = packGraphState(_defineProperty({}, key, value));
+      var graphState = packGraphState(_defineProperty2({}, key, value));
       if (key === 'xStart') {
         setXStart(value);
       } else {
@@ -706,7 +737,7 @@ function RCJSPP(props) {
     }
   };
 
-  var _useState91 = (0, _react.useState)((0, _helpersControls.formatControls)({
+  var _useState93 = (0, _react.useState)((0, _helpersControls.formatControls)({
       printAllow: allowed.printAllow,
       // all below are set on mount, not changed after
       backgroundAllow: allowed.backgroundAllow,
@@ -720,9 +751,9 @@ function RCJSPP(props) {
       toggleSelectorsPopover: toggleSelectorsPopover,
       handlePresetSelect: handlePresetSelect
     })),
-    _useState92 = _slicedToArray(_useState91, 2),
-    controls = _useState92[0],
-    setControls = _useState92[1];
+    _useState94 = _slicedToArray(_useState93, 2),
+    controls = _useState94[0],
+    setControls = _useState94[1];
 
   // @@@@@@@@@@@@@@@@@@ RENDER @@@@@@@@@@@@@@@@
 
@@ -757,8 +788,11 @@ function RCJSPP(props) {
     groupAllow: allowed.groupAllow,
     isGrouped: isGrouped,
     xStart: xStart,
+    handleXStartChange: handleXStartChange,
     xEnd: xEnd,
+    handleXEndChange: handleXEndChange,
     xIdealTickSpacing: xIdealTickSpacing,
+    handleXIdealTickSpacingChange: handleIncrementSizeChange,
     layersThatHaveUnits: layersThatHaveUnits,
     layersSelected: layersSelected,
     layerUnitsArray: layerUnitsArray,

@@ -10,7 +10,7 @@ export default function RangeFinder (props){
         name='start-of-range'
         step={1}
         className='rcjspp-sel-input'
-        onChange={e=>props.handleRangeChange(e, 'xStart')} 
+        onChange={e=>props.handleXStartChange(e)} 
         value={props.xStart} />
     </label>
     <label className='rcjspp-sel-row-form-label'>
@@ -19,7 +19,7 @@ export default function RangeFinder (props){
         type='number'
         step={1}
         className='rcjspp-sel-input'
-        onChange={e=>props.handleRangeChange(e, 'xEnd')} 
+        onChange={e=>props.handleXEndChange(e)} 
         value={props.xEnd} />
     </label>
     <label className='rcjspp-sel-row-form-label'>
@@ -28,7 +28,7 @@ export default function RangeFinder (props){
         type='number'
         step={1}
         className='rcjspp-sel-input'
-        onChange={e=>props.handleTickChange(e)} 
+        onChange={e=>props.handleXIdealTickSpacingChange(e)} 
         value={props.xIdealTickSpacing} />
     </label>
     {
