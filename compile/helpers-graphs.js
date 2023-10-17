@@ -388,6 +388,7 @@ var defaultTickProperties = {
 };
 var defaultXAxis = {
   display: true,
+  autoSkip: false,
   // type: 'linear',
   gridLines: {
     display: true

@@ -480,6 +480,7 @@ const defaultTickProperties = {
 };
 const defaultXAxis = {
   display: true,
+  autoSkip:false,
   // type: 'linear',
   gridLines: {
     display: true,
