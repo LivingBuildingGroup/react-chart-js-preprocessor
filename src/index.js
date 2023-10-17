@@ -158,7 +158,7 @@ export default function RCJSPP(props) {
 		const newValue = parseInt(e.target.value) < xEnd ? parseInt(e.target.value): xEnd-1;
 		setXStart(newValue); // Update the local state
 		props.handleChange('xStart', newValue); // Send the changes to parent
-		var graphState = packGraphState(_defineProperty({}, 'xStart', newValue));
+		var graphState = packGraphState({xStart:newValue});
 		var skipPacking = true;
 		handleGraphChange(graphState, skipPacking);
 	  };
@@ -168,7 +168,7 @@ export default function RCJSPP(props) {
 		const newValue = parseInt(e.target.value)  > xStart ? parseInt(e.target.value) : xStart+1;
 		setXEnd(newValue); // Update the local state
 		props.handleChange('xEnd', newValue); // Send the changes to parent
-		var graphState = packGraphState(_defineProperty({}, 'xEnd', newValue));
+		var graphState = packGraphState({xEnd: newValue});
 		var skipPacking = true;
 		handleGraphChange(graphState, skipPacking);
 	  };
@@ -179,7 +179,7 @@ export default function RCJSPP(props) {
 		setXMaxTickSpacing(newValue); // Update the local state
 		setXIdealTickSpacing(newValue);
 		props.handleChange('incrementSize', newValue); // Send the changes to parent
-		var graphState = packGraphState(_defineProperty({}, 'xIdealTickSpacing', newValue));
+		var graphState = packGraphState({xIdealTickSpacing: newValue});
 		var skipPacking = true;
 		handleGraphChange(graphState, skipPacking);
 	  

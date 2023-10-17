@@ -27,8 +27,8 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty2(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty2(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -259,7 +259,9 @@ function RCJSPP(props) {
     var newValue = parseInt(e.target.value) < xEnd ? parseInt(e.target.value) : xEnd - 1;
     setXStart(newValue); // Update the local state
     props.handleChange('xStart', newValue); // Send the changes to parent
-    var graphState = packGraphState(_defineProperty({}, 'xStart', newValue));
+    var graphState = packGraphState({
+      xStart: newValue
+    });
     var skipPacking = true;
     handleGraphChange(graphState, skipPacking);
   };
@@ -271,7 +273,9 @@ function RCJSPP(props) {
     var newValue = parseInt(e.target.value) > xStart ? parseInt(e.target.value) : xStart + 1;
     setXEnd(newValue); // Update the local state
     props.handleChange('xEnd', newValue); // Send the changes to parent
-    var graphState = packGraphState(_defineProperty({}, 'xEnd', newValue));
+    var graphState = packGraphState({
+      xEnd: newValue
+    });
     var skipPacking = true;
     handleGraphChange(graphState, skipPacking);
   };
@@ -288,7 +292,9 @@ function RCJSPP(props) {
     setXMaxTickSpacing(newValue); // Update the local state
     setXIdealTickSpacing(newValue);
     props.handleChange('incrementSize', newValue); // Send the changes to parent
-    var graphState = packGraphState(_defineProperty({}, 'xIdealTickSpacing', newValue));
+    var graphState = packGraphState({
+      xIdealTickSpacing: newValue
+    });
     var skipPacking = true;
     handleGraphChange(graphState, skipPacking);
   };
@@ -574,7 +580,7 @@ function RCJSPP(props) {
   var handleRangeChange = function handleRangeChange(event, key) {
     var value = parseInt(event.target.value, 10);
     if (key === 'xStart' || key === 'xEnd') {
-      var graphState = packGraphState(_defineProperty2({}, key, value));
+      var graphState = packGraphState(_defineProperty({}, key, value));
       if (key === 'xStart') {
         setXStart(value);
       } else {
