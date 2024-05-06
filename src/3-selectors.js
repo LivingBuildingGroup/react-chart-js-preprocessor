@@ -3,7 +3,7 @@ import RangeFinder              from './4-range-finder';
 import React, { useState } from 'react';
 
 export default function Selectors(props) {
-
+   const selectedLanguage=props.selectedLanguage;
   const p = props;
 
   const layerGroupByJSXOptions = 

@@ -455,18 +455,18 @@ const createGraphData = (graphState) => {
 
 // @@@@@@@@@@@@@@@@ AXES @@@@@@@@@@@@@@
 
-const calcTicks = (labels, min, max, increment) => {
+const calcTicks = (labels, min, max, incrementSize) => {
   // dataLength should be the data we want to show, i.e. after cropping (by the user), if any
   // dataLength should be 1 over ideal, so the final label is an even increment
   let ticks = [];
-  for (let i = min; i <= max; i += increment) {
+  for (let i = min; i <= max; i += incrementSize) {
     ticks.push(labels[i]);
   }
   return ticks;
 };
-const generateTicks = (labels, min, max, increment) => {
+const generateTicks = (labels, min, max, incrementSize) => {
   let ticks = [];
-  for (let i = min; i <= max; i += increment) {
+  for (let i = min; i <= max; i += incrementSize) {
     ticks.push(labels[i]);
   }
   return ticks;

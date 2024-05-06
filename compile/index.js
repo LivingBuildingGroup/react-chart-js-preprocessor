@@ -57,6 +57,7 @@ var deepCopy = function deepCopy(o) {
   return o;
 };
 function RCJSPP(props) {
+  var selectedLanguage = props.selectedLanguage || 0;
   // @@@@@@@@@@@@@@ STATE CONSTANTS @@@@@@@@@@@@@@@@
   var verbose = !!props.verbose;
   var legendUnits = props.legendUnits || {};
@@ -788,6 +789,7 @@ function RCJSPP(props) {
   var selectors = allowed.selectorsInclude ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_selectors["default"], {
     cssDivSelectors: css.cssDivSelectors,
     cssStyleColorsNamed: css.cssStyleColorsNamed,
+    selectedLanguage: selectedLanguage,
     legendHash: legendHash,
     indexDef: indexDef,
     selectorsInFocus: selectorsInFocus,

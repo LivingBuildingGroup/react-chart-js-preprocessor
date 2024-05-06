@@ -46,7 +46,7 @@ const deepCopy = o => {
 };
 
 export default function RCJSPP(props) {
-  
+	const selectedLanguage= props.selectedLanguage||0;
 	// @@@@@@@@@@@@@@ STATE CONSTANTS @@@@@@@@@@@@@@@@
 	const verbose = !!props.verbose;
     const legendUnits = props.legendUnits||{};
@@ -685,7 +685,7 @@ export default function RCJSPP(props) {
 	const selectors = allowed.selectorsInclude ? <Selectors
 		cssDivSelectors     ={css.cssDivSelectors}
 		cssStyleColorsNamed ={css.cssStyleColorsNamed}
-
+		selectedLanguage={selectedLanguage}
 		legendHash          ={legendHash}
 
 		indexDef            ={indexDef}

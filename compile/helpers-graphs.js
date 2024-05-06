@@ -363,18 +363,18 @@ var createGraphData = function createGraphData(graphState) {
 
 // @@@@@@@@@@@@@@@@ AXES @@@@@@@@@@@@@@
 
-var calcTicks = function calcTicks(labels, min, max, increment) {
+var calcTicks = function calcTicks(labels, min, max, incrementSize) {
   // dataLength should be the data we want to show, i.e. after cropping (by the user), if any
   // dataLength should be 1 over ideal, so the final label is an even increment
   var ticks = [];
-  for (var i = min; i <= max; i += increment) {
+  for (var i = min; i <= max; i += incrementSize) {
     ticks.push(labels[i]);
   }
   return ticks;
 };
-var generateTicks = function generateTicks(labels, min, max, increment) {
+var generateTicks = function generateTicks(labels, min, max, incrementSize) {
   var ticks = [];
-  for (var i = min; i <= max; i += increment) {
+  for (var i = min; i <= max; i += incrementSize) {
     ticks.push(labels[i]);
   }
   return ticks;
