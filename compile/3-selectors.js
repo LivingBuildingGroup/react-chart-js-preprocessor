@@ -33,7 +33,8 @@ function Selectors(props) {
     handleXIdealTickSpacingChange: p.handleXIdealTickSpacingChange,
     layerGroupByJSXOptions: layerGroupByJSXOptions,
     handleRangeChange: p.handleRangeChange,
-    handleTickChange: p.handleTickChange
+    handleTickChange: p.handleTickChange,
+    selectedLanguage: selectedLanguage
   });
   var selectors = p.selectorsInFocus === 'layers' ? /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
     className: "rcjspp-selectors",

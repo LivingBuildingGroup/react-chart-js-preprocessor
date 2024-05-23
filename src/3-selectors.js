@@ -26,7 +26,8 @@ export default function Selectors(props) {
     handleXIdealTickSpacingChange = {p.handleXIdealTickSpacingChange}
     layerGroupByJSXOptions={layerGroupByJSXOptions}
     handleRangeChange     ={p.handleRangeChange}
-    handleTickChange      ={p.handleTickChange} />
+    handleTickChange      ={p.handleTickChange} 
+    selectedLanguage = {selectedLanguage}/>
 
   const selectors = 
     p.selectorsInFocus === 'layers' ?
