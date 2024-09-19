@@ -113,24 +113,31 @@ function RCJSPP(props) {
     _useState18 = _slicedToArray(_useState17, 2),
     selectorsInFocus = _useState18[0],
     setSelectorsInFocus = _useState18[1];
-  var _useState19 = (0, _react.useState)({
-      cssStyleColorsNamedArray: [],
-      cssStyleColorsNamed: props.cssStyleColorsNamed || (0, _prettyColors.createNamed)('bright'),
-      cssRgbArray: props.cssRgbArray || (0, _prettyColors.selectPalette)(30),
-      // array of styles to loop through//  VVVVVVVVVVV edit location per project VVVVVVVVVVV
+  var _useState19 = (0, _react.useState)(function () {
+      // Get the initial cssRgbArray value
+      var initialCssRgbArray = props.cssRgbArray || (0, _prettyColors.selectPalette)(30);
+      var initialCssStyleColorsNamed = props.cssStyleColorsNamed || (0, _prettyColors.createNamed)('bright');
+      initialCssStyleColorsNamed.purple = "92, 38, 110";
+      // Check if there are at least 12 items
 
-      cssDivOuter: {},
-      cssDivGraph: {},
-      cssDivControls: {},
-      cssDivFooter: {},
-      cssDivSelectors: {},
-      cssWidthOuter: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssWidthOuter) ? props.cssWidthOuter : 200,
-      cssHeightOuter: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssHeightOuter) ? props.cssHeightOuter : 150,
-      cssWidthControls: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssWidthControls) ? props.cssWidthControls : 40,
-      cssHeightFooter: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssHeightFooter) ? props.cssHeightFooter : 160,
-      cssHeightSelectors: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssHeightSelectors) ? props.cssHeightSelectors : 'auto',
-      cssCanvasHeight: 0,
-      cssCanvasWidth: 0
+      return {
+        cssStyleColorsNamedArray: [],
+        cssStyleColorsNamed: initialCssStyleColorsNamed,
+        cssRgbArray: initialCssRgbArray,
+        // Assign the modified array
+        cssDivOuter: {},
+        cssDivGraph: {},
+        cssDivControls: {},
+        cssDivFooter: {},
+        cssDivSelectors: {},
+        cssWidthOuter: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssWidthOuter) ? props.cssWidthOuter : 200,
+        cssHeightOuter: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssHeightOuter) ? props.cssHeightOuter : 150,
+        cssWidthControls: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssWidthControls) ? props.cssWidthControls : 40,
+        cssHeightFooter: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssHeightFooter) ? props.cssHeightFooter : 160,
+        cssHeightSelectors: (0, _conjunctionJunction.isPrimitiveNumber)(props.cssHeightSelectors) ? props.cssHeightSelectors : 'auto',
+        cssCanvasHeight: 0,
+        cssCanvasWidth: 0
+      };
     }),
     _useState20 = _slicedToArray(_useState19, 2),
     css = _useState20[0],

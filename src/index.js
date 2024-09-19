@@ -80,24 +80,31 @@ export default function RCJSPP(props) {
 	const [selectorsPopover, setSelectorsPopover] = useState(false);
   const [selectorsInFocus, setSelectorsInFocus] = useState('none');
 
-	const [css, setCss] = useState({
-		cssStyleColorsNamedArray:    [],
-		cssStyleColorsNamed:         props.cssStyleColorsNamed           || createNamed('bright'),
-		cssRgbArray:                 props.cssRgbArray                   || selectPalette(30), // array of styles to loop through//  VVVVVVVVVVV edit location per project VVVVVVVVVVV
-	
-		cssDivOuter:                 {},
-		cssDivGraph:                 {},
-		cssDivControls:              {},
-		cssDivFooter:                {},
-		cssDivSelectors:             {},
-		cssWidthOuter:               isPrimitiveNumber(props.cssWidthOuter) ? props.cssWidthOuter : 200,
-		cssHeightOuter:              isPrimitiveNumber(props.cssHeightOuter) ? props.cssHeightOuter : 150,
-		cssWidthControls:            isPrimitiveNumber(props.cssWidthControls) ? props.cssWidthControls : 40,
-		cssHeightFooter:             isPrimitiveNumber(props.cssHeightFooter) ? props.cssHeightFooter : 160,
-		cssHeightSelectors:          isPrimitiveNumber(props.cssHeightSelectors) ? props.cssHeightSelectors : 'auto',
-		cssCanvasHeight:             0,
-		cssCanvasWidth:              0,
-	});
+  const [css, setCss] = useState(() => {
+	// Get the initial cssRgbArray value
+	const initialCssRgbArray = props.cssRgbArray || selectPalette(30);
+	const initialCssStyleColorsNamed = props.cssStyleColorsNamed           || createNamed('bright');
+	initialCssStyleColorsNamed.purple="92, 38, 110";
+	// Check if there are at least 12 items
+  
+	return {
+	  cssStyleColorsNamedArray:    [],
+	  cssStyleColorsNamed:         initialCssStyleColorsNamed,
+	  cssRgbArray:                 initialCssRgbArray,  // Assign the modified array
+	  cssDivOuter:                 {},
+	  cssDivGraph:                 {},
+	  cssDivControls:              {},
+	  cssDivFooter:                {},
+	  cssDivSelectors:             {},
+	  cssWidthOuter:               isPrimitiveNumber(props.cssWidthOuter) ? props.cssWidthOuter : 200,
+	  cssHeightOuter:              isPrimitiveNumber(props.cssHeightOuter) ? props.cssHeightOuter : 150,
+	  cssWidthControls:            isPrimitiveNumber(props.cssWidthControls) ? props.cssWidthControls : 40,
+	  cssHeightFooter:             isPrimitiveNumber(props.cssHeightFooter) ? props.cssHeightFooter : 160,
+	  cssHeightSelectors:          isPrimitiveNumber(props.cssHeightSelectors) ? props.cssHeightSelectors : 'auto',
+	  cssCanvasHeight:             0,
+	  cssCanvasWidth:              0,
+	};
+  });
 
 	// @@@@@@@@@@@@@@ STATE: GRAPH @@@@@@@@@@@@@@@@
 
